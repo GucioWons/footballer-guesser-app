@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.helpers.StringHelper;
 import com.guciowons.footballer_guesser_app.requests.RegisterRequest;
+import com.guciowons.footballer_guesser_app.validators.EmailValidator;
+import com.guciowons.footballer_guesser_app.validators.PasswordAndConfirmValidator;
+import com.guciowons.footballer_guesser_app.validators.UsernameValidator;
 
 import org.json.JSONObject;
 
@@ -27,8 +31,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
-    EditText username_edittext, email_edittext, password_edittext, confirm_password_edittext;
-    Button register_btn;
+    private EditText username_edittext, email_edittext, password_edittext, confirm_password_edittext;
+    private Button register_btn;
+
+    private UsernameValidator usernameValidator = new UsernameValidator();
+    private EmailValidator emailValidator = new EmailValidator();
+    private PasswordAndConfirmValidator passwordAndConfirmValidator = new PasswordAndConfirmValidator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,56 +59,21 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void processRegisterForm(){
-        if(!validateUserName() || !validateEmail() || !validatePassword()){
-            return;
-        }
-        RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
-        RegisterRequest registerRequest = new RegisterRequest();
-        requestQueue.add(registerRequest.getRegisterRequest(SignUpActivity.this,
-                username_edittext, email_edittext, password_edittext, confirm_password_edittext));
-    }
-
-    public boolean validateUserName(){
-        String username = username_edittext.getText().toString();
-        if(username.isEmpty()){
-            username_edittext.setError("Username cannot be empty!");
-            return false;
-        } else{
-            username_edittext.setError(null);
-            return true;
+        if(usernameValidator.validateUsername(username_edittext) &&
+                emailValidator.validateEmail(email_edittext) &&
+                passwordAndConfirmValidator.validatePasswordAndConfirm(password_edittext, confirm_password_edittext)){
+            RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
+            RegisterRequest registerRequest = new RegisterRequest();
+            SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
+            requestQueue.add(registerRequest.getRegisterRequest(SignUpActivity.this, getParamsJson(), sharedPreferences));
         }
     }
 
-    public boolean validateEmail(){
-        String email = email_edittext.getText().toString();
-        if(email.isEmpty()){
-            email_edittext.setError("Email cannot be empty!");
-            return false;
-        } else if(!StringHelper.validateEmail(email)){
-            email_edittext.setError("Email is not valid!");
-            return false;
-        } else{
-            email_edittext.setError(null);
-            return true;
-        }
-    }
-
-    public boolean validatePassword(){
-        String password = password_edittext.getText().toString();
-        String confirm_password = confirm_password_edittext.getText().toString();
-        if(password.isEmpty()){
-            password_edittext.setError("Password cannot be empty!");
-            return false;
-        } else if(confirm_password.isEmpty()){
-            confirm_password_edittext.setError("Confirm password cannot be empty!");
-            return false;
-        } else if(!password.equals(confirm_password)){
-            confirm_password_edittext.setError("Confirm password has to be the same as password!");
-            return false;
-        } else{
-            password_edittext.setError(null);
-            confirm_password_edittext.setError(null);
-            return true;
-        }
+    public JSONObject getParamsJson(){
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", username_edittext.getText().toString());
+        params.put("email", email_edittext.getText().toString());
+        params.put("password", password_edittext.getText().toString());
+        return new JSONObject(params);
     }
 }
