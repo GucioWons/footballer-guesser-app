@@ -1,5 +1,6 @@
 package com.guciowons.footballer_guesser_app;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,7 +10,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.helpers.StringHelper;
+import com.guciowons.footballer_guesser_app.requests.RegisterRequest;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText username_edittext, email_edittext, password_edittext, confirm_password_edittext;
@@ -39,7 +54,10 @@ public class SignUpActivity extends AppCompatActivity {
         if(!validateUserName() || !validateEmail() || !validatePassword()){
             return;
         }
-        Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+        RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
+        RegisterRequest registerRequest = new RegisterRequest();
+        requestQueue.add(registerRequest.getRegisterRequest(SignUpActivity.this,
+                username_edittext, email_edittext, password_edittext, confirm_password_edittext));
     }
 
     public boolean validateUserName(){
