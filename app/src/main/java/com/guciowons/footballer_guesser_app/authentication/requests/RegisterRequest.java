@@ -1,36 +1,24 @@
-package com.guciowons.footballer_guesser_app.requests;
+package com.guciowons.footballer_guesser_app.authentication.requests;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.guciowons.footballer_guesser_app.LeaguesActivity;
-import com.guciowons.footballer_guesser_app.SignInActivity;
-import com.guciowons.footballer_guesser_app.SignUpActivity;
+import com.guciowons.footballer_guesser_app.game.LeaguesActivity;
+import com.guciowons.footballer_guesser_app.authentication.activities.SignUpActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterRequest {
-    public JsonObjectRequest getRegisterRequest(SignUpActivity signUpActivity, JSONObject params, SharedPreferences sharedPreferences){
+    public JsonObjectRequest getRegisterRequest(SignUpActivity signUpActivity, JSONObject params){
         return new JsonObjectRequest(Request.Method.POST, "http://192.168.0.2:8080/register", params,
                 response -> {
-                    saveData(response, sharedPreferences);
+                    saveData(response, signUpActivity.getSharedPreferences("Account", 0));
                     userRegistered(signUpActivity);
                 }, error -> {
                     String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);

@@ -1,4 +1,4 @@
-package com.guciowons.footballer_guesser_app.validators;
+package com.guciowons.footballer_guesser_app.authentication.validators;
 
 import android.widget.EditText;
 

@@ -1,8 +1,8 @@
-package com.guciowons.footballer_guesser_app.validators;
+package com.guciowons.footballer_guesser_app.authentication.validators;
 
 import android.widget.EditText;
 
-import com.guciowons.footballer_guesser_app.helpers.StringHelper;
+import com.guciowons.footballer_guesser_app.authentication.helpers.StringHelper;
 
 public class EmailValidator {
     public boolean validateEmail(EditText editText) {

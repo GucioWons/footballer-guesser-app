@@ -1,4 +1,4 @@
-package com.guciowons.footballer_guesser_app.helpers;
+package com.guciowons.footballer_guesser_app.authentication.helpers;
 
 public class StringHelper {
     public static boolean validateEmail(String email){

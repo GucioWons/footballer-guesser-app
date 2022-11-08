@@ -1,10 +1,14 @@
-package com.guciowons.footballer_guesser_app;
+package com.guciowons.footballer_guesser_app.game;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.guciowons.footballer_guesser_app.R;
+
+import org.json.JSONArray;
 
 public class LeaguesActivity extends AppCompatActivity {
     TextView id_textview, username_textview, email_textview;

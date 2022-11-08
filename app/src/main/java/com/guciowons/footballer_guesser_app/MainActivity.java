@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.guciowons.footballer_guesser_app.authentication.activities.SignInActivity;
+import com.guciowons.footballer_guesser_app.authentication.activities.SignUpActivity;
+
 public class MainActivity extends AppCompatActivity {
     Button sign_in_btn, sign_out_btn;
 

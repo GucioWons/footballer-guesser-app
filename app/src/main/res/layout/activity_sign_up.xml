@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".authentication.activities.SignUpActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/username_edittext"
+            android:id="@+id/username_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -26,7 +26,7 @@
             android:autofillHints="username"/>
 
         <EditText
-            android:id="@+id/email_edittext"
+            android:id="@+id/email_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -35,7 +35,7 @@
             android:autofillHints="emailAddress"/>
 
         <EditText
-            android:id="@+id/password_edittext"
+            android:id="@+id/password_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -44,7 +44,7 @@
             android:autofillHints="password"/>
 
         <EditText
-            android:id="@+id/confirm_password_edittext"
+            android:id="@+id/confirm_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -58,7 +58,7 @@
             android:layout_marginTop="10dp">
 
             <Button
-                android:id="@+id/go_back_btn"
+                android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
