@@ -2,7 +2,9 @@ package com.guciowons.footballer_guesser_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -51,10 +53,11 @@ public class SignInActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
                 response -> {
                     try {
-                        Integer id = response.getInt("id");
-                        String username = response.getString("username");
-                        String email = response.getString("email");
+                        saveData(response.getInt("id"), response.getString("username"), response.getString("email"));
                         Toast.makeText(SignInActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignInActivity.this, LeaguesActivity.class);
+                        startActivity(intent);
+                        finish();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -65,12 +68,21 @@ public class SignInActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
+    public void saveData(Integer id, String username, String email){
+        SharedPreferences sharedPreferences = getSharedPreferences("Account", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("id", id);
+        editor.putString("username", username);
+        editor.putString("email", email);
+        editor.apply();
+    }
+
     public boolean validateEmail(){
         String email = email_edittext.getText().toString();
         if(email.isEmpty()){
             email_edittext.setError("Email cannot be empty!");
             return false;
-        } else if(!StringHelper.dupa(email)){
+        } else if(!StringHelper.validateEmail(email)){
             email_edittext.setError("Email is not valid!");
             return false;
         } else{

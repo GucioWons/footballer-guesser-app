@@ -76,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
         if(email.isEmpty()){
             email_edittext.setError("Email cannot be empty!");
             return false;
-        } else if(!StringHelper.dupa(email)){
+        } else if(!StringHelper.validateEmail(email)){
             email_edittext.setError("Email is not valid!");
             return false;
         } else{

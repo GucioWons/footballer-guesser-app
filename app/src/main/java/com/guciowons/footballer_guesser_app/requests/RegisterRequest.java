@@ -1,5 +1,7 @@
 package com.guciowons.footballer_guesser_app.requests;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.EditText;
 import android.widget.Toast;
 
