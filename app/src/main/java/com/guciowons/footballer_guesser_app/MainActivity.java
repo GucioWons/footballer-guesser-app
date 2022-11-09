@@ -5,14 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.authentication.activities.SignInActivity;
 import com.guciowons.footballer_guesser_app.authentication.activities.SignUpActivity;
-import com.guciowons.footballer_guesser_app.authentication.requests.LoginRequest;
+import com.guciowons.footballer_guesser_app.authentication.requests.AuthenticationRequestsManager;
+import com.guciowons.footballer_guesser_app.preferences.EncryptedPreferencesGetter;
 
 import org.json.JSONObject;
 
@@ -40,13 +40,14 @@ public class MainActivity extends AppCompatActivity {
         loadData();
         if(id != 0 || email != null || username != null || password != null){
             RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-            LoginRequest loginRequest = new LoginRequest();
-            requestQueue.add(loginRequest.getLoginRequest(MainActivity.this, getParamsJson()));
+            AuthenticationRequestsManager authenticationRequestsManager = new AuthenticationRequestsManager();
+            requestQueue.add(authenticationRequestsManager.getAuthenticationRequest(MainActivity.this, getParamsJson(), "login"));
         }
     }
 
     public void loadData(){
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("Account", MODE_PRIVATE);
+        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
+        SharedPreferences sharedPreferences = encryptedPreferencesGetter.getEncryptedPreferences(MainActivity.this);
         id = sharedPreferences.getInt("id", 0);
         email = sharedPreferences.getString("email", null);
         username = sharedPreferences.getString("username", null);

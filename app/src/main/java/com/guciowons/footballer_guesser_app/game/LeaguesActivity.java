@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.guciowons.footballer_guesser_app.R;
+import com.guciowons.footballer_guesser_app.preferences.EncryptedPreferencesGetter;
 
 import org.json.JSONArray;
 
@@ -24,7 +25,8 @@ public class LeaguesActivity extends AppCompatActivity {
     }
 
     public void loadData(){
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("Account", MODE_PRIVATE);
+        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
+        SharedPreferences sharedPreferences = encryptedPreferencesGetter.getEncryptedPreferences(LeaguesActivity.this);
         id_textview.setText(id_textview.getText() + Integer.toString(sharedPreferences.getInt("id", 0)));
         username_textview.setText(username_textview.getText() + sharedPreferences.getString("username", ""));
         email_textview.setText(email_textview.getText() + sharedPreferences.getString("email", ""));

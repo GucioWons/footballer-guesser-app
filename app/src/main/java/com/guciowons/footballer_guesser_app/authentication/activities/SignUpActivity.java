@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -12,7 +11,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.MainActivity;
 import com.guciowons.footballer_guesser_app.R;
-import com.guciowons.footballer_guesser_app.authentication.requests.RegisterRequest;
+import com.guciowons.footballer_guesser_app.authentication.requests.AuthenticationRequestsManager;
 import com.guciowons.footballer_guesser_app.authentication.validators.EmailValidator;
 import com.guciowons.footballer_guesser_app.authentication.validators.PasswordAndConfirmValidator;
 import com.guciowons.footballer_guesser_app.authentication.validators.UsernameValidator;
@@ -23,11 +22,7 @@ import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText usernameEt, emailEt, passwordEt, confirmEt;
-    private Button registerBtn;
-
-    private UsernameValidator usernameValidator = new UsernameValidator();
-    private EmailValidator emailValidator = new EmailValidator();
-    private PasswordAndConfirmValidator passwordAndConfirmValidator = new PasswordAndConfirmValidator();
+    private Button registerBtn, goBackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +35,26 @@ public class SignUpActivity extends AppCompatActivity {
         confirmEt = findViewById(R.id.confirm_et);
 
         registerBtn = findViewById(R.id.register_btn);
+        goBackBtn = findViewById(R.id.back_btn);
         registerBtn.setOnClickListener(view -> processRegisterForm());
+        goBackBtn.setOnClickListener(view -> goBack());
     }
 
-    public void goBack(View view){
+    public void goBack(){
         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void processRegisterForm(){
+        UsernameValidator usernameValidator = new UsernameValidator();
+        EmailValidator emailValidator = new EmailValidator();
+        PasswordAndConfirmValidator passwordAndConfirmValidator = new PasswordAndConfirmValidator();
         if(usernameValidator.validateUsername(usernameEt) &&
                 emailValidator.validateEmail(emailEt) &&
                 passwordAndConfirmValidator.validatePasswordAndConfirm(passwordEt, confirmEt)){
             RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
-            RegisterRequest registerRequest = new RegisterRequest();
-            requestQueue.add(registerRequest.getRegisterRequest(SignUpActivity.this, getParamsJson()));
+            AuthenticationRequestsManager authenticationRequestsManager = new AuthenticationRequestsManager();
+            requestQueue.add(authenticationRequestsManager.getAuthenticationRequest(SignUpActivity.this, getParamsJson(), "register"));
         }
     }
 
