@@ -16,9 +16,9 @@ import java.nio.charset.StandardCharsets;
 
 public class RegisterRequest {
     public JsonObjectRequest getRegisterRequest(SignUpActivity signUpActivity, JSONObject params){
-        return new JsonObjectRequest(Request.Method.POST, "http://192.168.0.2:8080/register", params,
+        return new JsonObjectRequest(Request.Method.POST, "http://192.168.0.3:8080/register", params,
                 response -> {
-                    saveData(response, signUpActivity.getSharedPreferences("Account", 0));
+                    saveData(response, params, signUpActivity.getSharedPreferences("Account", 0));
                     userRegistered(signUpActivity);
                 }, error -> {
                     String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
@@ -33,12 +33,13 @@ public class RegisterRequest {
         signUpActivity.finish();
     }
 
-    private void saveData(JSONObject response, SharedPreferences sharedPreferences){
+    private void saveData(JSONObject response, JSONObject params, SharedPreferences sharedPreferences){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
             editor.putInt("id", response.getInt("id"));
             editor.putString("username", response.getString("username"));
             editor.putString("email", response.getString("email"));
+            editor.putString("password", params.getString("password"));
             editor.apply();
         } catch (JSONException e) {
             e.printStackTrace();
