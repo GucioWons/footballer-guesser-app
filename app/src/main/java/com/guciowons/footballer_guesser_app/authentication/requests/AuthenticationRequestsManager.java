@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.guciowons.footballer_guesser_app.authentication.activities.SignUpActivity;
-import com.guciowons.footballer_guesser_app.game.LeaguesActivity;
+import com.guciowons.footballer_guesser_app.game.activities.LeaguesActivity;
 import com.guciowons.footballer_guesser_app.preferences.EncryptedPreferencesGetter;
 
 import org.json.JSONException;

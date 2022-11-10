@@ -1,4 +1,4 @@
-package com.guciowons.footballer_guesser_app.game;
+package com.guciowons.footballer_guesser_app.game.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,10 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.guciowons.footballer_guesser_app.MainActivity;
 import com.guciowons.footballer_guesser_app.R;
+import com.guciowons.footballer_guesser_app.authentication.requests.AuthenticationRequestsManager;
+import com.guciowons.footballer_guesser_app.game.requests.LeagueRequestManager;
 import com.guciowons.footballer_guesser_app.preferences.EncryptedPreferencesGetter;
-
-import org.json.JSONArray;
 
 public class LeaguesActivity extends AppCompatActivity {
     TextView id_textview, username_textview, email_textview;
@@ -25,10 +28,8 @@ public class LeaguesActivity extends AppCompatActivity {
     }
 
     public void loadData(){
-        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
-        SharedPreferences sharedPreferences = encryptedPreferencesGetter.getEncryptedPreferences(LeaguesActivity.this);
-        id_textview.setText(id_textview.getText() + Integer.toString(sharedPreferences.getInt("id", 0)));
-        username_textview.setText(username_textview.getText() + sharedPreferences.getString("username", ""));
-        email_textview.setText(email_textview.getText() + sharedPreferences.getString("email", ""));
+        RequestQueue requestQueue = Volley.newRequestQueue(LeaguesActivity.this);
+        LeagueRequestManager leagueRequestManager = new LeagueRequestManager();
+        requestQueue.add(leagueRequestManager.getLeaguesRequest(LeaguesActivity.this));
     }
 }
