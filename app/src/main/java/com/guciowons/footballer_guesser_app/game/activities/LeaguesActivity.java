@@ -11,11 +11,17 @@ import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.MainActivity;
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.authentication.requests.AuthenticationRequestsManager;
+import com.guciowons.footballer_guesser_app.game.entities.League;
 import com.guciowons.footballer_guesser_app.game.requests.LeagueRequestManager;
 import com.guciowons.footballer_guesser_app.preferences.EncryptedPreferencesGetter;
 
+import org.json.JSONObject;
+
+import java.util.List;
+
 public class LeaguesActivity extends AppCompatActivity {
     TextView id_textview, username_textview, email_textview;
+    private List<League> leagues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +37,10 @@ public class LeaguesActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(LeaguesActivity.this);
         LeagueRequestManager leagueRequestManager = new LeagueRequestManager();
         requestQueue.add(leagueRequestManager.getLeaguesRequest(LeaguesActivity.this));
+    }
+
+    public void setLeagues(List<League> leagues){
+        this.leagues = leagues;
+        System.out.println(leagues.get(1).getName());
     }
 }
