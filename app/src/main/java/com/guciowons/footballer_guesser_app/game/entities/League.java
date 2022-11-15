@@ -1,19 +1,25 @@
 package com.guciowons.footballer_guesser_app.game.entities;
 
-public class League {
-    private final Integer id;
-    private final String name;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-    public League(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class League {
+    private Integer id;
+    private String name;
 
     public Integer getId() {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
