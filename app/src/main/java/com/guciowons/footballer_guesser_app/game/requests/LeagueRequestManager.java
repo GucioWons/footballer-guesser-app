@@ -29,6 +29,7 @@ public class LeagueRequestManager {
         return new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
                     activity.setLeagues(convertResponseToLeagues(response));
+                    activity.updateAdapter();
                     activity.getLoadingDialog().dismissAlertDialog();
                 },
                 error -> {
