@@ -1,10 +1,13 @@
 package com.guciowons.footballer_guesser_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKeys;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 
 import com.android.volley.RequestQueue;
@@ -16,58 +19,59 @@ import com.guciowons.footballer_guesser_app.preferences.EncryptedPreferencesGett
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    private Button sign_in_btn, sign_up_btn;
-
     private Integer id;
     private String email, username, password;
+
+    private SharedPreferences account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
+        account = encryptedPreferencesGetter.getEncryptedPreferences(this);
         setContentView(R.layout.activity_main);
-        sign_in_btn = findViewById(R.id.sign_in_btn);
-        sign_up_btn = findViewById(R.id.sign_up_btn);
+        getSupportActionBar().hide();
+
+        loadData();
         authenticateUser();
 
-        sign_in_btn.setOnClickListener(view -> goToSignIn());
-        sign_up_btn.setOnClickListener(view -> goToSignUp());
+        //TODO
+        //Cant get encrypted preferences after reinstall
     }
 
-    public void authenticateUser(){
-        loadData();
-        if(id != 0 || email != null || username != null || password != null){
+    private void loadData(){
+        id = account.getInt("id", 0);
+        email = account.getString("email", null);
+        username = account.getString("username", null);
+        password = account.getString("password", null);
+    }
+
+    private void authenticateUser(){
+        if(id != 0 || email != null || username != null || password != null) {
             RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
             AuthenticationRequestsManager authenticationRequestsManager = new AuthenticationRequestsManager();
             requestQueue.add(authenticationRequestsManager.getAuthenticationRequest(MainActivity.this, getParamsJson(), "login"));
+        }else{
+            closeSplashScreen();
         }
     }
 
-    public void loadData(){
-        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
-        SharedPreferences sharedPreferences = encryptedPreferencesGetter.getEncryptedPreferences(MainActivity.this);
-        id = sharedPreferences.getInt("id", 0);
-        email = sharedPreferences.getString("email", null);
-        username = sharedPreferences.getString("username", null);
-        password = sharedPreferences.getString("password", null);
-    }
-
-    public JSONObject getParamsJson(){
+    private JSONObject getParamsJson(){
         HashMap<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
         return new JSONObject(params);
     }
 
-    public void goToSignIn(){
-        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToSignUp(){
-        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-        startActivity(intent);
+    private void closeSplashScreen() {
+        new Handler().postDelayed(() -> {
+            startActivity(new Intent(MainActivity.this, LandingActivity.class));
+            finish();
+        }, 2000);
     }
 }

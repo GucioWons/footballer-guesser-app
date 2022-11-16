@@ -39,15 +39,18 @@ public class SignInActivity extends AppCompatActivity {
     public void processLoginForm(){
         EmailValidator emailValidator = new EmailValidator();
         PasswordValidator passwordValidator = new PasswordValidator();
-        if(emailValidator.validateEmail(emailEt) &&
-                passwordValidator.validatePassword(passwordEt)){
-            RequestQueue requestQueue = Volley.newRequestQueue(SignInActivity.this);
-            AuthenticationRequestsManager authenticationRequestsManager = new AuthenticationRequestsManager();
-            requestQueue.add(authenticationRequestsManager.getAuthenticationRequest(SignInActivity.this, getParamsJson(), "login"));
+        if(emailValidator.validateEmail(emailEt) && passwordValidator.validatePassword(passwordEt)){
+            authenticateUser();
         }
     }
 
-    public JSONObject getParamsJson(){
+    private void authenticateUser(){
+        RequestQueue requestQueue = Volley.newRequestQueue(SignInActivity.this);
+        AuthenticationRequestsManager authenticationRequestsManager = new AuthenticationRequestsManager();
+        requestQueue.add(authenticationRequestsManager.getAuthenticationRequest(SignInActivity.this, getParamsJson(), "login"));
+    }
+
+    private JSONObject getParamsJson(){
         HashMap<String, String> params = new HashMap<>();
         params.put("email", emailEt.getText().toString());
         params.put("password", passwordEt.getText().toString());

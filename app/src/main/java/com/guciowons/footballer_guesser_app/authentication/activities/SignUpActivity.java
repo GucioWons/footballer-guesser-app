@@ -49,16 +49,19 @@ public class SignUpActivity extends AppCompatActivity {
         UsernameValidator usernameValidator = new UsernameValidator();
         EmailValidator emailValidator = new EmailValidator();
         PasswordAndConfirmValidator passwordAndConfirmValidator = new PasswordAndConfirmValidator();
-        if(usernameValidator.validateUsername(usernameEt) &&
-                emailValidator.validateEmail(emailEt) &&
+        if(usernameValidator.validateUsername(usernameEt) && emailValidator.validateEmail(emailEt) &&
                 passwordAndConfirmValidator.validatePasswordAndConfirm(passwordEt, confirmEt)){
-            RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
-            AuthenticationRequestsManager authenticationRequestsManager = new AuthenticationRequestsManager();
-            requestQueue.add(authenticationRequestsManager.getAuthenticationRequest(SignUpActivity.this, getParamsJson(), "register"));
+            registerUser();
         }
     }
 
-    public JSONObject getParamsJson(){
+    private void registerUser(){
+        RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
+        AuthenticationRequestsManager authenticationRequestsManager = new AuthenticationRequestsManager();
+        requestQueue.add(authenticationRequestsManager.getAuthenticationRequest(SignUpActivity.this, getParamsJson(), "register"));
+    }
+
+    private JSONObject getParamsJson(){
         HashMap<String, String> params = new HashMap<>();
         params.put("username", usernameEt.getText().toString());
         params.put("email", emailEt.getText().toString());

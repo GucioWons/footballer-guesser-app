@@ -24,7 +24,7 @@ import java.util.stream.StreamSupport;
 
 public class LeagueRequestManager {
     public JsonArrayRequest getLeaguesRequest(LeaguesActivity activity){
-        String url = "http://192.168.0.3:8080/leagues";
+        String url = "http://192.168.0.2:8080/leagues";
         return new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> activity.setLeagues(convertResponseToLeagues(response)), error -> {
             String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
