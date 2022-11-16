@@ -1,6 +1,9 @@
 package com.guciowons.footballer_guesser_app.game.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,10 +20,12 @@ import com.guciowons.footballer_guesser_app.preferences.EncryptedPreferencesGett
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LeaguesActivity extends AppCompatActivity {
     private List<League> leagues;
+    private RecyclerView leaguesRecycler;
     private LoadingDialog loadingDialog;
 
     @Override
@@ -29,7 +34,20 @@ public class LeaguesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leagues);
         loadingDialog = new LoadingDialog(LeaguesActivity.this);
         loadingDialog.loadingAlertDialog();
-        loadData();
+        leaguesRecycler = findViewById(R.id.leagues_recycler);
+        leagues = new ArrayList<>();
+        leagues.add(new League(1, "Bundesliga"));
+        leagues.add(new League(2, "Premier League"));
+        setAdapter();
+//        loadData();
+    }
+
+    private void setAdapter(){
+        LeaguesAdapter leaguesAdapter = new LeaguesAdapter(leagues);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        leaguesRecycler.setLayoutManager(layoutManager);
+        leaguesRecycler.setItemAnimator(new DefaultItemAnimator());
+        leaguesRecycler.setAdapter(leaguesAdapter);
     }
 
     public void loadData(){
@@ -40,7 +58,6 @@ public class LeaguesActivity extends AppCompatActivity {
 
     public void setLeagues(List<League> leagues){
         this.leagues = leagues;
-        System.out.println(leagues.get(1).getName());
     }
 
     public LoadingDialog getLoadingDialog(){
