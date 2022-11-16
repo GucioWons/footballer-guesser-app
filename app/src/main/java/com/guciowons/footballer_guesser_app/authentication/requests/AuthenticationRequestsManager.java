@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 
 public class AuthenticationRequestsManager {
     public JsonObjectRequest getAuthenticationRequest(AppCompatActivity activity, JSONObject params, String endpoint){
-        String url = "http://192.168.0.3:8080/" + endpoint;
+        String url = "http://192.168.0.2:8080/" + endpoint;
         return new JsonObjectRequest(Request.Method.POST, url, params,
                 response -> {
                     EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
