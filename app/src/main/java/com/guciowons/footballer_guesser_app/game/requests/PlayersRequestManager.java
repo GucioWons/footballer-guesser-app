@@ -5,8 +5,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.guciowons.footballer_guesser_app.game.activities.GameActivity;
-import com.guciowons.footballer_guesser_app.game.activities.LeaguesActivity;
-import com.guciowons.footballer_guesser_app.game.entities.League;
 import com.guciowons.footballer_guesser_app.game.entities.Player;
 
 import org.json.JSONArray;
@@ -19,11 +17,12 @@ import java.util.List;
 
 public class PlayersRequestManager {
     public JsonArrayRequest getPlayersRequest(GameActivity activity, Integer leagueId){
-        String url = "http://192.168.0.2:8080/footballers/club/" + leagueId;
+        String url = "http://192.168.0.2:8080/footballers/league/" + leagueId;
         return new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
-//                    activity.setPlayers(convertResponseToPlayers(response));
-//                    activity.updateAdapter();
+                    activity.setPlayers(convertResponseToPlayers(response));
+                    activity.updateAdapter();
+                    activity.getLoadingDialog().dismissAlertDialog();
                 },
                 error -> {
                     String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
