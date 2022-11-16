@@ -22,8 +22,8 @@ public class PlayersRequestManager {
         String url = "http://192.168.0.2:8080/footballers/club/" + leagueId;
         return new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
-                    activity.setPlayers(convertResponseToPlayers(response));
-                    activity.updateAdapter();
+//                    activity.setPlayers(convertResponseToPlayers(response));
+//                    activity.updateAdapter();
                 },
                 error -> {
                     String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);

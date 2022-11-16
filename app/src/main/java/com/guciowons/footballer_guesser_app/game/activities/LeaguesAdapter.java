@@ -15,17 +15,25 @@ import java.util.List;
 
 public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.MyViewHolder> {
     private List<League> leagues;
+    private RecyclerViewClickListener listener;
 
-    public LeaguesAdapter(List<League> leagues){
+    public LeaguesAdapter(List<League> leagues, RecyclerViewClickListener listener){
         this.leagues = leagues;
+        this.listener = listener;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nameText;
 
         public MyViewHolder(final View view){
             super(view);
             nameText = view.findViewById(R.id.leagues_text);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            listener.onClick(view, getAdapterPosition());
         }
     }
 
@@ -45,5 +53,9 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.MyViewHo
     @Override
     public int getItemCount() {
         return leagues.size();
+    }
+
+    public interface RecyclerViewClickListener{
+        void onClick(View view, int position);
     }
 }
