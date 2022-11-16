@@ -20,16 +20,15 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class LeaguesActivity extends AppCompatActivity {
-    TextView id_textview, username_textview, email_textview;
     private List<League> leagues;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leagues);
-        id_textview = findViewById(R.id.id_textview);
-        username_textview = findViewById(R.id.username_textview);
-        email_textview = findViewById(R.id.email_textview);
+        loadingDialog = new LoadingDialog(LeaguesActivity.this);
+        loadingDialog.loadingAlertDialog();
         loadData();
     }
 
@@ -42,5 +41,9 @@ public class LeaguesActivity extends AppCompatActivity {
     public void setLeagues(List<League> leagues){
         this.leagues = leagues;
         System.out.println(leagues.get(1).getName());
+    }
+
+    public LoadingDialog getLoadingDialog(){
+        return loadingDialog;
     }
 }

@@ -6,38 +6,5 @@
     android:layout_height="match_parent"
     tools:context=".game.activities.LeaguesActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05"
-        android:layout_marginHorizontal="20dp">
-
-        <TextView
-            android:id="@+id/id_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Id: " />
-
-        <TextView
-            android:id="@+id/username_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Username: " />
-
-        <TextView
-            android:id="@+id/email_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Email: " />
-    </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
