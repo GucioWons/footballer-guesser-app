@@ -16,6 +16,7 @@ import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.authentication.requests.AuthenticationRequestsManager;
 import com.guciowons.footballer_guesser_app.game.entities.League;
 import com.guciowons.footballer_guesser_app.game.requests.LeagueRequestManager;
+import com.guciowons.footballer_guesser_app.game.requests.PlayersRequestManager;
 import com.guciowons.footballer_guesser_app.preferences.EncryptedPreferencesGetter;
 
 import org.json.JSONObject;
@@ -27,7 +28,6 @@ public class LeaguesActivity extends AppCompatActivity {
     private List<League> leagues;
     private RecyclerView leaguesRecycler;
     private LoadingDialog loadingDialog;
-    private LeaguesAdapter leaguesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class LeaguesActivity extends AppCompatActivity {
     }
 
     public void updateAdapter(){
-        leaguesAdapter = new LeaguesAdapter(leagues);
+        LeaguesAdapter leaguesAdapter = new LeaguesAdapter(leagues);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         leaguesRecycler.setLayoutManager(layoutManager);
         leaguesRecycler.setItemAnimator(new DefaultItemAnimator());
