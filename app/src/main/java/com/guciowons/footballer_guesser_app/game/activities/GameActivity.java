@@ -12,22 +12,26 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
-import com.guciowons.footballer_guesser_app.game.entities.League;
 import com.guciowons.footballer_guesser_app.game.entities.Player;
-import com.guciowons.footballer_guesser_app.game.requests.LeagueRequestManager;
 import com.guciowons.footballer_guesser_app.game.requests.PlayersRequestManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
-    private String name;
-    private Integer id;
-    private TextView gameText;
-//    private RecyclerView playersRecycler;
-    private List<Player> players;
     private LoadingDialog loadingDialog;
     private SearchDialog searchDialog;
+
+    private HistoryAdapter historyAdapter;
+    private RecyclerView historyRecycler;
     private Button button;
+    private TextView gameText;
+
+    private String name;
+    private Integer id;
+    private Player answer;
+    private List<Player> history;
+    private List<Player> players;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +39,21 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         gameText = findViewById(R.id.game_text);
         button = findViewById(R.id.search_button);
+        historyRecycler = findViewById(R.id.history_recycler);
         button.setOnClickListener(view -> startSearchDialog());
+        history = new ArrayList<>();
+        updateAdapter();
         getExtras();
         gameText.setText(name);
         getPlayersData(id);
+    }
+
+    private void updateAdapter(){
+        historyAdapter = new HistoryAdapter(history);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        historyRecycler.setLayoutManager(layoutManager);
+        historyRecycler.setItemAnimator(new DefaultItemAnimator());
+        historyRecycler.setAdapter(historyAdapter);
     }
 
     private void getExtras(){
@@ -64,6 +79,14 @@ public class GameActivity extends AppCompatActivity {
         loadingDialog.show();
     }
 
+    public void setAnswer(Player answer){
+        this.answer = answer;
+    }
+
+    public Player getAnswer(){
+        return answer;
+    }
+
     public void setPlayers(List<Player> players){
         this.players = players;
     }
@@ -72,7 +95,9 @@ public class GameActivity extends AppCompatActivity {
         loadingDialog.dismiss();
     }
 
-    public List<Player> getPlayers(){
-        return players;
+    public void addPlayerToHistory(Player player){
+        players.remove(player);
+        historyAdapter.addPlayer(player);
     }
+
 }

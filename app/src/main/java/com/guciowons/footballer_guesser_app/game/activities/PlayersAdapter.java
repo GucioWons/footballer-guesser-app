@@ -13,31 +13,24 @@ import com.guciowons.footballer_guesser_app.game.entities.Player;
 
 import java.util.List;
 
-public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.MyViewHolder>{
+public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder>{
     private List<Player> players;
+    private RecyclerViewClickListener listener;
 
-    public PlayersAdapter(List<Player> players){
+    public PlayersAdapter(List<Player> players, RecyclerViewClickListener listener){
         this.players = players;
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView nameText;
-
-        public MyViewHolder(final View view){
-            super(view);
-            nameText = view.findViewById(R.id.player_text);
-        }
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public PlayersAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PlayersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View gameView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_players, parent, false);
-        return new PlayersAdapter.MyViewHolder(gameView);
+        return new PlayersViewHolder(gameView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlayersAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlayersViewHolder holder, int position) {
         String name = players.get(position).getName();
         holder.nameText.setText(name);
     }
@@ -50,5 +43,28 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.MyViewHo
     public void setFilteredList(List<Player> filteredList){
         this.players = filteredList;
         notifyDataSetChanged();
+    }
+
+    public Player getPlayer(Integer position){
+        return players.get(position);
+    }
+
+    public class PlayersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private TextView nameText;
+
+        public PlayersViewHolder(final View view){
+            super(view);
+            nameText = view.findViewById(R.id.player_text);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            listener.onClick(view, getAdapterPosition());
+        }
+    }
+
+    public interface RecyclerViewClickListener{
+        void onClick(View view, int position);
     }
 }

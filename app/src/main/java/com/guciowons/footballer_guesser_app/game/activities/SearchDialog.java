@@ -1,6 +1,5 @@
 package com.guciowons.footballer_guesser_app.game.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.view.LayoutInflater;
@@ -24,6 +23,7 @@ public class SearchDialog {
     private PlayersAdapter playersAdapter;
     private SearchView searchView;
     private Dialog dialog;
+    private PlayersAdapter.RecyclerViewClickListener listener;
 
     public SearchDialog(GameActivity activity, List<Player> players) {
         this.activity = activity;
@@ -68,10 +68,18 @@ public class SearchDialog {
     }
 
     private void updateAdapter(){
-        playersAdapter = new PlayersAdapter(players);
+        setOnClickListener();
+        playersAdapter = new PlayersAdapter(players, listener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity.getApplicationContext());
         searchRecycler.setLayoutManager(layoutManager);
         searchRecycler.setItemAnimator(new DefaultItemAnimator());
         searchRecycler.setAdapter(playersAdapter);
+    }
+
+    private void setOnClickListener(){
+        listener = (view, position) -> {
+            activity.addPlayerToHistory(playersAdapter.getPlayer(position));
+            dialog.dismiss();
+        };
     }
 }
