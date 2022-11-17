@@ -13,7 +13,7 @@ import com.guciowons.footballer_guesser_app.game.entities.League;
 
 import java.util.List;
 
-public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.MyViewHolder> {
+public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeaguesViewHolder> {
     private List<League> leagues;
     private RecyclerViewClickListener listener;
 
@@ -22,10 +22,28 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.MyViewHo
         this.listener = listener;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    @NonNull
+    @Override
+    public LeaguesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View leagueView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_leagues, parent, false);
+        return new LeaguesViewHolder(leagueView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull LeaguesViewHolder holder, int position) {
+        String name = leagues.get(position).getName();
+        holder.nameText.setText(name);
+    }
+
+    @Override
+    public int getItemCount() {
+        return leagues.size();
+    }
+
+    public class LeaguesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nameText;
 
-        public MyViewHolder(final View view){
+        public LeaguesViewHolder(final View view){
             super(view);
             nameText = view.findViewById(R.id.leagues_text);
             view.setOnClickListener(this);
@@ -35,24 +53,6 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.MyViewHo
         public void onClick(View view) {
             listener.onClick(view, getAdapterPosition());
         }
-    }
-
-    @NonNull
-    @Override
-    public LeaguesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View leagueView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_leagues, parent, false);
-        return new MyViewHolder(leagueView);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull LeaguesAdapter.MyViewHolder holder, int position) {
-        String name = leagues.get(position).getName();
-        holder.nameText.setText(name);
-    }
-
-    @Override
-    public int getItemCount() {
-        return leagues.size();
     }
 
     public interface RecyclerViewClickListener{
