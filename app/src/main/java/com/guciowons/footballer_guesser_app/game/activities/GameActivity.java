@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -25,6 +26,8 @@ public class GameActivity extends AppCompatActivity {
     private RecyclerView playersRecycler;
     private List<Player> players;
     private LoadingDialog loadingDialog;
+    private SearchDialog searchDialog;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         gameText = findViewById(R.id.game_text);
         playersRecycler = findViewById(R.id.players_recycler);
-
+        button = findViewById(R.id.search_button);
+        button.setOnClickListener(view -> startSearchDialog());
         getExtras();
         gameText.setText(name);
         getPlayersData(id);
@@ -49,6 +53,11 @@ public class GameActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(GameActivity.this);
         PlayersRequestManager playersRequestManager = new PlayersRequestManager();
         requestQueue.add(playersRequestManager.getPlayersRequest(GameActivity.this, id));
+    }
+
+    public void startSearchDialog(){
+        searchDialog = new SearchDialog(GameActivity.this);
+        searchDialog.show();
     }
 
     private void startLoadingDialog(){
