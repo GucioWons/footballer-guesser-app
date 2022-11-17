@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.guciowons.footballer_guesser_app.authentication.activities.SignUpActivity;
-import com.guciowons.footballer_guesser_app.game.LeaguesActivity;
+import com.guciowons.footballer_guesser_app.game.activities.LeaguesActivity;
 import com.guciowons.footballer_guesser_app.preferences.EncryptedPreferencesGetter;
 
 import org.json.JSONException;
@@ -19,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 
 public class AuthenticationRequestsManager {
     public JsonObjectRequest getAuthenticationRequest(AppCompatActivity activity, JSONObject params, String endpoint){
-        String url = "http://192.168.0.3:8080/" + endpoint;
+        String url = "http://192.168.0.2:8080/" + endpoint;
         return new JsonObjectRequest(Request.Method.POST, url, params,
                 response -> {
                     EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();

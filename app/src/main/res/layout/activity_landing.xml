@@ -4,33 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".game.activities.LeaguesActivity">
+    tools:context=".LandingActivity">
 
-    <TextView
-        android:id="@+id/avaible_leagues_tex"
+    <Button
+        android:id="@+id/sign_in_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Avaible leagues"
-        android:textColor="@color/black"
-        android:textSize="30sp"
+        android:text="Sign in"
+        android:textSize="25sp"
+        android:padding="10dp"
+        android:layout_marginHorizontal="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.386"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/leagues_recycler"
+    <Button
+        android:id="@+id/sign_up_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textSize="25sp"
+        android:padding="10dp"
+        android:layout_marginHorizontal="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avaible_leagues_tex"
-        app:layout_constraintVertical_bias="0"
-        android:layout_marginHorizontal="10dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_btn"
+        app:layout_constraintVertical_bias="0.228"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
