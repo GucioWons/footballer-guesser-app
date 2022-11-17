@@ -46,4 +46,9 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.MyViewHo
     public int getItemCount() {
         return players.size();
     }
+
+    public void setFilteredList(List<Player> filteredList){
+        this.players = filteredList;
+        notifyDataSetChanged();
+    }
 }

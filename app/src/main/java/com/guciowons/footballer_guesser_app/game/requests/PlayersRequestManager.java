@@ -26,7 +26,6 @@ public class PlayersRequestManager {
 
     private void sendPlayersToActivity(GameActivity activity, JSONArray response){
         activity.setPlayers(convertResponseToPlayers(response));
-        activity.updateAdapter();
         activity.endLoadingDialog();
     }
 

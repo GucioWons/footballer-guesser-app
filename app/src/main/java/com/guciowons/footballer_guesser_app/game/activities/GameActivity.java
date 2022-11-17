@@ -23,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
     private String name;
     private Integer id;
     private TextView gameText;
-    private RecyclerView playersRecycler;
+//    private RecyclerView playersRecycler;
     private List<Player> players;
     private LoadingDialog loadingDialog;
     private SearchDialog searchDialog;
@@ -34,7 +34,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         gameText = findViewById(R.id.game_text);
-        playersRecycler = findViewById(R.id.players_recycler);
         button = findViewById(R.id.search_button);
         button.setOnClickListener(view -> startSearchDialog());
         getExtras();
@@ -56,7 +55,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void startSearchDialog(){
-        searchDialog = new SearchDialog(GameActivity.this);
+        searchDialog = new SearchDialog(GameActivity.this, players);
         searchDialog.show();
     }
 
@@ -65,19 +64,15 @@ public class GameActivity extends AppCompatActivity {
         loadingDialog.show();
     }
 
-    public void updateAdapter(){
-        PlayersAdapter playersAdapter = new PlayersAdapter(players);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        playersRecycler.setLayoutManager(layoutManager);
-        playersRecycler.setItemAnimator(new DefaultItemAnimator());
-        playersRecycler.setAdapter(playersAdapter);
-    }
-
     public void setPlayers(List<Player> players){
         this.players = players;
     }
 
     public void endLoadingDialog(){
         loadingDialog.dismiss();
+    }
+
+    public List<Player> getPlayers(){
+        return players;
     }
 }
