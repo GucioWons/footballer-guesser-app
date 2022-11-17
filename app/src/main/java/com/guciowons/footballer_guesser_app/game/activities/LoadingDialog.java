@@ -15,7 +15,7 @@ public class LoadingDialog {
         this.activity = activity;
     }
 
-    public void loadingAlertDialog(){
+    public void show(){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_loading, null));
@@ -25,7 +25,7 @@ public class LoadingDialog {
         dialog.show();
     }
 
-    public void dismissAlertDialog(){
+    public void dismiss(){
         dialog.dismiss();
     }
 }

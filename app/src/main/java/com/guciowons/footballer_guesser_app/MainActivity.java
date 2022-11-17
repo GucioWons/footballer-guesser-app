@@ -21,24 +21,25 @@ public class MainActivity extends AppCompatActivity {
     private Integer id;
     private String email, username, password;
 
-    private SharedPreferences account;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
-        account = encryptedPreferencesGetter.getEncryptedPreferences(this);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-        loadData();
+        loadEncryptedPreferences();
         authenticateUser();
 
         //TODO
         //Cant get encrypted preferences after reinstall
     }
 
-    private void loadData(){
+    private void loadEncryptedPreferences(){
+        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
+        loadData(encryptedPreferencesGetter.getEncryptedPreferences(this));
+    }
+
+    private void loadData(SharedPreferences account){
         id = account.getInt("id", 0);
         email = account.getString("email", null);
         username = account.getString("username", null);
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         return new JSONObject(params);
     }
 
-    private void closeSplashScreen() {
+    public void closeSplashScreen() {
         new Handler().postDelayed(() -> {
             startActivity(new Intent(MainActivity.this, LandingActivity.class));
             finish();

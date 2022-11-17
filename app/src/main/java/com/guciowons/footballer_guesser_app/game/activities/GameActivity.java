@@ -19,6 +19,8 @@ import com.guciowons.footballer_guesser_app.game.requests.PlayersRequestManager;
 import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
+    private String name;
+    private Integer id;
     private TextView gameText;
     private RecyclerView playersRecycler;
     private List<Player> players;
@@ -28,22 +30,30 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        loadingDialog = new LoadingDialog(GameActivity.this);
-        loadingDialog.loadingAlertDialog();
         gameText = findViewById(R.id.game_text);
-
-        Bundle extras = getIntent().getExtras();
-        gameText.setText(extras.getString("name"));
-
         playersRecycler = findViewById(R.id.players_recycler);
 
-        loadData(extras.getInt("id"));
+        getExtras();
+        gameText.setText(name);
+        getPlayersData(id);
     }
 
-    public void loadData(Integer id){
+    private void getExtras(){
+        Bundle extras = getIntent().getExtras();
+        name = extras.getString("name");
+        id = extras.getInt("id");
+    }
+
+    private void getPlayersData(Integer id){
+        startLoadingDialog();
         RequestQueue requestQueue = Volley.newRequestQueue(GameActivity.this);
         PlayersRequestManager playersRequestManager = new PlayersRequestManager();
         requestQueue.add(playersRequestManager.getPlayersRequest(GameActivity.this, id));
+    }
+
+    private void startLoadingDialog(){
+        loadingDialog = new LoadingDialog(GameActivity.this);
+        loadingDialog.show();
     }
 
     public void updateAdapter(){
@@ -58,7 +68,7 @@ public class GameActivity extends AppCompatActivity {
         this.players = players;
     }
 
-    public LoadingDialog getLoadingDialog(){
-        return loadingDialog;
+    public void endLoadingDialog(){
+        loadingDialog.dismiss();
     }
 }

@@ -5,6 +5,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.guciowons.footballer_guesser_app.game.activities.LeaguesActivity;
@@ -27,27 +28,33 @@ public class LeagueRequestManager {
     public JsonArrayRequest getLeaguesRequest(LeaguesActivity activity){
         String url = "http://192.168.0.2:8080/leagues";
         return new JsonArrayRequest(Request.Method.GET, url, null,
-                response -> {
-                    activity.setLeagues(convertResponseToLeagues(response));
-                    activity.updateAdapter();
-                    activity.getLoadingDialog().dismissAlertDialog();
-                },
-                error -> {
-                    String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
-                    Toast.makeText(activity, body, Toast.LENGTH_SHORT).show();
-        });
+                response -> sendLeaguesToActivity(activity, response),
+                error -> showError(error, activity));
+    }
+
+    private void sendLeaguesToActivity(LeaguesActivity activity, JSONArray response){
+        activity.setLeagues(convertResponseToLeagues(response));
+        activity.updateAdapter();
+        activity.endLoadingDialog();
     }
 
     private List<League> convertResponseToLeagues(JSONArray response){
         List<League> leagues = new ArrayList<>();
         for(int i = 0; i<response.length(); i++){
             try {
-                League league = new League(response.getJSONObject(i).getInt("id"), response.getJSONObject(i).getString("name"));
+                League league = new League(response.getJSONObject(i).getInt("id"),
+                        response.getJSONObject(i).getString("name"));
                 leagues.add(league);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         return leagues;
+    }
+
+    private void showError(VolleyError error, LeaguesActivity activity){
+        activity.endLoadingDialog();
+        String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+        Toast.makeText(activity, body, Toast.LENGTH_SHORT).show();
     }
 }

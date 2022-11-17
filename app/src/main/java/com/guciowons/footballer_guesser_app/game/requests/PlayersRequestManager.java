@@ -3,6 +3,7 @@ package com.guciowons.footballer_guesser_app.game.requests;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.guciowons.footballer_guesser_app.game.activities.GameActivity;
 import com.guciowons.footballer_guesser_app.game.entities.Player;
@@ -19,15 +20,14 @@ public class PlayersRequestManager {
     public JsonArrayRequest getPlayersRequest(GameActivity activity, Integer leagueId){
         String url = "http://192.168.0.2:8080/footballers/league/" + leagueId;
         return new JsonArrayRequest(Request.Method.GET, url, null,
-                response -> {
-                    activity.setPlayers(convertResponseToPlayers(response));
-                    activity.updateAdapter();
-                    activity.getLoadingDialog().dismissAlertDialog();
-                },
-                error -> {
-                    String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
-                    Toast.makeText(activity, body, Toast.LENGTH_SHORT).show();
-                });
+                response -> sendPlayersToActivity(activity, response),
+                error -> showError(error, activity));
+    }
+
+    private void sendPlayersToActivity(GameActivity activity, JSONArray response){
+        activity.setPlayers(convertResponseToPlayers(response));
+        activity.updateAdapter();
+        activity.endLoadingDialog();
     }
 
     private List<Player> convertResponseToPlayers(JSONArray response){
@@ -48,5 +48,11 @@ public class PlayersRequestManager {
             }
         }
         return players;
+    }
+
+    private void showError(VolleyError error, GameActivity activity){
+        activity.endLoadingDialog();
+        String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+        Toast.makeText(activity, body, Toast.LENGTH_SHORT).show();
     }
 }

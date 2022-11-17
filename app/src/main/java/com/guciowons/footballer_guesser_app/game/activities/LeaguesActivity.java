@@ -36,18 +36,24 @@ public class LeaguesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leagues);
-        loadingDialog = new LoadingDialog(LeaguesActivity.this);
-        loadingDialog.loadingAlertDialog();
         leaguesRecycler = findViewById(R.id.leagues_recycler);
-
-
-        loadData();
+        getLeaguesData();
     }
 
-    public void loadData(){
+    private void getLeaguesData(){
+        startLoadingDialog();
         RequestQueue requestQueue = Volley.newRequestQueue(LeaguesActivity.this);
         LeagueRequestManager leagueRequestManager = new LeagueRequestManager();
         requestQueue.add(leagueRequestManager.getLeaguesRequest(LeaguesActivity.this));
+    }
+
+    private void startLoadingDialog(){
+        loadingDialog = new LoadingDialog(LeaguesActivity.this);
+        loadingDialog.show();
+    }
+
+    public void endLoadingDialog(){
+        loadingDialog.dismiss();
     }
 
     public void updateAdapter(){
@@ -60,22 +66,15 @@ public class LeaguesActivity extends AppCompatActivity {
     }
 
     private void setOnClickListener() {
-        listener = new LeaguesAdapter.RecyclerViewClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                intent.putExtra("id", leagues.get(position).getId());
-                intent.putExtra("name", leagues.get(position).getName());
-                startActivity(intent);
-            }
+        listener = (view, position) -> {
+            Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+            intent.putExtra("id", leagues.get(position).getId());
+            intent.putExtra("name", leagues.get(position).getName());
+            startActivity(intent);
         };
     }
 
     public void setLeagues(List<League> leagues){
         this.leagues = leagues;
-    }
-
-    public LoadingDialog getLoadingDialog(){
-        return loadingDialog;
     }
 }
