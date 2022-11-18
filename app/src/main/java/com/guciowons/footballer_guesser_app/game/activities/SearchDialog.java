@@ -78,7 +78,7 @@ public class SearchDialog {
 
     private void setOnClickListener(){
         listener = (view, position) -> {
-            activity.addPlayerToHistory(playersAdapter.getPlayer(position));
+            activity.checkAnswer(playersAdapter.getPlayer(position));
             dialog.dismiss();
         };
     }

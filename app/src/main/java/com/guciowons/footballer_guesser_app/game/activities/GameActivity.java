@@ -25,10 +25,10 @@ public class GameActivity extends AppCompatActivity {
     private HistoryAdapter historyAdapter;
     private RecyclerView historyRecycler;
     private Button button;
-    private TextView gameText;
+    private TextView gameText, hintNameText, hintCountryText, hintClubText, hintNumberText;
 
-    private String name;
-    private Integer id;
+    private String name, hintName, hintCountry, hintClub;
+    private Integer id, hintNumber;
     private Player answer;
     private List<Player> history;
     private List<Player> players;
@@ -38,6 +38,10 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         gameText = findViewById(R.id.game_text);
+        hintNameText = findViewById(R.id.hint_name_text);
+        hintClubText = findViewById(R.id.hint_club_text);
+        hintCountryText = findViewById(R.id.hint_country_text);
+        hintNumberText = findViewById(R.id.hint_number_text);
         button = findViewById(R.id.search_button);
         historyRecycler = findViewById(R.id.history_recycler);
         button.setOnClickListener(view -> startSearchDialog());
@@ -95,6 +99,22 @@ public class GameActivity extends AppCompatActivity {
         loadingDialog.dismiss();
     }
 
+    public void checkAnswer(Player player){
+        if(player.equals(answer)){
+            hintNameText.setText(player.getName());
+        }else{
+            if(player.getClub().equals(answer.getClub())){
+                hintClubText.setText(player.getClubShortcut());
+            }
+            if(player.getNationality().equals(answer.getNationality())){
+                hintCountryText.setText(player.getNationality());
+            }
+            if(player.getNumber() == answer.getNumber()){
+                hintNumberText.setText(player.getNumber().toString());
+            }
+        }
+        addPlayerToHistory(player);
+    }
     public void addPlayerToHistory(Player player){
         players.remove(player);
         historyAdapter.addPlayer(player);
