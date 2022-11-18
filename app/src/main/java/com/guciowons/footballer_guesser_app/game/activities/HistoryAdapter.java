@@ -29,8 +29,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        String name = players.get(position).getName();
-        holder.nameText.setText(name);
+        Player player = players.get(position);
+        holder.nameText.setText(player.getName());
+        holder.numberText.setText(player.getNumber().toString());
+        holder.countryText.setText(player.getNationality());
+        holder.clubText.setText(player.getClubShortcut());
     }
 
     @Override
@@ -44,11 +47,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder{
-        private TextView nameText;
+        private TextView nameText, countryText, numberText, clubText;
 
         public HistoryViewHolder(final View view){
             super(view);
-            nameText = view.findViewById(R.id.history_text);
+            nameText = view.findViewById(R.id.history_name_text);
+            numberText = view.findViewById(R.id.history_number_text);
+            countryText = view.findViewById(R.id.history_country_text);
+            clubText = view.findViewById(R.id.history_club_text);
         }
     }
 }
