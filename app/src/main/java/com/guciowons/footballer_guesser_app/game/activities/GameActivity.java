@@ -5,14 +5,18 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.game.entities.Player;
+import com.guciowons.footballer_guesser_app.game.requests.FlagRequestManager;
+import com.guciowons.footballer_guesser_app.game.requests.ImageRequestManager;
 import com.guciowons.footballer_guesser_app.game.requests.PlayersRequestManager;
 
 import java.util.ArrayList;
@@ -21,11 +25,13 @@ import java.util.List;
 public class GameActivity extends AppCompatActivity {
     private LoadingDialog loadingDialog;
     private SearchDialog searchDialog;
+    private RequestQueue requestQueue;
 
     private HistoryAdapter historyAdapter;
     private RecyclerView historyRecycler;
     private Button button;
-    private TextView gameText, hintNameText, hintCountryText, hintClubText, hintNumberText, hintPositionText;
+    private TextView gameText, hintNameText, hintNumberText, hintPositionText;
+    private ImageView hintCountryImage, hintClubImage;
 
     private String name, hintName, hintCountry, hintClub, hintPosition;
     private Integer id, hintNumber;
@@ -39,8 +45,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         gameText = findViewById(R.id.game_text);
         hintNameText = findViewById(R.id.hint_name_text);
-        hintClubText = findViewById(R.id.hint_club_text);
-        hintCountryText = findViewById(R.id.hint_country_text);
+        hintClubImage = findViewById(R.id.hint_club_image);
+        hintCountryImage = findViewById(R.id.hint_country_image);
         hintNumberText = findViewById(R.id.hint_number_text);
         hintPositionText = findViewById(R.id.hint_position_text);
         button = findViewById(R.id.search_button);
@@ -69,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void getPlayersData(Integer id){
         startLoadingDialog();
-        RequestQueue requestQueue = Volley.newRequestQueue(GameActivity.this);
+        requestQueue = Volley.newRequestQueue(GameActivity.this);
         PlayersRequestManager playersRequestManager = new PlayersRequestManager();
         requestQueue.add(playersRequestManager.getPlayersRequest(GameActivity.this, id));
     }
@@ -101,18 +107,28 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void checkAnswer(Player player){
+        FlagRequestManager flagRequestManager = new FlagRequestManager();
+        ImageRequestManager imageRequestManager = new ImageRequestManager();
         if(player.equals(answer)){
             hintNameText.setText(player.getName());
-            hintClubText.setText(player.getClubShortcut());
-            hintCountryText.setText(player.getNationality());
+            if(player.getClubUrl().endsWith("svg")){
+                requestQueue.add(imageRequestManager.getSVGRequest(player.getClubUrl(), hintClubImage));
+            }else if(player.getClubUrl().endsWith("png")){
+                requestQueue.add(imageRequestManager.getPngRequest(player.getClubUrl(), hintClubImage, 64, 64));
+            }
+            requestQueue.add(flagRequestManager.getFlagRequest(player.getNationality(), hintCountryImage, requestQueue));
             hintNumberText.setText(player.getNumber().toString());
             hintPositionText.setText(player.getPosition());
         }else{
             if(player.getClub().equals(answer.getClub())){
-                hintClubText.setText(player.getClubShortcut());
+                if(player.getClubUrl().endsWith("svg")){
+                    requestQueue.add(imageRequestManager.getSVGRequest(player.getClubUrl(), hintClubImage));
+                }else if(player.getClubUrl().endsWith("png")){
+                    requestQueue.add(imageRequestManager.getPngRequest(player.getClubUrl(), hintClubImage, 64, 64));
+                }
             }
             if(player.getNationality().equals(answer.getNationality())){
-                hintCountryText.setText(player.getNationality());
+                requestQueue.add(flagRequestManager.getFlagRequest(player.getNationality(), hintCountryImage, requestQueue));
             }
             if(player.getNumber() == answer.getNumber()){
                 hintNumberText.setText(player.getNumber().toString());
@@ -123,9 +139,9 @@ public class GameActivity extends AppCompatActivity {
         }
         addPlayerToHistory(player);
     }
+
     public void addPlayerToHistory(Player player){
         players.remove(player);
         historyAdapter.addPlayer(player);
     }
-
 }

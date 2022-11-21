@@ -14,6 +14,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.game.entities.Player;
+import com.guciowons.footballer_guesser_app.game.requests.FlagRequestManager;
 import com.guciowons.footballer_guesser_app.game.requests.ImageRequestManager;
 
 import java.util.List;
@@ -37,7 +38,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         Player player = players.get(position);
         holder.nameText.setText(player.getName());
         holder.numberText.setText(player.getNumber().toString());
-        holder.countryText.setText(player.getNationality());
         holder.positionText.setText(player.getPosition());
         RequestQueue requestQueue = Volley.newRequestQueue(holder.context);
         ImageRequestManager imageRequestManager = new ImageRequestManager();
@@ -46,6 +46,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         }else if(player.getClubUrl().endsWith("png")){
             requestQueue.add(imageRequestManager.getPngRequest(player.getClubUrl(), holder.clubImage, 64, 64));
         }
+        FlagRequestManager flagRequestManager = new FlagRequestManager();
+        requestQueue.add(flagRequestManager.getFlagRequest(player.getNationality(), holder.countryImage, requestQueue));
     }
 
     @Override
@@ -59,15 +61,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder{
-        private TextView nameText, countryText, numberText, positionText;
-        private ImageView clubImage;
+        private TextView nameText, numberText, positionText;
+        private ImageView clubImage, countryImage;
         private Context context;
 
         public HistoryViewHolder(final View view){
             super(view);
             nameText = view.findViewById(R.id.history_name_text);
             numberText = view.findViewById(R.id.history_number_text);
-            countryText = view.findViewById(R.id.history_country_text);
+            countryImage = view.findViewById(R.id.history_country_image);
             clubImage = view.findViewById(R.id.history_club_image);
             positionText = view.findViewById(R.id.history_position_text);
             context = view.getContext();

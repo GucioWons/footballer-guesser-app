@@ -49,14 +49,10 @@
             app:layout_constraintStart_toStartOf="@id/imageView"
             app:layout_constraintEnd_toEndOf="@+id/imageView"/>
 
-        <TextView
-            android:id="@+id/history_country_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="15dp"
-            android:text="Country"
-            android:textSize="30sp"
+        <ImageView
+            android:id="@+id/history_country_image"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/history_position_text"
             app:layout_constraintStart_toEndOf="@id/imageView"
@@ -68,11 +64,9 @@
             android:layout_height="wrap_content"
             android:text="PO"
             android:textSize="30sp"
-            android:layout_marginHorizontal="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/history_club_image"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/history_country_image"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView

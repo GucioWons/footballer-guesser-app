@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import it.unimi.dsi.util.XoRoShiRo128PlusRandom;
+
 public class PlayersRequestManager {
     public JsonArrayRequest getPlayersRequest(GameActivity activity, Integer leagueId){
         String url = "http://192.168.0.2:8080/footballers/league/" + leagueId;
@@ -28,7 +30,8 @@ public class PlayersRequestManager {
     private void sendPlayersToActivity(GameActivity activity, JSONArray response){
         List<Player> players = convertResponseToPlayers(response);
         activity.setPlayers(players);
-        activity.setAnswer(players.get(ThreadLocalRandom.current().nextInt(0, players.size()) + 1));
+        XoRoShiRo128PlusRandom xoroRandom = new XoRoShiRo128PlusRandom();
+        activity.setAnswer(players.get(xoroRandom.nextInt(players.size())));
         activity.endLoadingDialog();
     }
 

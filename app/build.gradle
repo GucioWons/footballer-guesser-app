@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation "androidx.security:security-crypto:1.0.0"
     implementation 'com.caverock:androidsvg-aar:1.4'
+    implementation 'it.unimi.dsi:dsiutils:2.7.2'
 }

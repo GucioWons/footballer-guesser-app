@@ -19,23 +19,18 @@ public class ImageRequestManager {
     public StringRequest getSVGRequest(String url, ImageView imageView){
         return new StringRequest(url,
                 response -> convertSVGToBitmap(response, imageView, url),
-                error -> {
-
-        });
+                error -> imageView.setImageDrawable(imageView.getContext().getDrawable(R.drawable.badge)));
     }
     private void convertSVGToBitmap(String response, ImageView imageView, String url){
         try {
             SVG svg = SVG.getFromString(response);
-            if(!url.endsWith("/6.svg")) {
-                Picture picture = svg.renderToPicture();
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                    Bitmap bitmap = Bitmap.createBitmap(picture);
-                    imageView.setImageBitmap(bitmap);
-                }
-            }else{
-                imageView.setImageDrawable(imageView.getContext().getDrawable(R.drawable.badge));
+            Picture picture = svg.renderToPicture();
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                Bitmap bitmap = Bitmap.createBitmap(picture);
+                imageView.setImageBitmap(bitmap);
             }
         } catch (SVGParseException e) {
+            imageView.setImageDrawable(imageView.getContext().getDrawable(R.drawable.badge));
         }
     }
 
@@ -43,8 +38,6 @@ public class ImageRequestManager {
         return new ImageRequest(url,
                 response -> imageView.setImageBitmap(response),
                 min, max, ImageView.ScaleType.CENTER, null,
-                error -> {
-
-        });
+                error -> imageView.setImageDrawable(imageView.getContext().getDrawable(R.drawable.badge)));
     }
 }
