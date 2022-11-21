@@ -43,7 +43,8 @@ public class LeagueRequestManager {
         for(int i = 0; i<response.length(); i++){
             try {
                 League league = new League(response.getJSONObject(i).getInt("id"),
-                        response.getJSONObject(i).getString("name"));
+                        response.getJSONObject(i).getString("name"),
+                        response.getJSONObject(i).getString("url"));
                 leagues.add(league);
             } catch (JSONException e) {
                 e.printStackTrace();

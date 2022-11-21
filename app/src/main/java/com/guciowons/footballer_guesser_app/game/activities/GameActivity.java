@@ -25,9 +25,9 @@ public class GameActivity extends AppCompatActivity {
     private HistoryAdapter historyAdapter;
     private RecyclerView historyRecycler;
     private Button button;
-    private TextView gameText, hintNameText, hintCountryText, hintClubText, hintNumberText;
+    private TextView gameText, hintNameText, hintCountryText, hintClubText, hintNumberText, hintPositionText;
 
-    private String name, hintName, hintCountry, hintClub;
+    private String name, hintName, hintCountry, hintClub, hintPosition;
     private Integer id, hintNumber;
     private Player answer;
     private List<Player> history;
@@ -42,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
         hintClubText = findViewById(R.id.hint_club_text);
         hintCountryText = findViewById(R.id.hint_country_text);
         hintNumberText = findViewById(R.id.hint_number_text);
+        hintPositionText = findViewById(R.id.hint_position_text);
         button = findViewById(R.id.search_button);
         historyRecycler = findViewById(R.id.history_recycler);
         button.setOnClickListener(view -> startSearchDialog());
@@ -102,6 +103,10 @@ public class GameActivity extends AppCompatActivity {
     public void checkAnswer(Player player){
         if(player.equals(answer)){
             hintNameText.setText(player.getName());
+            hintClubText.setText(player.getClubShortcut());
+            hintCountryText.setText(player.getNationality());
+            hintNumberText.setText(player.getNumber().toString());
+            hintPositionText.setText(player.getPosition());
         }else{
             if(player.getClub().equals(answer.getClub())){
                 hintClubText.setText(player.getClubShortcut());
@@ -111,6 +116,9 @@ public class GameActivity extends AppCompatActivity {
             }
             if(player.getNumber() == answer.getNumber()){
                 hintNumberText.setText(player.getNumber().toString());
+            }
+            if(player.getPosition().equals(answer.getPosition())){
+                hintPositionText.setText(player.getPosition());
             }
         }
         addPlayerToHistory(player);

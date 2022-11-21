@@ -9,15 +9,17 @@ public class Player {
     private final String position;
     private final String club;
     private final String clubShortcut;
+    private final String clubUrl;
     private final String league;
 
-    public Player(String name, String nationality, Integer number, String position, String club, String clubShortcut, String league) {
+    public Player(String name, String nationality, Integer number, String position, String club, String clubShortcut, String clubUrl, String league) {
         this.name = name;
         this.nationality = nationality;
         this.number = number;
         this.position = position;
         this.club = club;
         this.clubShortcut = clubShortcut;
+        this.clubUrl = clubUrl;
         this.league = league;
     }
 
@@ -43,6 +45,10 @@ public class Player {
 
     public String getClubShortcut() {
         return clubShortcut;
+    }
+
+    public String getClubUrl() {
+        return clubUrl;
     }
 
     public String getLeague() {

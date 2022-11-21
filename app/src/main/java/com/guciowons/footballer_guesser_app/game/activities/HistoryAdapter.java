@@ -1,15 +1,20 @@
 package com.guciowons.footballer_guesser_app.game.activities;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.game.entities.Player;
+import com.guciowons.footballer_guesser_app.game.requests.ImageRequestManager;
 
 import java.util.List;
 
@@ -33,7 +38,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.nameText.setText(player.getName());
         holder.numberText.setText(player.getNumber().toString());
         holder.countryText.setText(player.getNationality());
-        holder.clubText.setText(player.getClubShortcut());
+        holder.positionText.setText(player.getPosition());
+        RequestQueue requestQueue = Volley.newRequestQueue(holder.context);
+        ImageRequestManager imageRequestManager = new ImageRequestManager();
+        if(player.getClubUrl().endsWith("svg")){
+            requestQueue.add(imageRequestManager.getSVGRequest(player.getClubUrl(), holder.clubImage));
+        }else if(player.getClubUrl().endsWith("png")){
+            requestQueue.add(imageRequestManager.getPngRequest(player.getClubUrl(), holder.clubImage, 64, 64));
+        }
     }
 
     @Override
@@ -47,14 +59,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder{
-        private TextView nameText, countryText, numberText, clubText;
+        private TextView nameText, countryText, numberText, positionText;
+        private ImageView clubImage;
+        private Context context;
 
         public HistoryViewHolder(final View view){
             super(view);
             nameText = view.findViewById(R.id.history_name_text);
             numberText = view.findViewById(R.id.history_number_text);
             countryText = view.findViewById(R.id.history_country_text);
-            clubText = view.findViewById(R.id.history_club_text);
+            clubImage = view.findViewById(R.id.history_club_image);
+            positionText = view.findViewById(R.id.history_position_text);
+            context = view.getContext();
         }
     }
 }

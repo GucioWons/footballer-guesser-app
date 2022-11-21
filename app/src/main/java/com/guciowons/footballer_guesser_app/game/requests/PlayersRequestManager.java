@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayersRequestManager {
     public JsonArrayRequest getPlayersRequest(GameActivity activity, Integer leagueId){
@@ -27,7 +28,7 @@ public class PlayersRequestManager {
     private void sendPlayersToActivity(GameActivity activity, JSONArray response){
         List<Player> players = convertResponseToPlayers(response);
         activity.setPlayers(players);
-        activity.setAnswer(players.get(0));
+        activity.setAnswer(players.get(ThreadLocalRandom.current().nextInt(0, players.size()) + 1));
         activity.endLoadingDialog();
     }
 
@@ -42,6 +43,7 @@ public class PlayersRequestManager {
                         playerJson.getString("position"),
                         playerJson.getJSONObject("club").getString("name"),
                         playerJson.getJSONObject("club").getString("shortcut"),
+                        playerJson.getJSONObject("club").getString("url"),
                         playerJson.getJSONObject("club").getJSONObject("league").getString("name"));
                 players.add(player);
             } catch (JSONException e) {

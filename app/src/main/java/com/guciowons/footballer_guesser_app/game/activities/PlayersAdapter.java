@@ -1,15 +1,20 @@
 package com.guciowons.footballer_guesser_app.game.activities;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.game.entities.Player;
+import com.guciowons.footballer_guesser_app.game.requests.ImageRequestManager;
 
 import java.util.List;
 
@@ -31,8 +36,16 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
 
     @Override
     public void onBindViewHolder(@NonNull PlayersViewHolder holder, int position) {
-        String name = players.get(position).getName();
-        holder.nameText.setText(name);
+        Player player = players.get(position);
+        holder.nameText.setText(player.getName());
+        RequestQueue requestQueue = Volley.newRequestQueue(holder.context);
+        ImageRequestManager imageRequestManager = new ImageRequestManager();
+        if(player.getClubUrl().endsWith("svg")){
+            requestQueue.add(imageRequestManager.getSVGRequest(player.getClubUrl(), holder.clubImage));
+        }else if(player.getClubUrl().endsWith("png")){
+            requestQueue.add(imageRequestManager.getPngRequest(player.getClubUrl(), holder.clubImage, 64, 64));
+        }
+
     }
 
     @Override
@@ -51,10 +64,14 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
 
     public class PlayersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nameText;
+        private ImageView clubImage;
+        private Context context;
 
         public PlayersViewHolder(final View view){
             super(view);
             nameText = view.findViewById(R.id.player_text);
+            clubImage = view.findViewById(R.id.player_club_image);
+            context = view.getContext();
             view.setOnClickListener(this);
         }
 
