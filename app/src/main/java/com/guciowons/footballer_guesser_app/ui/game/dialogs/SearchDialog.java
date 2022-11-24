@@ -62,7 +62,8 @@ public class SearchDialog {
 
     private void filterList(String newText){
         playersAdapter.setFilteredList(players.stream().filter(
-                player -> player.getName().toLowerCase().contains(newText.toLowerCase()))
+                player -> player.getName().toLowerCase().contains(newText.toLowerCase()) ||
+                        player.getClub().getName().toLowerCase().contains(newText.toLowerCase()))
                 .collect(Collectors.toList()));
     }
 

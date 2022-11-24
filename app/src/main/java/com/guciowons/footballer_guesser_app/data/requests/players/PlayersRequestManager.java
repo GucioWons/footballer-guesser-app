@@ -1,22 +1,13 @@
-package com.guciowons.footballer_guesser_app.data.requests;
+package com.guciowons.footballer_guesser_app.data.requests.players;
 
-import android.graphics.Bitmap;
-import android.graphics.Picture;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
 import com.guciowons.footballer_guesser_app.data.mappers.JsonToClubMapper;
-import com.guciowons.footballer_guesser_app.data.mappers.JsonToPlayerMapper;
 import com.guciowons.footballer_guesser_app.domain.entities.Club;
-import com.guciowons.footballer_guesser_app.domain.entities.Player;
 import com.guciowons.footballer_guesser_app.ui.game.activities.GameActivity;
 
 import org.json.JSONArray;

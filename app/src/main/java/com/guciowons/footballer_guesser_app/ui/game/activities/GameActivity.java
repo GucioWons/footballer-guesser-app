@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
-import com.guciowons.footballer_guesser_app.data.requests.PlayersRequestManager;
+import com.guciowons.footballer_guesser_app.data.requests.players.PlayersRequestManager;
 import com.guciowons.footballer_guesser_app.domain.entities.Player;
 import com.guciowons.footballer_guesser_app.data.requests.FlagRequestManager;
 import com.guciowons.footballer_guesser_app.ui.game.adapters.HistoryAdapter;
