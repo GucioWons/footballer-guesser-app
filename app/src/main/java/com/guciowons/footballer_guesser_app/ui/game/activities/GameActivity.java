@@ -17,14 +17,18 @@ import com.guciowons.footballer_guesser_app.data.requests.PlayersRequestManager;
 import com.guciowons.footballer_guesser_app.domain.entities.Player;
 import com.guciowons.footballer_guesser_app.data.requests.FlagRequestManager;
 import com.guciowons.footballer_guesser_app.ui.game.adapters.HistoryAdapter;
+import com.guciowons.footballer_guesser_app.ui.game.dialogs.FinishDialog;
 import com.guciowons.footballer_guesser_app.ui.game.dialogs.LoadingDialog;
 import com.guciowons.footballer_guesser_app.ui.game.dialogs.SearchDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unimi.dsi.util.XoRoShiRo128PlusRandom;
+
 public class GameActivity extends AppCompatActivity {
     private LoadingDialog loadingDialog;
+    private FinishDialog finishDialog;
     private SearchDialog searchDialog;
     private RequestQueue requestQueue;
 
@@ -90,11 +94,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void checkAnswer(Player player){
-//        if(player.equals(answer)){
-//            showHints(player);
-//        }else{
-//            checkHints(player);
-//        }
+        if(player.equals(answer)){
+            showHints(player);
+            startFinishDialog();
+        }else{
+            checkHints(player);
+        }
         addPlayerToHistory(player);
     }
 
@@ -131,8 +136,9 @@ public class GameActivity extends AppCompatActivity {
         historyAdapter.addPlayer(player);
     }
 
-    public void setAnswer(Player answer){
-        this.answer = answer;
+    public void drawAnswer(){
+        XoRoShiRo128PlusRandom xoroRandom = new XoRoShiRo128PlusRandom();
+        answer = players.get(xoroRandom.nextInt(players.size()));
     }
 
     public void startSearchDialog(){
@@ -143,6 +149,11 @@ public class GameActivity extends AppCompatActivity {
     private void startLoadingDialog(){
         loadingDialog = new LoadingDialog(GameActivity.this);
         loadingDialog.show();
+    }
+
+    private void startFinishDialog(){
+        finishDialog = new FinishDialog(GameActivity.this, answer.getName());
+        finishDialog.show();
     }
 
     public void endLoadingDialog(){

@@ -17,6 +17,8 @@ import com.guciowons.footballer_guesser_app.ui.game.adapters.PlayersAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class SearchDialog {
     private List<Player> players;
@@ -59,14 +61,9 @@ public class SearchDialog {
     }
 
     private void filterList(String newText){
-        List<Player> filteredList = new ArrayList<>();
-        for(Player player : players){
-            if(player.getName().toLowerCase().contains(newText.toLowerCase())){
-                filteredList.add(player);
-            }
-        }
-        playersAdapter.setFilteredList(filteredList);
-
+        playersAdapter.setFilteredList(players.stream().filter(
+                player -> player.getName().toLowerCase().contains(newText.toLowerCase()))
+                .collect(Collectors.toList()));
     }
 
     private void updateAdapter(){

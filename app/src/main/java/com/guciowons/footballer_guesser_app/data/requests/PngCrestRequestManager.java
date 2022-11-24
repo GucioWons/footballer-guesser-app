@@ -44,6 +44,7 @@ public class PngCrestRequestManager {
                 //TODO
             }
             if(i +1 == clubsQuantity && j+1 == playersJson.length()){
+                activity.drawAnswer();
                 activity.endLoadingDialog();
             }
         }
