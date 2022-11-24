@@ -46,8 +46,8 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeaguesV
         return leagues.size();
     }
 
-    public void addLeague(League league){
-        leagues.add(league);
+    public void setLeagues(List<League> leagues){
+        this.leagues = leagues;
         notifyDataSetChanged();
     }
 
@@ -66,11 +66,11 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeaguesV
 
         @Override
         public void onClick(View view) {
-            listener.onClick(view, getAdapterPosition());
+            listener.onClick(view, leagues.get(getAdapterPosition()).getName(), leagues.get(getAdapterPosition()).getId());
         }
     }
 
     public interface RecyclerViewClickListener{
-        void onClick(View view, int position);
+        void onClick(View view, String name, Integer id);
     }
 }
