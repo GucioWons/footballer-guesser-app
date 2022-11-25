@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
+import com.guciowons.footballer_guesser_app.domain.entities.League;
 import com.guciowons.footballer_guesser_app.domain.entities.Player;
 import com.guciowons.footballer_guesser_app.data.requests.FlagRequestManager;
 import com.guciowons.footballer_guesser_app.data.requests.ImageRequestManager;
@@ -50,9 +51,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         return players.size();
     }
 
-    public void addPlayer(Player player){
-        players.add(0, player);
-        notifyItemInserted(0);
+    public void setPlayers(List<Player> players){
+        this.players = players;
+        notifyDataSetChanged();
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder{

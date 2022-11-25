@@ -8,6 +8,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 import com.guciowons.footballer_guesser_app.R;
+import com.guciowons.footballer_guesser_app.data.repositories.PlayerRepository;
 import com.guciowons.footballer_guesser_app.domain.entities.Club;
 import com.guciowons.footballer_guesser_app.ui.game.activities.GameActivity;
 
@@ -16,47 +17,43 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SvgCrestRequestManager extends CrestRequestManager {
-    public StringRequest getSvgCrestRequest(GameActivity activity, Club club, JSONObject clubJson, Integer clubsQuantity, Integer i){
+    public StringRequest getSvgCrestRequest(PlayerRepository repository, Club club, JSONObject clubJson, Integer clubsQuantity, Integer i){
         return new StringRequest(club.getUrl(),
-                response -> convertPlayerSvg(activity, response, club, clubJson, clubsQuantity, i),
-                error -> setClubCrest(activity,
-                        BitmapFactory.decodeResource(activity.getResources(), R.drawable.badge),
-                        club, clubJson, i, clubsQuantity));
+                response -> convertPlayerSvg(repository, response, club, clubJson, clubsQuantity, i),
+                error -> {
+                    //TODO
+                });
     }
 
-    private void convertPlayerSvg(GameActivity activity, String response12, Club club, JSONObject clubJson, Integer clubsQuantity, Integer i){
+    private void convertPlayerSvg(PlayerRepository repository, String response12, Club club, JSONObject clubJson, Integer clubsQuantity, Integer i){
         try {
-            getBitmapFromSvg(activity, SVG.getFromString(response12).renderToPicture(), club, clubJson, clubsQuantity, i);
+            getBitmapFromSvg(repository, SVG.getFromString(response12).renderToPicture(), club, clubJson, clubsQuantity, i);
         } catch (SVGParseException e) {
-            setClubCrest(activity,
-                    BitmapFactory.decodeResource(activity.getResources(), R.drawable.badge),
-                    club, clubJson, i, clubsQuantity);
+            //TODO
         }
     }
 
-    private void getBitmapFromSvg(GameActivity activity, Picture picture, Club club, JSONObject clubJson, Integer clubsQuantity, Integer i){
+    private void getBitmapFromSvg(PlayerRepository repository, Picture picture, Club club, JSONObject clubJson, Integer clubsQuantity, Integer i){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
             Bitmap bitmap = Bitmap.createBitmap(picture);
-            setClubCrest(activity, bitmap, club, clubJson, clubsQuantity, i);
+            setClubCrest(repository, bitmap, club, clubJson, clubsQuantity, i);
         }else {
-            setClubCrest(activity,
-                    BitmapFactory.decodeResource(activity.getResources(), R.drawable.badge),
-                    club, clubJson, i, clubsQuantity);
+            //TODO
         }
     }
 
-    private void setClubCrest(GameActivity activity, Bitmap bitmap, Club club, JSONObject clubJson, Integer clubsQuantity, Integer i){
+    private void setClubCrest(PlayerRepository repository, Bitmap bitmap, Club club, JSONObject clubJson, Integer clubsQuantity, Integer i){
         club.setCrest(bitmap);
         try {
-            convertPlayers(activity, club, clubJson.getJSONArray("footballers"), clubsQuantity, i);
+            convertPlayers(repository, club, clubJson.getJSONArray("footballers"), clubsQuantity, i);
         } catch (JSONException e) {
             //TODO
         }
     }
 
-    private void convertPlayers(GameActivity activity, Club club, JSONArray playersJson, Integer clubsQuantity, Integer i){
+    private void convertPlayers(PlayerRepository repository, Club club, JSONArray playersJson, Integer clubsQuantity, Integer i){
         for (int j = 0; j < playersJson.length(); j++) {
-            addPlayerToActivity(activity, club, playersJson, clubsQuantity, i, j);
+            addPlayerToActivity(repository, club, playersJson, clubsQuantity, i, j);
         }
     }
 }
