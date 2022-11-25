@@ -10,7 +10,6 @@ import org.json.JSONException;
 
 public class CrestRequestManager {
     public void addPlayerToActivity(PlayerRepository repository, Club club, JSONArray playersJson, Integer clubsQuantity, Integer i, Integer j){
-        System.out.println(i+1 + "=" + clubsQuantity + "||" + (j+1) + "==" + playersJson.length());
         try {
             JsonToPlayerMapper jsonToPlayerMapper = new JsonToPlayerMapper();
             repository.addPlayer(jsonToPlayerMapper.mapJsonToPlayer(playersJson.getJSONObject(j), club));
@@ -18,7 +17,6 @@ public class CrestRequestManager {
             //TODO
         }
         if(i +1 == clubsQuantity && j+1 == playersJson.length()){
-            System.out.println("dupa");
             repository.setPlayers();
         }
     }

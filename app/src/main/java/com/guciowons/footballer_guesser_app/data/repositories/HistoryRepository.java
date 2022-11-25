@@ -25,4 +25,8 @@ public class HistoryRepository {
     public MutableLiveData<List<Player>> getHistory(){
         return history;
     }
+
+    public void clearHistory(){
+        history.postValue(new ArrayList<>());
+    }
 }

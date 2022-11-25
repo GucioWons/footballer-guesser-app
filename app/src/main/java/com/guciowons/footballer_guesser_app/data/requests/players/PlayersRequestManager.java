@@ -48,7 +48,6 @@ public class PlayersRequestManager {
     }
 
     private void downloadClubCrest(PlayerRepository repository, Club club, JSONObject clubJson, Integer clubsQuantity, Integer i){
-        System.out.println(club.getName());
         if(club.getUrl().endsWith(".png")) {
             PngCrestRequestManager pngCrestRequestManager = new PngCrestRequestManager();
             repository.getRequestQueue().add(pngCrestRequestManager.getPngCrestRequest(repository, club, clubJson, i, clubsQuantity));
