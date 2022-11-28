@@ -8,9 +8,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.guciowons.footballer_guesser_app.R;
-import com.guciowons.footballer_guesser_app.ui.game.activities.GameActivity;
+import com.guciowons.footballer_guesser_app.ui.game.activity.GameActivity;
 
 public class FinishDialog {
+    //TODO
+    //Finish dialog binding
     private GameActivity activity;
     private String name;
     private Dialog dialog;

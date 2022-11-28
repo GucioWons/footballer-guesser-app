@@ -10,11 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
-import com.guciowons.footballer_guesser_app.domain.entities.Player;
-import com.guciowons.footballer_guesser_app.data.requests.ImageRequestManager;
+import com.guciowons.footballer_guesser_app.domain.game.entities.Player;
 
 import java.util.List;
 

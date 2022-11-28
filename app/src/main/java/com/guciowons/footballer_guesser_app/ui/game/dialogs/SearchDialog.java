@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.guciowons.footballer_guesser_app.R;
-import com.guciowons.footballer_guesser_app.domain.entities.Player;
-import com.guciowons.footballer_guesser_app.ui.game.activities.GameActivity;
+import com.guciowons.footballer_guesser_app.domain.game.entities.Player;
+import com.guciowons.footballer_guesser_app.ui.game.activity.GameActivity;
 import com.guciowons.footballer_guesser_app.ui.game.adapters.PlayersAdapter;
 
 import java.util.List;
