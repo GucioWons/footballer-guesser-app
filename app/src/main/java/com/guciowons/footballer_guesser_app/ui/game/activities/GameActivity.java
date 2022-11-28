@@ -32,10 +32,6 @@ public class GameActivity extends AppCompatActivity {
     private SearchDialog searchDialog;
 
     private HistoryAdapter historyAdapter;
-    private Observer<List<Player>> playersObserver, historyObserver;
-    private Observer<Club> clubObserver;
-    private Observer<String> countryObserver, positionObserver;
-    private Observer<Integer> numberObserver;
     private String name;
     private Integer id;
 
@@ -51,63 +47,61 @@ public class GameActivity extends AppCompatActivity {
         getExtras();
         gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
         gameViewModel.fetchPlayers(id);
+        setUpObservers();
+
+        setUpViews();
+    }
+
+    public void setUpObservers(){
         setUpPlayersObserver();
         setUpHistoryObserver();
         setUpClubObserver();
         setUpCountryObserver();
         setUpNumberObserver();
         setUpPositionObserver();
-
-        setUpViews();
     }
 
     public void setUpPlayersObserver(){
-        playersObserver = (Observer<List<Player>>) players -> {
+        gameViewModel.getAllPlayers().observe(this, players -> {
             gameViewModel.drawAnswer();
-            endLoadingDialog();
-        };
-        gameViewModel.getAllPlayers().observe(this, playersObserver);
+            loadingDialog.dismiss();
+        });
     }
 
     public void setUpHistoryObserver(){
-        historyObserver = (Observer<List<Player>>) players -> historyAdapter.setPlayers(players);
-        gameViewModel.getHistory().observe(this, historyObserver);
+        gameViewModel.getHistory().observe(this, history -> historyAdapter.setPlayers(history));
     }
 
     public void setUpClubObserver(){
-        clubObserver = (Observer<Club>) club -> {
+        gameViewModel.getClubHint().observe(this, club -> {
             if(club != null) {
                 binding.hintClubImage.setImageBitmap(club.getCrest());
             }
-        };
-        gameViewModel.getClubHint().observe(this, clubObserver);
+        });
     }
 
     public void setUpCountryObserver(){
-        countryObserver = (Observer<String>) country -> {
+        gameViewModel.getCountryHint().observe(this, country -> {
             if(country != null) {
                 loadCountryImage(country);
             }
-        };
-        gameViewModel.getCountryHint().observe(this, countryObserver);
+        });
     }
 
     public void setUpNumberObserver(){
-        numberObserver = (Observer<Integer>) number -> {
+        gameViewModel.getNumberHint().observe(this, number -> {
             if(number != null) {
                 binding.hintNumberText.setText(number);
             }
-        };
-        gameViewModel.getNumberHint().observe(this, numberObserver);
+        });
     }
 
     public void setUpPositionObserver(){
-        positionObserver = (Observer<String>) position -> {
+        gameViewModel.getPositionHint().observe(this, position ->{
             if(position != null) {
                 binding.hintPositionText.setText(position);
             }
-        };
-        gameViewModel.getPositionHint().observe(this, positionObserver);
+        });
     }
 
     private void setUpHistoryRecycler(){
@@ -115,12 +109,12 @@ public class GameActivity extends AppCompatActivity {
         historyAdapter = new HistoryAdapter(new ArrayList<>());
         binding.historyRecycler.setAdapter(historyAdapter);
     }
-//
+
     private void setUpViews(){
         binding.gameText.setText(name);
         binding.searchButton.setOnClickListener(view -> startSearchDialog());
     }
-//
+
     private void getExtras(){
         Bundle extras = getIntent().getExtras();
         name = extras.getString("name");
@@ -131,6 +125,8 @@ public class GameActivity extends AppCompatActivity {
         gameViewModel.addPlayerToHistory(player);
         if(gameViewModel.checkAnswer(player)){
             startFinishDialog(player.getName());
+            gameViewModel.clearHints();
+            gameViewModel.clearHistory();
         }
     }
 
@@ -153,11 +149,5 @@ public class GameActivity extends AppCompatActivity {
     private void startFinishDialog(String name){
         finishDialog = new FinishDialog(GameActivity.this, name);
         finishDialog.show();
-        gameViewModel.clearHistory();
-        gameViewModel.clearHints();
-    }
-
-    public void endLoadingDialog(){
-        loadingDialog.dismiss();
     }
 }

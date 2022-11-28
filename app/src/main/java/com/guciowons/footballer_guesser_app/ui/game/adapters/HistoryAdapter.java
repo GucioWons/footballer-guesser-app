@@ -36,11 +36,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        Player player = players.get(position);
+        setUpItem(holder, players.get(position));
+    }
+
+    private void setUpItem(HistoryViewHolder holder, Player player){
         holder.nameText.setText(player.getName());
         holder.numberText.setText(player.getNumber().toString());
         holder.positionText.setText(player.getPosition());
         holder.clubImage.setImageBitmap(player.getClub().getCrest());
+        setUpCountry(holder, player);
+    }
+
+    private void setUpCountry(HistoryViewHolder holder, Player player){
         RequestQueue requestQueue = Volley.newRequestQueue(holder.context);
         FlagRequestManager flagRequestManager = new FlagRequestManager();
         requestQueue.add(flagRequestManager.getFlagRequest(player.getNationality(), holder.countryImage, requestQueue));
@@ -63,6 +70,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
         public HistoryViewHolder(final View view){
             super(view);
+            setUpViews(view);
+        }
+
+        private void setUpViews(View view){
             nameText = view.findViewById(R.id.history_name_text);
             numberText = view.findViewById(R.id.history_number_text);
             countryImage = view.findViewById(R.id.history_country_image);

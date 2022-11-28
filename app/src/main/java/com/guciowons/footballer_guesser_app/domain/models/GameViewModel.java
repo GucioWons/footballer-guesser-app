@@ -28,7 +28,6 @@ public class GameViewModel extends AndroidViewModel {
 
     public GameViewModel(@NonNull Application application) {
         super(application);
-        System.out.println("dupa");
         historyRepository = new HistoryRepository(getApplication());
         history = historyRepository.getHistory();
     }
@@ -77,10 +76,6 @@ public class GameViewModel extends AndroidViewModel {
         countryHint.postValue(null);
         numberHint.postValue(null);
         positionHint.postValue(null);
-    }
-
-    public String getAnswerName(){
-        return answer.getName();
     }
 
     public MutableLiveData<List<Player>> getHistory(){

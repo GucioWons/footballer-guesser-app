@@ -36,9 +36,12 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeaguesV
 
     @Override
     public void onBindViewHolder(@NonNull LeaguesViewHolder holder, int position) {
-        String name = leagues.get(position).getName();
-        holder.nameText.setText(name);
-        holder.leagueImage.setImageBitmap(leagues.get(position).getLogo());
+        setUpItem(holder, leagues.get(position));
+    }
+
+    private void setUpItem(LeaguesViewHolder holder, League league){
+        holder.nameText.setText(league.getName());
+        holder.leagueImage.setImageBitmap(league.getLogo());
     }
 
     @Override
@@ -58,10 +61,14 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeaguesV
 
         public LeaguesViewHolder(final View view){
             super(view);
+            setUpViews(view);
+            view.setOnClickListener(this);
+        }
+
+        private void setUpViews(View view){
             nameText = view.findViewById(R.id.leagues_text);
             leagueImage = view.findViewById(R.id.league_image);
             context = view.getContext();
-            view.setOnClickListener(this);
         }
 
         @Override

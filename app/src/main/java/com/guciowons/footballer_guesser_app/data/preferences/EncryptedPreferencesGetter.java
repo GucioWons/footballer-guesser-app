@@ -1,5 +1,6 @@
 package com.guciowons.footballer_guesser_app.data.preferences;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,13 +11,13 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 public class EncryptedPreferencesGetter {
-    public SharedPreferences getEncryptedPreferences(AppCompatActivity activity){
+    public SharedPreferences getEncryptedPreferences(Context context){
         try {
             String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
             return EncryptedSharedPreferences.create(
                     "Accounts",
                     masterKeyAlias,
-                    activity,
+                    context,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             );

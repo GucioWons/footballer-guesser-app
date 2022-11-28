@@ -23,16 +23,27 @@ public class FinishDialog {
     }
 
     public void show(){
+        dialog = createDialog().create();
+        dialog.show();
+    }
+
+    private AlertDialog.Builder createDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_finish, null);
         builder.setView(dialogView);
         builder.setCancelable(false);
+        setUpViews(dialogView);
+        return builder;
+    }
+
+    private void setUpViews(View dialogView){
         nameText = dialogView.findViewById(R.id.finish_name_text);
         nextButton = dialogView.findViewById(R.id.next_button);
         nameText.setText(nameText.getText() + " " + name);
-        nextButton.setOnClickListener(view -> activity.recreate());
-        dialog = builder.create();
-        dialog.show();
+        nextButton.setOnClickListener(view -> {
+            dialog.dismiss();
+            activity.recreate();
+        });
     }
 }

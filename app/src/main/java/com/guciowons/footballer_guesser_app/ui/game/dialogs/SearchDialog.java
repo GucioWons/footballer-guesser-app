@@ -15,9 +15,7 @@ import com.guciowons.footballer_guesser_app.domain.entities.Player;
 import com.guciowons.footballer_guesser_app.ui.game.activities.GameActivity;
 import com.guciowons.footballer_guesser_app.ui.game.adapters.PlayersAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class SearchDialog {
@@ -35,14 +33,29 @@ public class SearchDialog {
     }
 
     public void show(){
+        dialog = createDialog().create();
+        dialog.show();
+    }
+
+    private AlertDialog.Builder createDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_search, null);
         builder.setView(dialogView);
         builder.setCancelable(true);
+        setUpViews(dialogView);
+        return builder;
+    }
+
+    private void setUpViews(View dialogView){
         searchRecycler = dialogView.findViewById(R.id.players_recycler);
         searchView = dialogView.findViewById(R.id.player_searchview);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(setUpQueryTextListener());
+        updateAdapter();
+    }
+
+    private SearchView.OnQueryTextListener setUpQueryTextListener(){
+        return new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -53,11 +66,7 @@ public class SearchDialog {
                 filterList(newText);
                 return true;
             }
-        });
-        updateAdapter();
-
-        dialog = builder.create();
-        dialog.show();
+        };
     }
 
     private void filterList(String newText){
