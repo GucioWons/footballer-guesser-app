@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/player_searchview"
@@ -28,5 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/player_searchview"
         app:layout_constraintVertical_bias="0"
-        android:paddingBottom="50dp"/>
+        android:paddingBottom="50dp"
+        tools:listitem="@layout/items_players"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

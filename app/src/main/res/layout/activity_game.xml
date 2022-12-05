@@ -124,6 +124,7 @@
         app:layout_constraintTop_toBottomOf="@+id/search_button"
         app:layout_constraintVertical_bias="0"
         android:layout_marginHorizontal="10dp"
-        android:paddingBottom="250dp"/>
+        android:paddingBottom="250dp"
+        tools:listitem="@layout/items_history"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
