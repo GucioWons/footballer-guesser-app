@@ -29,18 +29,23 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoresView
 
     @Override
     public void onBindViewHolder(@NonNull ScoresViewHolder holder, int position) {
-        setUpItem(holder, scores.get(position), position);
+        setUpItem(holder, scores.get(position), position+1);
     }
 
-    private void setUpItem(ScoresViewHolder holder, Score score, int position) {
-        holder.positionText.setText(position);
+    private void setUpItem(ScoresViewHolder holder, Score score, Integer position) {
+        holder.positionText.setText(position.toString());
         holder.nameText.setText(score.getName());
-        holder.pointsText.setText(score.getPoints());
+        holder.pointsText.setText(score.getPoints().toString());
     }
 
     @Override
     public int getItemCount() {
         return scores.size();
+    }
+
+    public void setScores(List<Score> scores){
+        this.scores = scores;
+        notifyDataSetChanged();
     }
 
     public class ScoresViewHolder extends RecyclerView.ViewHolder {

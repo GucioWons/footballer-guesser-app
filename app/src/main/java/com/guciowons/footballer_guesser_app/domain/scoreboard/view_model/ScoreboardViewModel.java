@@ -26,6 +26,14 @@ public class ScoreboardViewModel extends AndroidViewModel {
 
     private void fetchScores(){
         ScoresRequestManager scoresRequestManager = new ScoresRequestManager();
-        requestQueue.add(scoresRequestManager.getScores());
+        requestQueue.add(scoresRequestManager.getScores(this));
+    }
+
+    public MutableLiveData<List<Score>> getScores(){
+        return scores;
+    }
+
+    public void setScores(List<Score> newScores){
+        scores.setValue(newScores);
     }
 }
