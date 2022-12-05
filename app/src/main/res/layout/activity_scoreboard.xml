@@ -30,6 +30,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <Button
+            android:id="@+id/all_time_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
@@ -37,6 +38,7 @@
             android:text="All-time" />
 
         <Button
+            android:id="@+id/monthly_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
@@ -44,6 +46,7 @@
             android:text="Monthly" />
 
         <Button
+            android:id="@+id/weekly_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"

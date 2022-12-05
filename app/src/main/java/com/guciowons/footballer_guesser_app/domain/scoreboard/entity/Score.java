@@ -1,4 +1,4 @@
-package com.guciowons.footballer_guesser_app.domain.scoreboard;
+package com.guciowons.footballer_guesser_app.domain.scoreboard.entity;
 
 public class Score {
     private final String name;

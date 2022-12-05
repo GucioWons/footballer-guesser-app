@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.guciowons.footballer_guesser_app.R;
-import com.guciowons.footballer_guesser_app.domain.scoreboard.Score;
+import com.guciowons.footballer_guesser_app.domain.scoreboard.entity.Score;
 
 import java.util.List;
 
