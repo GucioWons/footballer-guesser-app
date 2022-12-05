@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.game.activities.GameActivity">
+    tools:context=".game.activities.GameActivity">
 
     <TextView
         android:id="@+id/game_text"
@@ -21,109 +21,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/hint_name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="?"
-        android:textSize="30sp"
-        android:layout_marginHorizontal="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/game_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/hint_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        app:layout_constraintTop_toBottomOf="@id/hint_name_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:id="@+id/hint_shirt_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/shirt"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0"/>
-
-        <TextView
-            android:id="@+id/hint_number_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="?"
-            android:textSize="30sp"
-            app:layout_constraintTop_toTopOf="@id/hint_shirt_image"
-            app:layout_constraintBottom_toBottomOf="@id/hint_shirt_image"
-            app:layout_constraintEnd_toEndOf="@id/hint_shirt_image"
-            app:layout_constraintStart_toStartOf="@id/hint_shirt_image"/>
-
-        <ImageView
-            android:id="@+id/hint_country_image"
-            android:layout_width="64dp"
-            android:layout_height="48dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/hint_position_text"
-            app:layout_constraintStart_toEndOf="@id/hint_shirt_image"
-            app:srcCompat="@drawable/flag"/>
-
-        <TextView
-            android:id="@+id/hint_position_text"
-            android:layout_width="64dp"
-            android:layout_height="wrap_content"
-            android:text="?"
-            android:textSize="30sp"
-            android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/hint_club_image"
-            app:layout_constraintStart_toEndOf="@id/hint_country_image"
-            app:layout_constraintHorizontal_bias="1"/>
-
-        <ImageView
-            android:id="@+id/hint_club_image"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            app:srcCompat="@drawable/badge"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hint_layout"
-        app:layout_constraintVertical_bias="0.0" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_recycler"
+        android:id="@+id/players_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_button"
+        app:layout_constraintTop_toBottomOf="@+id/game_text"
         app:layout_constraintVertical_bias="0"
-        android:layout_marginHorizontal="10dp"
-        android:paddingBottom="250dp"/>
-
+        android:layout_marginHorizontal="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

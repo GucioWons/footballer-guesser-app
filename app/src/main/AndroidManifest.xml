@@ -17,23 +17,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.game.activities.GameActivity"
-            android:exported="false"
-            android:configChanges="orientation|screenSize"/>
-        <activity
-            android:name=".ui.LandingActivity"
+            android:name=".game.activities.GameActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.game.activities.LeaguesActivity"
+            android:name=".LandingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.activities.SignUpActivity"
+            android:name=".game.activities.LeaguesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.activities.SignInActivity"
+            android:name=".authentication.activities.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".authentication.activities.SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
