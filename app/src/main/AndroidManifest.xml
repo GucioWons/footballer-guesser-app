@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.scoreboard.ScoreboardActivity"
+            android:name=".ui.scoreboard.activity.ScoreboardActivity"
             android:exported="false"/>
         <activity
             android:name=".ui.game.activity.GameActivity"

@@ -10,12 +10,10 @@ import android.view.View;
 
 import com.guciowons.footballer_guesser_app.databinding.ActivityLeaguesBinding;
 import com.guciowons.footballer_guesser_app.domain.leagues.view_model.LeaguesViewModel;
-import com.guciowons.footballer_guesser_app.ui.authentication.landing.activity.LandingActivity;
-import com.guciowons.footballer_guesser_app.ui.authentication.signin.activity.SignInActivity;
 import com.guciowons.footballer_guesser_app.ui.game.activity.GameActivity;
 import com.guciowons.footballer_guesser_app.ui.loadingdialog.LoadingDialog;
 import com.guciowons.footballer_guesser_app.ui.leagues.adapter.LeaguesAdapter;
-import com.guciowons.footballer_guesser_app.ui.scoreboard.ScoreboardActivity;
+import com.guciowons.footballer_guesser_app.ui.scoreboard.activity.ScoreboardActivity;
 
 import java.util.ArrayList;
 

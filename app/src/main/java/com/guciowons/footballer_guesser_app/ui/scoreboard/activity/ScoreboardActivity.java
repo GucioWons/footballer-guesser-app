@@ -1,4 +1,4 @@
-package com.guciowons.footballer_guesser_app.ui.scoreboard;
+package com.guciowons.footballer_guesser_app.ui.scoreboard.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
