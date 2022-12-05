@@ -1,15 +1,20 @@
 package com.guciowons.footballer_guesser_app.domain.game.view_model;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.data.game.repositories.HistoryRepository;
 import com.guciowons.footballer_guesser_app.data.game.repositories.PlayerRepository;
 import com.guciowons.footballer_guesser_app.domain.game.entities.Club;
 import com.guciowons.footballer_guesser_app.domain.game.entities.Player;
+import com.guciowons.footballer_guesser_app.domain.game.request.SendScoreRequestManager;
+import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
 
 import java.util.List;
 
@@ -24,12 +29,14 @@ public class GameViewModel extends AndroidViewModel {
     private MutableLiveData<String> countryHint = new MutableLiveData<>();
     private MutableLiveData<Integer> numberHint = new MutableLiveData<>();
     private MutableLiveData<String> positionHint = new MutableLiveData<>();
+    private RequestQueue requestQueue;
     private Player answer;
 
     public GameViewModel(@NonNull Application application) {
         super(application);
         historyRepository = new HistoryRepository(getApplication());
         history = historyRepository.getHistory();
+        requestQueue = Volley.newRequestQueue(application);
     }
 
     public void fetchPlayers(Integer id){
@@ -76,6 +83,29 @@ public class GameViewModel extends AndroidViewModel {
         countryHint.postValue(null);
         numberHint.postValue(null);
         positionHint.postValue(null);
+    }
+
+    public void sendScore(Integer leagueId) {
+        Integer playerId = getEncryptedPreferences().getInt("id", 0);
+        if(playerId != 0){
+            Integer points;
+            if(history.getValue().size() <= 10){
+                points = 8;
+            }else if(history.getValue().size() <= 15){
+                points = 5;
+            }else if(history.getValue().size() <= 20){
+                points = 3;
+            }else{
+                points = 1;
+            }
+            SendScoreRequestManager sendScoreRequestManager = new SendScoreRequestManager();
+            requestQueue.add(sendScoreRequestManager.sendScoreRequest(playerId, leagueId, points));
+        }
+    }
+
+    private SharedPreferences getEncryptedPreferences(){
+        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
+        return encryptedPreferencesGetter.getEncryptedPreferences(getApplication());
     }
 
     public MutableLiveData<List<Player>> getHistory(){
