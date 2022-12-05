@@ -10,11 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
-import com.guciowons.footballer_guesser_app.domain.entities.Player;
-import com.guciowons.footballer_guesser_app.data.requests.ImageRequestManager;
+import com.guciowons.footballer_guesser_app.domain.game.entities.Player;
 
 import java.util.List;
 
@@ -36,7 +33,10 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
 
     @Override
     public void onBindViewHolder(@NonNull PlayersViewHolder holder, int position) {
-        Player player = players.get(position);
+        setUpItem(holder, players.get(position));
+    }
+
+    private void setUpItem(PlayersViewHolder holder, Player player){
         holder.nameText.setText(player.getName());
         holder.clubImage.setImageBitmap(player.getClub().getCrest());
     }
@@ -62,10 +62,14 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
 
         public PlayersViewHolder(final View view){
             super(view);
+            setUpViews(view);
+            view.setOnClickListener(this);
+        }
+
+        private void setUpViews(View view){
             nameText = view.findViewById(R.id.player_text);
             clubImage = view.findViewById(R.id.player_club_image);
             context = view.getContext();
-            view.setOnClickListener(this);
         }
 
         @Override
