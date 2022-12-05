@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ScoresRequestManager {
-    public JsonArrayRequest getScores(ScoreboardViewModel scoreboardViewModel){
-        String url = "http://192.168.0.2:8080/scores";
+    public JsonArrayRequest getScores(ScoreboardViewModel scoreboardViewModel, String url){
         return new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
                     List<Score> scores = new ArrayList<>();

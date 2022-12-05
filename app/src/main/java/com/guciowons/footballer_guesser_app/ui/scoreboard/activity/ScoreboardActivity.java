@@ -32,10 +32,17 @@ public class ScoreboardActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         setUpScoresRecycler();
+        setUpButtons();
         scoreboardViewModel = new ViewModelProvider(this).get(ScoreboardViewModel.class);
         scoreboardViewModel.getScores().observe(this, scores -> {
             scoresAdapter.setScores(scores);
         });
+    }
+
+    private void setUpButtons(){
+        binding.allTimeButton.setOnClickListener(view -> scoreboardViewModel.fetchAllTimeScores());
+        binding.monthlyButton.setOnClickListener(view ->scoreboardViewModel.fetchMonthlyScores());
+        binding.weeklyButton.setOnClickListener(view ->scoreboardViewModel.fetchWeeklyScores());
     }
 
     private void setUpScoresRecycler(){
