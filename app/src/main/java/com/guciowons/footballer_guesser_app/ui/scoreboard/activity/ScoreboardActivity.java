@@ -15,6 +15,7 @@ import com.guciowons.footballer_guesser_app.domain.leagues.view_model.LeaguesVie
 import com.guciowons.footballer_guesser_app.domain.scoreboard.entity.Score;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.view_model.ScoreboardViewModel;
 import com.guciowons.footballer_guesser_app.ui.leagues.adapter.LeaguesAdapter;
+import com.guciowons.footballer_guesser_app.ui.scoreboard.adapter.ScoreboardLeaguesAdapter;
 import com.guciowons.footballer_guesser_app.ui.scoreboard.adapter.ScoresAdapter;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class ScoreboardActivity extends AppCompatActivity {
     private ActivityScoreboardBinding binding;
     private ScoreboardViewModel scoreboardViewModel;
     private ScoresAdapter scoresAdapter;
+    private ScoreboardLeaguesAdapter scoreboardLeaguesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +34,14 @@ public class ScoreboardActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         setUpScoresRecycler();
+        setUpScoreboardLeaguesRecycler();
         setUpButtons();
         scoreboardViewModel = new ViewModelProvider(this).get(ScoreboardViewModel.class);
         scoreboardViewModel.getScores().observe(this, scores -> {
             scoresAdapter.setScores(scores);
+        });
+        scoreboardViewModel.getLeagues().observe(this, leagues ->{
+            scoreboardLeaguesAdapter.setLeagues(leagues);
         });
     }
 
@@ -43,6 +49,12 @@ public class ScoreboardActivity extends AppCompatActivity {
         binding.allTimeButton.setOnClickListener(view -> scoreboardViewModel.fetchAllTimeScores());
         binding.monthlyButton.setOnClickListener(view ->scoreboardViewModel.fetchMonthlyScores());
         binding.weeklyButton.setOnClickListener(view ->scoreboardViewModel.fetchWeeklyScores());
+    }
+
+    private void setUpScoreboardLeaguesRecycler(){
+        binding.scoreboardLeaguesRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        scoreboardLeaguesAdapter = new ScoreboardLeaguesAdapter(new ArrayList<>());
+        binding.scoreboardLeaguesRecycler.setAdapter(scoreboardLeaguesAdapter);
     }
 
     private void setUpScoresRecycler(){

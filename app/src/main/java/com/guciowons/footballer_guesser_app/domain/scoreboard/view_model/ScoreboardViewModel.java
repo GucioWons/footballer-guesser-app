@@ -8,19 +8,26 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.guciowons.footballer_guesser_app.data.leagues.repository.LeagueRepository;
+import com.guciowons.footballer_guesser_app.domain.leagues.entity.League;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.entity.Score;
+import com.guciowons.footballer_guesser_app.domain.scoreboard.request.ScoreboardLeaguesRequestManager;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.request.ScoresRequestManager;
 
 import java.util.List;
 
 public class ScoreboardViewModel extends AndroidViewModel {
+    private LeagueRepository leagueRepository;
     private MutableLiveData<List<Score>> scores = new MutableLiveData<>();
+    private MutableLiveData<List<League>> leagues;
 
     private RequestQueue requestQueue;
 
     public ScoreboardViewModel(@NonNull Application application) {
         super(application);
         requestQueue = Volley.newRequestQueue(application);
+        leagueRepository = new LeagueRepository(application);
+        leagues = leagueRepository.getLeagues();
         fetchAllTimeScores();
     }
 
@@ -43,7 +50,19 @@ public class ScoreboardViewModel extends AndroidViewModel {
         return scores;
     }
 
+    public MutableLiveData<List<League>> getLeagues(){
+        return leagues;
+    }
+
     public void setScores(List<Score> newScores){
         scores.setValue(newScores);
+    }
+
+    public void setLeagues(List<League> newLeagues){
+        leagues.postValue(newLeagues);
+    }
+
+    public RequestQueue getRequestQueue(){
+        return requestQueue;
     }
 }
