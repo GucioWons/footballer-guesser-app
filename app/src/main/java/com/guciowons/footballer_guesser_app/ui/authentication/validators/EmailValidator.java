@@ -5,18 +5,14 @@ import android.widget.EditText;
 import com.guciowons.footballer_guesser_app.ui.authentication.helpers.StringHelper;
 
 public class EmailValidator {
-    public boolean validateEmail(EditText editText) {
-        String email = editText.getText().toString();
+    public static String validateEmail(String email) {
         StringHelper stringHelper = new StringHelper();
         if (email.isEmpty()) {
-            editText.setError("Email cannot be empty!");
-            return false;
+            return "Email cannot be empty!";
         } else if (!stringHelper.validateEmail(email)) {
-            editText.setError("Email is not valid!");
-            return false;
+            return "Email is not valid!";
         } else {
-            editText.setError(null);
-            return true;
+            return "Success";
         }
     }
 }

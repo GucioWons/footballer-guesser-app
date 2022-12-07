@@ -3,14 +3,11 @@ package com.guciowons.footballer_guesser_app.ui.authentication.validators;
 import android.widget.EditText;
 
 public class UsernameValidator {
-    public boolean validateUsername(EditText editText){
-        String username = editText.getText().toString();
+    public static String validateUsername(String username){
         if(username.isEmpty()){
-            editText.setError("Username cannot be empty!");
-            return false;
+            return "Username cannot be empty!";
         } else{
-            editText.setError(null);
-            return true;
+            return "Success";
         }
     }
 }
