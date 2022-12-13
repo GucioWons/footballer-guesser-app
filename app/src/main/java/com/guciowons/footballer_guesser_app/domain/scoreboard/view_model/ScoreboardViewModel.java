@@ -21,6 +21,9 @@ public class ScoreboardViewModel extends AndroidViewModel {
     private MutableLiveData<List<Score>> scores = new MutableLiveData<>();
     private MutableLiveData<List<League>> leagues;
 
+    private String time;
+    private Integer leagueId;
+
     private RequestQueue requestQueue;
 
     public ScoreboardViewModel(@NonNull Application application) {
@@ -28,22 +31,35 @@ public class ScoreboardViewModel extends AndroidViewModel {
         requestQueue = Volley.newRequestQueue(application);
         leagueRepository = new LeagueRepository(application);
         leagues = leagueRepository.getLeagues();
-        fetchAllTimeScores();
+        time = null;
+        leagueId = null;
+        fetchScores();
     }
 
-    public void fetchAllTimeScores(){
-        ScoresRequestManager scoresRequestManager = new ScoresRequestManager();
-        requestQueue.add(scoresRequestManager.getScores(this, "http://192.168.0.2:8080/scores"));
+    public void setTime(String time){
+        this.time = time;
+        fetchScores();
     }
 
-    public void fetchMonthlyScores(){
-        ScoresRequestManager scoresRequestManager = new ScoresRequestManager();
-        requestQueue.add(scoresRequestManager.getScores(this, "http://192.168.0.2:8080/scores/monthly"));
+    public void setLeagueId(Integer leagueId){
+        this.leagueId = leagueId;
+        fetchScores();
     }
 
-    public void fetchWeeklyScores(){
+    private void fetchScores() {
         ScoresRequestManager scoresRequestManager = new ScoresRequestManager();
-        requestQueue.add(scoresRequestManager.getScores(this, "http://192.168.0.2:8080/scores/weekly"));
+        requestQueue.add(scoresRequestManager.getScores(this, createUrl()));
+    }
+
+    private String createUrl(){
+        String url = "http://192.168.0.2:8080/scores?";
+        if(time != null){
+            url = url + "time=" + time + "&";
+        }
+        if(leagueId != null){
+            url = url + "leagueId=" + leagueId;
+        }
+        return url;
     }
 
     public MutableLiveData<List<Score>> getScores(){

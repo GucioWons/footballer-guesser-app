@@ -19,18 +19,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/scoreboard_leagues_recycler"
+    <LinearLayout
+        android:id="@+id/leagues_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/best_textview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/items_scoreboard_leagues"/>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:background="@color/light_green"
+            android:id="@+id/all_leagues_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:srcCompat="@drawable/badge"
+            android:layout_marginHorizontal="5dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/scoreboard_leagues_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/items_scoreboard_leagues"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/buttons_layout"
@@ -39,7 +56,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scoreboard_leagues_recycler"
+        app:layout_constraintTop_toBottomOf="@id/leagues_layout"
         app:layout_constraintVertical_bias="0.0">
 
         <Button

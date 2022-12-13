@@ -86,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
     private void setUpNumberObserver(){
         gameViewModel.getNumberHint().observe(this, number -> {
             if(number != null) {
-                binding.hintNumberText.setText(number);
+                binding.hintNumberText.setText(number.toString());
             }
         });
     }

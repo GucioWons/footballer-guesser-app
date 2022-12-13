@@ -33,7 +33,7 @@ public class ScoreboardLeaguesRequestManager {
                                     System.out.println("set");
                                     scoreboardViewModel.setLeagues(leagues);
                                 }
-                            }, 80, 80, ImageView.ScaleType.CENTER, null, error -> {
+                            }, 200, 200, ImageView.ScaleType.CENTER, null, error -> {
 
                             }));
                         } catch (JSONException e) {

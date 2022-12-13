@@ -4,11 +4,14 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
-    <ImageView
+    <ImageButton
+        android:background="@color/purple_200"
         android:id="@+id/scoreboard_league_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         app:srcCompat="@drawable/badge"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_marginHorizontal="5dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
 
 </LinearLayout>

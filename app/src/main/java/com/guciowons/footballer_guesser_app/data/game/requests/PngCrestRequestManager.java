@@ -12,22 +12,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PngCrestRequestManager extends CrestRequestManager {
-    public ImageRequest getPngCrestRequest(PlayerRepository repository, Club club, JSONObject clubJson, Integer i, Integer clubsQuantity){
+    public ImageRequest getPngCrestRequest(PlayerRepository repository, Club club,
+                                           JSONObject clubJson, Integer i, Integer clubsQuantity){
         return new ImageRequest(club.getUrl(),
                 crest -> setClubCrest(repository, crest, club, clubJson, i, clubsQuantity),
                 64, 64, ImageView.ScaleType.CENTER, null,
-                error -> {
-
-                });
+                error -> showError());
     }
 
-    private void setClubCrest(PlayerRepository repository, Bitmap crest, Club club, JSONObject clubJson, Integer i, Integer clubsQuantity){
+    private void setClubCrest(PlayerRepository repository, Bitmap crest, Club club,
+                              JSONObject clubJson, Integer i, Integer clubsQuantity){
         club.setCrest(crest);
         try {
             convertPlayers(repository, club, clubJson.getJSONArray("footballers"), i, clubsQuantity);
         } catch (JSONException e) {
-            //TODO
+            showError();
         }
+    }
+
+    private void showError() {
     }
 
     private void convertPlayers(PlayerRepository repository, Club club, JSONArray playersJson, Integer i, Integer clubsQuantity) {
