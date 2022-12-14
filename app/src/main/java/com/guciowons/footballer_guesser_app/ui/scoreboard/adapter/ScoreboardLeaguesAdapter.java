@@ -34,9 +34,9 @@ public class ScoreboardLeaguesAdapter extends RecyclerView.Adapter<ScoreboardLea
     @Override
     public void onBindViewHolder(@NonNull ScoreboardLeaguesViewHolder holder, int position) {
         if(selected != null && selected == position){
-            holder.imageButton.setBackground(holder.itemView.getResources().getDrawable(R.color.light_green));
+            holder.imageButton.setBackgroundTintList(holder.itemView.getContext().getColorStateList(R.color.light_green));
         }else {
-            holder.imageButton.setBackground(holder.itemView.getResources().getDrawable(R.color.purple_200));
+            holder.imageButton.setBackgroundTintList(holder.itemView.getContext().getColorStateList(R.color.purple_200));
         }
         holder.imageButton.setImageBitmap(leagues.get(position).getLogo());
     }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageButton
-        android:background="@color/purple_200"
+        style="@style/UnclickedImageButton"
         android:id="@+id/scoreboard_league_image"
         android:layout_width="80dp"
         android:layout_height="80dp"

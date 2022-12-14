@@ -44,27 +44,27 @@ public class ScoreboardActivity extends AppCompatActivity {
     private void setUpButtons(){
         binding.allTimeButton.setOnClickListener(view -> {
             scoreboardViewModel.setTime(null);
-            binding.allTimeButton.setBackgroundColor(getColor(R.color.green));
-            binding.weeklyButton.setBackgroundColor(getColor(R.color.purple_500));
-            binding.monthlyButton.setBackgroundColor(getColor(R.color.purple_500));
+            binding.allTimeButton.setBackgroundTintList(getColorStateList(R.color.green));
+            binding.weeklyButton.setBackgroundTintList(getColorStateList(R.color.purple_500));
+            binding.monthlyButton.setBackgroundTintList(getColorStateList(R.color.purple_500));
 
         });
         binding.monthlyButton.setOnClickListener(view ->{
             scoreboardViewModel.setTime("monthly");
-            binding.monthlyButton.setBackgroundColor(getColor(R.color.green));
-            binding.allTimeButton.setBackgroundColor(getColor(R.color.purple_500));
-            binding.weeklyButton.setBackgroundColor(getColor(R.color.purple_500));
+            binding.allTimeButton.setBackgroundTintList(getColorStateList(R.color.purple_500));
+            binding.weeklyButton.setBackgroundTintList(getColorStateList(R.color.purple_500));
+            binding.monthlyButton.setBackgroundTintList(getColorStateList(R.color.green));
         });
         binding.weeklyButton.setOnClickListener(view ->{
             scoreboardViewModel.setTime("weekly");
-            binding.weeklyButton.setBackgroundColor(getColor(R.color.green));
-            binding.monthlyButton.setBackgroundColor(getColor(R.color.purple_500));
-            binding.allTimeButton.setBackgroundColor(getColor(R.color.purple_500));
+            binding.allTimeButton.setBackgroundTintList(getColorStateList(R.color.purple_500));
+            binding.weeklyButton.setBackgroundTintList(getColorStateList(R.color.green));
+            binding.monthlyButton.setBackgroundTintList(getColorStateList(R.color.purple_500));
         });
 
         binding.allLeaguesButton.setOnClickListener(view ->{
             scoreboardViewModel.setLeagueId(null);
-            binding.allLeaguesButton.setBackground(getDrawable(R.color.light_green));
+            binding.allLeaguesButton.setBackgroundTintList(getColorStateList(R.color.light_green));
             scoreboardLeaguesAdapter.deleteSelected();
         });
     }
@@ -86,7 +86,7 @@ public class ScoreboardActivity extends AppCompatActivity {
     private void setOnClickListener(){
         listener = (view, id) -> {
             scoreboardViewModel.setLeagueId(id);
-            binding.allLeaguesButton.setBackground(getDrawable(R.color.purple_200));
+            binding.allLeaguesButton.setBackgroundTintList(getColorStateList(R.color.purple_200));
         };
     }
 }

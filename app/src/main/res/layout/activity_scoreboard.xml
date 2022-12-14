@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:background="@color/light_green"
+            style="@style/ClickedImageButton"
             android:id="@+id/all_leagues_button"
             android:layout_width="80dp"
             android:layout_height="80dp"
