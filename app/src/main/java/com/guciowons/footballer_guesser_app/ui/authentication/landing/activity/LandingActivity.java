@@ -19,6 +19,7 @@ public class LandingActivity extends AppCompatActivity {
         binding = ActivityLandingBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setUpButtons();
     }
 
     private void setUpButtons(){

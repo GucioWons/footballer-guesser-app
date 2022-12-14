@@ -86,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
     private void setUpNumberObserver(){
         gameViewModel.getNumberHint().observe(this, number -> {
             if(number != null) {
-                binding.hintNumberText.setText(number);
+                binding.hintNumberText.setText(number.toString());
             }
         });
     }
@@ -120,6 +120,7 @@ public class GameActivity extends AppCompatActivity {
         gameViewModel.addPlayerToHistory(player);
         if(gameViewModel.checkAnswer(player)){
             startFinishDialog(player.getName());
+            gameViewModel.sendScore(id);
             gameViewModel.clearHints();
             gameViewModel.clearHistory();
         }

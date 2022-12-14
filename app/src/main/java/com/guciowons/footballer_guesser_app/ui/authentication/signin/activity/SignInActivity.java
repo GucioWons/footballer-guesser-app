@@ -49,11 +49,33 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void processLoginForm(){
-        EmailValidator emailValidator = new EmailValidator();
-        PasswordValidator passwordValidator = new PasswordValidator();
-        if(emailValidator.validateEmail(binding.emailEt) && passwordValidator.validatePassword(binding.passwordEt)){
+        if(validateEditTexts()){
             signInViewModel.logInUser(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
         }
+    }
+
+    private boolean validateEditTexts(){
+        boolean emailCorrect = validateEmail();
+        boolean passwordCorrect = validatePassword();
+        return emailCorrect && passwordCorrect;
+    }
+
+    private boolean validateEmail(){
+        String emailResponse = EmailValidator.validateEmail(binding.emailEt.getText().toString());
+        if(!emailResponse.equals("Success")){
+            binding.emailEt.setError(emailResponse);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validatePassword(){
+        String passwordResponse = PasswordValidator.validatePassword(binding.passwordEt.getText().toString());
+        if(!passwordResponse.equals("Success")){
+            binding.passwordEt.setError(passwordResponse);
+            return false;
+        }
+        return true;
     }
 
     private void authenticateUser(){

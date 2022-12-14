@@ -14,37 +14,42 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SvgCrestRequestManager extends CrestRequestManager {
-    public StringRequest getSvgCrestRequest(PlayerRepository repository, Club club, JSONObject clubJson, Integer i, Integer clubsQuantity){
+    public StringRequest getSvgCrestRequest(PlayerRepository repository, Club club,
+                                            JSONObject clubJson, Integer i, Integer clubsQuantity){
         return new StringRequest(club.getUrl(),
                 response -> convertPlayerSvg(repository, response, club, clubJson, i, clubsQuantity),
-                error -> {
-                    //TODO
-                });
+                error -> showError());
     }
 
-    private void convertPlayerSvg(PlayerRepository repository, String response12, Club club, JSONObject clubJson, Integer i, Integer clubsQuantity){
+    private void convertPlayerSvg(PlayerRepository repository, String response12, Club club,
+                                  JSONObject clubJson, Integer i, Integer clubsQuantity){
         try {
             getBitmapFromSvg(repository, SVG.getFromString(response12).renderToPicture(), club, clubJson, i, clubsQuantity);
         } catch (SVGParseException e) {
-            //TODO
+            showError();
         }
     }
 
-    private void getBitmapFromSvg(PlayerRepository repository, Picture picture, Club club, JSONObject clubJson, Integer i, Integer clubsQuantity){
+    private void getBitmapFromSvg(PlayerRepository repository, Picture picture, Club club,
+                                  JSONObject clubJson, Integer i, Integer clubsQuantity){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
             Bitmap bitmap = Bitmap.createBitmap(picture);
             setClubCrest(repository, bitmap, club, clubJson, i, clubsQuantity);
         }else {
-            //TODO
+            showError();
         }
     }
 
-    private void setClubCrest(PlayerRepository repository, Bitmap bitmap, Club club, JSONObject clubJson, Integer i, Integer clubsQuantity){
+    private void showError() {
+    }
+
+    private void setClubCrest(PlayerRepository repository, Bitmap bitmap, Club club,
+                              JSONObject clubJson, Integer i, Integer clubsQuantity){
         club.setCrest(bitmap);
         try {
             convertPlayers(repository, club, clubJson.getJSONArray("footballers"), i, clubsQuantity);
         } catch (JSONException e) {
-            //TODO
+            showError();
         }
     }
 

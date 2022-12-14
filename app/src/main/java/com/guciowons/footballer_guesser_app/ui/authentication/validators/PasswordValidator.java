@@ -3,14 +3,11 @@ package com.guciowons.footballer_guesser_app.ui.authentication.validators;
 import android.widget.EditText;
 
 public class PasswordValidator {
-    public boolean validatePassword(EditText editText){
-        String password = editText.getText().toString();
+    public static String validatePassword(String password){
         if(password.isEmpty()){
-            editText.setError("Password cannot be empty!");
-            return false;
+            return "Password cannot be empty!";
         } else{
-            editText.setError(null);
-            return true;
+            return "Success";
         }
     }
 }
