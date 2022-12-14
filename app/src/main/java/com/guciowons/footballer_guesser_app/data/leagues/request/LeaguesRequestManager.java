@@ -30,7 +30,7 @@ public class LeaguesRequestManager {
                                 if(leagues.size() == response1.length()){
                                     leagueRepository.setLeagues(leagues);
                                 }
-                            }, 80, 80, ImageView.ScaleType.CENTER, null, error -> {
+                            }, 150, 150, ImageView.ScaleType.CENTER, null, error -> {
 
                             }));
                         } catch (JSONException e) {

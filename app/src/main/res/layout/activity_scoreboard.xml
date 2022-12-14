@@ -32,11 +32,11 @@
         <ImageButton
             style="@style/ClickedImageButton"
             android:id="@+id/all_leagues_button"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             app:srcCompat="@drawable/badge"
             android:layout_marginHorizontal="5dp"
-            android:padding="10dp"
+            android:padding="5dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"/>
 
