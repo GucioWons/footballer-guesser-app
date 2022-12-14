@@ -10,6 +10,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:srcCompat="@drawable/badge"
+        android:padding="10dp"
         android:layout_marginHorizontal="5dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>

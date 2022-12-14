@@ -11,7 +11,6 @@ import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.data.leagues.repository.LeagueRepository;
 import com.guciowons.footballer_guesser_app.domain.leagues.entity.League;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.entity.Score;
-import com.guciowons.footballer_guesser_app.domain.scoreboard.request.ScoreboardLeaguesRequestManager;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.request.ScoresRequestManager;
 
 import java.util.List;

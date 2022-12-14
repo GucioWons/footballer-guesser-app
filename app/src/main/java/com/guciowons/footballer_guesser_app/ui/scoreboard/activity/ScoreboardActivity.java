@@ -74,6 +74,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         binding.scoreboardLeaguesRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         scoreboardLeaguesAdapter = new ScoreboardLeaguesAdapter(new ArrayList<>(), listener);
         binding.scoreboardLeaguesRecycler.setAdapter(scoreboardLeaguesAdapter);
+        binding.scoreboardLeaguesRecycler.setNestedScrollingEnabled(false);
     }
 
     private void setUpScoresRecycler(){
