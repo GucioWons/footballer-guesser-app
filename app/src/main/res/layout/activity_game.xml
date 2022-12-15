@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_test"
     tools:context=".ui.game.activity.GameActivity">
 
     <TextView
@@ -13,7 +14,8 @@
         android:gravity="center"
         android:text="Avaible players"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="50sp"
+        android:fontFamily="@font/atlanta_college"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -47,9 +49,9 @@
 
         <ImageView
             android:id="@+id/hint_shirt_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/shirt"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            app:srcCompat="@drawable/shirt_blue"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

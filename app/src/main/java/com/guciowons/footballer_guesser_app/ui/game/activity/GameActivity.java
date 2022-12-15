@@ -117,13 +117,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void checkAnswer(Player player){
-        gameViewModel.addPlayerToHistory(player);
         if(gameViewModel.checkAnswer(player)){
             startFinishDialog(player.getName());
             gameViewModel.sendScore(id);
             gameViewModel.clearHints();
             gameViewModel.clearHistory();
         }
+        gameViewModel.addPlayerToHistory(player);
     }
 
     private void loadCountryImage(String country){

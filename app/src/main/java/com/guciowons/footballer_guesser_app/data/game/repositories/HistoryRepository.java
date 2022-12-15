@@ -4,25 +4,26 @@ import android.app.Application;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.guciowons.footballer_guesser_app.domain.game.entities.HistoryPlayer;
 import com.guciowons.footballer_guesser_app.domain.game.entities.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryRepository {
-    private MutableLiveData<List<Player>> history = new MutableLiveData<>();
+    private MutableLiveData<List<HistoryPlayer>> history = new MutableLiveData<>();
 
     public HistoryRepository(Application application){
         history.postValue(new ArrayList<>());
     }
 
-    public void addPlayer(Player player){
-        List<Player> newPlayers = history.getValue();
-        newPlayers.add(player);
+    public void addPlayer(HistoryPlayer historyPlayer){
+        List<HistoryPlayer> newPlayers = history.getValue();
+        newPlayers.add(historyPlayer);
         history.setValue(newPlayers);
     }
 
-    public MutableLiveData<List<Player>> getHistory(){
+    public MutableLiveData<List<HistoryPlayer>> getHistory(){
         return history;
     }
 

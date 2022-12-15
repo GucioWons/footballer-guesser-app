@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.R;
+import com.guciowons.footballer_guesser_app.domain.game.entities.HistoryPlayer;
 import com.guciowons.footballer_guesser_app.domain.game.entities.Player;
 import com.guciowons.footballer_guesser_app.data.game.requests.FlagRequestManager;
 
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
-    private List<Player> players;
+    private List<HistoryPlayer> players;
 
-    public HistoryAdapter(List<Player> players){
+    public HistoryAdapter(List<HistoryPlayer> players){
         this.players = players;
     }
 
@@ -37,15 +38,27 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         setUpItem(holder, players.get(position));
     }
 
-    private void setUpItem(HistoryViewHolder holder, Player player){
+    private void setUpItem(HistoryViewHolder holder, HistoryPlayer player){
         holder.nameText.setText(player.getName());
         holder.numberText.setText(player.getNumber().toString());
+        if(player.isShirtCorrect()){
+            holder.shirtImage.setImageDrawable(holder.context.getDrawable(R.drawable.shirt_green));
+        }
         holder.positionText.setText(player.getPosition());
+        if(player.isPositionCorrect()){
+            holder.positionText.setTextColor(holder.context.getColorStateList(R.color.green));
+        }
         holder.clubImage.setImageBitmap(player.getClub().getCrest());
+        if(player.isClubCorrect()){
+            holder.clubImage.setBackground(holder.context.getDrawable(R.drawable.circle_green));
+        }
         setUpCountry(holder, player);
+        if(player.isNationalityCorrect()){
+            holder.countryImage.setBackground(holder.context.getDrawable(R.drawable.rectangle_green));
+        }
     }
 
-    private void setUpCountry(HistoryViewHolder holder, Player player){
+    private void setUpCountry(HistoryViewHolder holder, HistoryPlayer player){
         RequestQueue requestQueue = Volley.newRequestQueue(holder.context);
         FlagRequestManager flagRequestManager = new FlagRequestManager();
         requestQueue.add(flagRequestManager.getFlagRequest(player.getNationality(), holder.countryImage, requestQueue));
@@ -56,14 +69,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         return players.size();
     }
 
-    public void setPlayers(List<Player> players){
+    public void setPlayers(List<HistoryPlayer> players){
         this.players = players;
         notifyDataSetChanged();
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder{
         private TextView nameText, numberText, positionText;
-        private ImageView clubImage, countryImage;
+        private ImageView clubImage, countryImage, shirtImage;
         private Context context;
 
         public HistoryViewHolder(final View view){
@@ -77,6 +90,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             countryImage = view.findViewById(R.id.history_country_image);
             clubImage = view.findViewById(R.id.history_club_image);
             positionText = view.findViewById(R.id.history_position_text);
+            shirtImage = view.findViewById(R.id.imageView);
             context = view.getContext();
         }
     }

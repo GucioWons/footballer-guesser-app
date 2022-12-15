@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.data.game.repositories.HistoryRepository;
 import com.guciowons.footballer_guesser_app.data.game.repositories.PlayerRepository;
 import com.guciowons.footballer_guesser_app.domain.game.entities.Club;
+import com.guciowons.footballer_guesser_app.domain.game.entities.HistoryPlayer;
 import com.guciowons.footballer_guesser_app.domain.game.entities.Player;
 import com.guciowons.footballer_guesser_app.domain.game.request.SendScoreRequestManager;
 import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
@@ -24,7 +25,7 @@ public class GameViewModel extends AndroidViewModel {
     private PlayerRepository playerRepository;
     private HistoryRepository historyRepository;
     private MutableLiveData<List<Player>> players;
-    private MutableLiveData<List<Player>> history;
+    private MutableLiveData<List<HistoryPlayer>> history;
     private MutableLiveData<Club> clubHint = new MutableLiveData<>();
     private MutableLiveData<String> countryHint = new MutableLiveData<>();
     private MutableLiveData<Integer> numberHint = new MutableLiveData<>();
@@ -71,7 +72,14 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public void addPlayerToHistory(Player player){
-        historyRepository.addPlayer(player);
+        System.out.println(player.getNumber());
+        System.out.println(numberHint.getValue());
+        historyRepository.addPlayer(new HistoryPlayer(player.getName(), player.getNationality(),
+                player.getNumber(), player.getPosition(), player.getClub(),
+                player.getNationality().equals(countryHint.getValue()),
+                player.getNumber().equals(numberHint.getValue()),
+                player.getPosition().equals(positionHint.getValue()),
+                player.getClub().equals(clubHint.getValue())));
     }
 
     public void clearHistory(){
@@ -108,7 +116,7 @@ public class GameViewModel extends AndroidViewModel {
         return encryptedPreferencesGetter.getEncryptedPreferences(getApplication());
     }
 
-    public MutableLiveData<List<Player>> getHistory(){
+    public MutableLiveData<List<HistoryPlayer>> getHistory(){
         return history;
     }
 
