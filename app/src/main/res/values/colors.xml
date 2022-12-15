@@ -12,4 +12,6 @@
     <color name="bez">#80C18651</color>
     <color name="grey">#807E7E7E</color>
     <color name="red">#80DF0000</color>
+    <color name="input">#BFE6E6E6</color>
+    <color name="button">#1E5071</color>
 </resources>

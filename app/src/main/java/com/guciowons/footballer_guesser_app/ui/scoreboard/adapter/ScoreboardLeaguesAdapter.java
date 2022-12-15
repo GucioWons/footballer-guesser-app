@@ -1,5 +1,6 @@
 package com.guciowons.footballer_guesser_app.ui.scoreboard.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +35,9 @@ public class ScoreboardLeaguesAdapter extends RecyclerView.Adapter<ScoreboardLea
     @Override
     public void onBindViewHolder(@NonNull ScoreboardLeaguesViewHolder holder, int position) {
         if(selected != null && selected == position){
-            holder.imageButton.setBackgroundTintList(holder.itemView.getContext().getColorStateList(R.color.light_green));
+            holder.imageButton.setBackgroundTintList(holder.context.getColorStateList(R.color.light_green));
         }else {
-            holder.imageButton.setBackgroundTintList(holder.itemView.getContext().getColorStateList(R.color.purple_200));
+            holder.imageButton.setBackgroundTintList(holder.context.getColorStateList(R.color.purple_200));
         }
         holder.imageButton.setImageBitmap(leagues.get(position).getLogo());
     }
@@ -58,6 +59,7 @@ public class ScoreboardLeaguesAdapter extends RecyclerView.Adapter<ScoreboardLea
 
     public class ScoreboardLeaguesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageButton imageButton;
+        private Context context;
 
         public ScoreboardLeaguesViewHolder(final View view) {
             super(view);
@@ -67,6 +69,7 @@ public class ScoreboardLeaguesAdapter extends RecyclerView.Adapter<ScoreboardLea
         private void setUpViews(View view) {
             imageButton = view.findViewById(R.id.scoreboard_league_image);
             imageButton.setOnClickListener(this);
+            context = view.getContext();
         }
 
         @Override

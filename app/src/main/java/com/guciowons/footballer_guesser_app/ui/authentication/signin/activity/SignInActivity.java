@@ -50,7 +50,7 @@ public class SignInActivity extends AppCompatActivity {
 
     public void processLoginForm(){
         if(validateEditTexts()){
-            signInViewModel.logInUser(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
+            signInViewModel.logInUser(binding.emailEt.getEditText().getText().toString(), binding.passwordEt.getEditText().getText().toString());
         }
     }
 
@@ -61,7 +61,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private boolean validateEmail(){
-        String emailResponse = EmailValidator.validateEmail(binding.emailEt.getText().toString());
+        String emailResponse = EmailValidator.validateEmail(binding.emailEt.getEditText().getText().toString());
         if(!emailResponse.equals("Success")){
             binding.emailEt.setError(emailResponse);
             return false;
@@ -70,7 +70,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private boolean validatePassword(){
-        String passwordResponse = PasswordValidator.validatePassword(binding.passwordEt.getText().toString());
+        String passwordResponse = PasswordValidator.validatePassword(binding.passwordEt.getEditText().getText().toString());
         if(!passwordResponse.equals("Success")){
             binding.passwordEt.setError(passwordResponse);
             return false;

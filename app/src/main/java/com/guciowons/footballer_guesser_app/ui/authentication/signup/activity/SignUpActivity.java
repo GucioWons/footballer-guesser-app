@@ -50,9 +50,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void processRegisterForm(){
         if(validateEditTexts()){
-            signUpViewModel.signUpUser(binding.usernameEt.getText().toString(),
-                    binding.emailEt.getText().toString(),
-                    binding.passwordEt.getText().toString());
+            signUpViewModel.signUpUser(binding.usernameEt.getEditText().getText().toString(),
+                    binding.emailEt.getEditText().getText().toString(),
+                    binding.passwordEt.getEditText().getText().toString());
         }
     }
 
@@ -65,7 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validateUsername(){
-        String usernameResponse = UsernameValidator.validateUsername(binding.usernameEt.getText().toString());
+        String usernameResponse = UsernameValidator.validateUsername(binding.usernameEt.getEditText().getText().toString());
         if(!usernameResponse.equals("Success")){
             binding.usernameEt.setError(usernameResponse);
             return false;
@@ -74,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validateEmail(){
-        String emailResponse = EmailValidator.validateEmail(binding.emailEt.getText().toString());
+        String emailResponse = EmailValidator.validateEmail(binding.emailEt.getEditText().getText().toString());
         if(!emailResponse.equals("Success")){
             binding.emailEt.setError(emailResponse);
             return false;
@@ -83,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validatePassword(){
-        String passwordResponse = PasswordValidator.validatePassword(binding.passwordEt.getText().toString());
+        String passwordResponse = PasswordValidator.validatePassword(binding.passwordEt.getEditText().getText().toString());
         if(!passwordResponse.equals("Success")){
             binding.passwordEt.setError(passwordResponse);
             return false;
@@ -93,7 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private boolean validateConfirm(){
         String confirmResponse = ConfirmPasswordValidator.validateConfirmPassword(
-                binding.passwordEt.getText().toString(), binding.confirmEt.getText().toString());
+                binding.passwordEt.getEditText().getText().toString(), binding.confirmEt.getEditText().getText().toString());
         if(!confirmResponse.equals("Success")){
             binding.confirmEt.setError(confirmResponse);
             return false;
