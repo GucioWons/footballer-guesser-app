@@ -6,8 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.presence.scoreboard.activities.ScoreboardActivity;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
 import com.guciowons.footballer_guesser_app.databinding.ActivityLeaguesBinding;
@@ -31,14 +37,24 @@ public class LeaguesActivity extends AppCompatActivity {
         binding = ActivityLeaguesBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        setUpButton();
+        setUpMenu();
         startLoadingDialog();
         setUpLeaguesRecycler();
         setUpObserver();
     }
 
-    private void setUpButton(){
-        binding.topButton.setOnClickListener(view -> goToScoreboard());
+    private void setUpMenu(){
+        binding.appBar.toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.scoreboard:
+                    goToScoreboard();
+                    break;
+                case R.id.logout:
+                    Toast.makeText(LeaguesActivity.this, "Logout Successful", Toast.LENGTH_LONG).show();
+                    break;
+            }
+            return true;
+        });
     }
 
     public void goToScoreboard(){

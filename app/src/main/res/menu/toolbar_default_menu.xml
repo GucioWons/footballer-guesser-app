@@ -2,14 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/scoreboard"
-        android:icon="@drawable/ic_baseline_military_tech_24"
-        android:iconTint="@color/white"
-        android:title="scoreboard"
-        android:contentDescription=""
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_baseline_login_24"
         android:iconTint="@color/white"

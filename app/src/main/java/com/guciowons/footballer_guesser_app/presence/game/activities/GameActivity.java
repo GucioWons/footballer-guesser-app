@@ -7,15 +7,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.databinding.ActivityGameBinding;
 import com.guciowons.footballer_guesser_app.data.models.player.Player;
 import com.guciowons.footballer_guesser_app.data.game.requests.flag.FlagRequestManager;
 import com.guciowons.footballer_guesser_app.domain.game.viewmodel.GameViewModel;
 import com.guciowons.footballer_guesser_app.presence.game.adapters.HistoryAdapter;
 import com.guciowons.footballer_guesser_app.presence.game.dialogs.FinishDialog;
+import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 import com.guciowons.footballer_guesser_app.presence.loading.dialogs.LoadingDialog;
 import com.guciowons.footballer_guesser_app.presence.game.dialogs.SearchDialog;
 
@@ -41,8 +46,17 @@ public class GameActivity extends AppCompatActivity {
         startLoadingDialog();
         setUpHistoryRecycler();
         getExtras();
+        setUpMenu();
         setUpObservers();
         setUpViews();
+    }
+    private void setUpMenu(){
+        binding.appBar.toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.logout){
+                Toast.makeText(GameActivity.this, "Logout Successful", Toast.LENGTH_LONG).show();
+            }
+            return true;
+        });
     }
 
     private void setUpObservers(){
@@ -107,6 +121,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void setUpViews(){
         binding.searchButton.setOnClickListener(view -> startSearchDialog());
+        binding.appBar.toolbar.setTitle(name);
     }
 
     private void getExtras(){

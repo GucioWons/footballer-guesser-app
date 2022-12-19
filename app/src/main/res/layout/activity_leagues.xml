@@ -11,17 +11,6 @@
         android:id="@+id/app_bar"
         layout="@layout/toolbar_leagues"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/top_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Top scorers"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar"
-        app:layout_constraintVertical_bias="0.0" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/leagues_recycler"
         android:layout_width="match_parent"
@@ -30,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_button"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         app:layout_constraintVertical_bias="0"
         android:layout_marginHorizontal="10dp"
         tools:listitem="@layout/items_leagues"/>

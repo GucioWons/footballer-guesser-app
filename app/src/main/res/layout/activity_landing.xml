@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/app_bar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar_blank"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_in_btn"

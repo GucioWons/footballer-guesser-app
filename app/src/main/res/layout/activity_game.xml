@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/app_bar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar_default"/>
 
     <TextView
         android:id="@+id/hint_name_text"

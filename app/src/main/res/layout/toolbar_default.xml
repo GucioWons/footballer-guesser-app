@@ -5,11 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:title="Footballer Guesser"
         app:titleTextColor="@color/white"
         app:navigationIcon="@drawable/ic_baseline_sports_soccer_24"
-        app:navigationIconTint="@color/white"/>
+        app:navigationIconTint="@color/white"
+        app:menu="@menu/toolbar_default_menu"/>
 
 </com.google.android.material.appbar.AppBarLayout>
