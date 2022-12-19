@@ -14,4 +14,5 @@
     <color name="red">#DF0000</color>
     <color name="input">#BFE6E6E6</color>
     <color name="button">#1E5071</color>
+    <color name="transparent">#001E5071</color>
 </resources>

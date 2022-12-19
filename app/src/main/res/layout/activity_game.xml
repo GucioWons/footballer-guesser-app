@@ -7,21 +7,9 @@
     android:background="@drawable/ic_test"
     tools:context=".presence.game.activities.GameActivity">
 
-    <TextView
-        android:id="@+id/game_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/game_title"
-        android:textColor="@color/black"
-        android:textSize="50sp"
-        android:fontFamily="@font/atlanta_college"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/toolbar"/>
 
     <TextView
         android:id="@+id/hint_name_text"
@@ -30,7 +18,7 @@
         android:text="@string/question_mark"
         android:textSize="30sp"
         android:layout_marginHorizontal="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/game_text"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +92,7 @@
             app:srcCompat="@drawable/badge"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -7,7 +7,11 @@
     android:background="@drawable/ic_landing"
     tools:context=".presence.authorization.landing.activities.LandingActivity">
 
-    <Button
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/toolbar"/>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_in_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.15" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_up_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

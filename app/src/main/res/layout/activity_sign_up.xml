@@ -7,6 +7,10 @@
     android:background="@drawable/ic_sign_up"
     tools:context=".presence.authorization.sign_up.activities.SignUpActivity">
 
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/toolbar"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +96,7 @@
                 android:paddingVertical="15dp"
                 android:backgroundTint="@color/button"
                 android:text="Go Back"/>
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

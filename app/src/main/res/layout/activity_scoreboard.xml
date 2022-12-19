@@ -7,24 +7,15 @@
     android:background="@drawable/ic_test"
     tools:context=".presence.scoreboard.activities.ScoreboardActivity">
 
-    <TextView
-        android:id="@+id/best_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Best Players"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/toolbar"/>
 
     <LinearLayout
         android:id="@+id/leagues_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/best_textview"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@id/leagues_layout"
         app:layout_constraintVertical_bias="0.0">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/all_time_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,7 +61,7 @@
             android:text="All-time"
             android:backgroundTint="@color/green"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/monthly_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +69,7 @@
             android:layout_weight="1"
             android:text="Monthly" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/weekly_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

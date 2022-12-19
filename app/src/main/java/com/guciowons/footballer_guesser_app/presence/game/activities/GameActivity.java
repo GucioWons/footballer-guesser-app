@@ -106,7 +106,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setUpViews(){
-        binding.gameText.setText(name);
         binding.searchButton.setOnClickListener(view -> startSearchDialog());
     }
 
