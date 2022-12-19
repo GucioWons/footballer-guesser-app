@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.authentication.splash.activity.SplashActivity"
+    tools:context=".presence.authorization.splash.activities.SplashActivity"
     android:background="@drawable/ic_splash">
 
     <ProgressBar

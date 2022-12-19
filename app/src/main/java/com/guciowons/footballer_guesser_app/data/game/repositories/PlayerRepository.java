@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.guciowons.footballer_guesser_app.data.game.requests.PlayersRequestManager;
-import com.guciowons.footballer_guesser_app.domain.game.entities.Player;
+import com.guciowons.footballer_guesser_app.data.game.requests.players.PlayersRequestManager;
+import com.guciowons.footballer_guesser_app.data.models.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,26 +17,26 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.scoreboard.activity.ScoreboardActivity"
+            android:name=".presence.scoreboard.activities.ScoreboardActivity"
             android:exported="false"/>
         <activity
-            android:name=".ui.game.activity.GameActivity"
+            android:name=".presence.game.activities.GameActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.landing.activity.LandingActivity"
+            android:name=".presence.authorization.landing.activities.LandingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.leagues.activity.LeaguesActivity"
+            android:name=".presence.leagues.activities.LeaguesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.signup.activity.SignUpActivity"
+            android:name=".presence.authorization.sign_up.activities.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.signin.activity.SignInActivity"
+            android:name=".presence.authorization.sign_in.activities.SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.splash.activity.SplashActivity"
+            android:name=".presence.authorization.splash.activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

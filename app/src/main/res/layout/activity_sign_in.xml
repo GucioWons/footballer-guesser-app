@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_sign_in"
-    tools:context=".ui.authentication.signin.activity.SignInActivity">
+    tools:context=".presence.authorization.sign_in.activities.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

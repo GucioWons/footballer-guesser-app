@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_landing"
-    tools:context=".ui.authentication.landing.activity.LandingActivity">
+    tools:context=".presence.authorization.landing.activities.LandingActivity">
 
     <Button
         android:id="@+id/sign_in_btn"

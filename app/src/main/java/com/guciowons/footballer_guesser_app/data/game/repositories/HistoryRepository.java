@@ -4,8 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.guciowons.footballer_guesser_app.domain.game.entities.HistoryPlayer;
-import com.guciowons.footballer_guesser_app.domain.game.entities.Player;
+import com.guciowons.footballer_guesser_app.data.models.player.HistoryPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
