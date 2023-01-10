@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 public class PlayersRequestManager {
     public JsonObjectRequest getPlayersRequest(PlayerRepository repository, Integer leagueId){
-        String url = "http://192.168.0.8:8080/footballers/league/" + leagueId;
+        String url = "http://footballerguesserservice-env.eba-iwqz7xzh.eu-central-1.elasticbeanstalk.com/footballers/league/" + leagueId;
         return new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> getClubs(repository, response),
                 error -> setError("Can't get players!"));

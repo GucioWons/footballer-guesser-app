@@ -20,7 +20,7 @@ public class LeaguesRequestManager {
     private List<League> leagues;
 
     public JsonArrayRequest getLeaguesRequest(LeagueRepository leagueRepository){
-        String url = "http://192.168.0.8:8080/leagues";
+        String url = "http://footballerguesserservice-env.eba-iwqz7xzh.eu-central-1.elasticbeanstalk.com/leagues";
         return new JsonArrayRequest(Request.Method.GET, url, null,
                 leaguesJson -> getLeagues(leagueRepository, leaguesJson),
                 error -> leagueRepository.setError("Error"));
