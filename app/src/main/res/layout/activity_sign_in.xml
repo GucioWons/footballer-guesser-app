@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.authentication.signin.activity.SignInActivity">
+    android:background="@drawable/ic_sign_in"
+    tools:context=".presence.authorization.sign_in.activities.SignInActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/toolbar_blank"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,47 +19,61 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintVertical_bias="0.15"
         android:orientation="vertical">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:inputType="textEmailAddress"
-            android:hint="Email"
-            android:autofillHints="emailAddress"/>
+            android:hint="@string/email"
+            android:layout_marginBottom="5dp">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/input"
+                android:inputType="textEmailAddress"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:inputType="textPassword"
-            android:hint="Password"
-            android:autofillHints="password"/>
+            android:hint="@string/password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/input"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:text="Go Back"
-                android:onClick="goBack"/>
-            <Button
+                android:layout_marginEnd="10dp"
+                android:paddingVertical="15dp"
+                android:backgroundTint="@color/button"
+                android:text="@string/go_back"/>
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/login_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:text="Login"/>
+                android:layout_marginStart="10dp"
+                android:paddingVertical="15dp"
+                android:backgroundTint="@color/button"
+                android:text="@string/login"/>
         </LinearLayout>
 
     </LinearLayout>

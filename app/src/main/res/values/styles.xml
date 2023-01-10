@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="UnclickedImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:backgroundTint">@color/button_light</item>
+        <item name="android:background">@drawable/button</item>
+    </style>
+    <style name="ClickedImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:backgroundTint">@color/light_green</item>
+        <item name="android:background">@drawable/button</item>
+    </style>
+    <style name="ScorePlace">
+        <item name="android:background">@drawable/place</item>
+        <item name="android:backgroundTint">@color/grey</item>
+    </style>
+</resources>

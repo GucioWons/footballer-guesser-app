@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_test"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.SearchView
@@ -29,6 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/player_searchview"
         app:layout_constraintVertical_bias="0"
-        android:paddingBottom="50dp"
+        android:paddingBottom="?attr/actionBarSize"
         tools:listitem="@layout/items_players"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
