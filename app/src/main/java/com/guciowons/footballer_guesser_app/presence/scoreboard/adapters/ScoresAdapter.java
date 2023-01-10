@@ -33,7 +33,7 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoresView
     }
 
     private void setUpItem(ScoresViewHolder holder, Score score, Integer position) {
-        holder.positionText.setText(position.toString());
+        holder.positionText.setText(position.toString() + ".");
         holder.nameText.setText(score.getName());
         holder.pointsText.setText(score.getPoints().toString());
     }

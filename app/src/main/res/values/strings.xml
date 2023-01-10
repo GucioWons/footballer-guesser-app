@@ -1,6 +1,28 @@
 <resources>
     <string name="app_name">Footballer guesser app</string>
     <string name="game_title">Avaible players</string>
-    <string name="question_mark">?</string>
+    <string name="question_mark">\?</string>
+    <string name="multiple_question_marks">\? ? ? ? ?</string>
     <string name="position">PO</string>
+    <string name="player_name">Player name</string>
+    <string name="number">11</string>
+    <string name="all_time">All-time</string>
+    <string name="monthly">Monthly</string>
+    <string name="weekly">Weekly</string>
+    <string name="search">Search</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="go_back">Go back</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="register">Register</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="you_guessed">You guessed</string>
+    <string name="next">Next</string>
+    <string name="league_name">League name</string>
+    <string name="place">1.</string>
+    <string name="score">12500</string>
 </resources>

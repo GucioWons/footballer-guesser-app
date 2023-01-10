@@ -26,7 +26,7 @@
             android:id="@+id/email_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/email"
             android:layout_marginBottom="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -41,7 +41,7 @@
             android:id="@+id/password_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password">
+            android:hint="@string/password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -61,19 +61,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:paddingVertical="15dp"
                 android:backgroundTint="@color/button"
-                android:text="Go Back"/>
+                android:text="@string/go_back"/>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/login_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:paddingVertical="15dp"
                 android:backgroundTint="@color/button"
-                android:text="Login"/>
+                android:text="@string/login"/>
         </LinearLayout>
 
     </LinearLayout>
