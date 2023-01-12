@@ -79,6 +79,10 @@ public class GameViewModel extends AndroidViewModel {
         }
     }
 
+    public void removePlayer(Player player){
+        playerRepository.removePlayer(player);
+    }
+
     public void addPlayerToHistory(Player player){
         historyRepository.addPlayer(new HistoryPlayer(player.getName(), player.getNationality(),
                 player.getNumber(), player.getPosition(), player.getClub(),

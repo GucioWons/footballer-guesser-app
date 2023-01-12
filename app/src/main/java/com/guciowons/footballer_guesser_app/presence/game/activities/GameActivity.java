@@ -145,6 +145,7 @@ public class GameActivity extends AppCompatActivity {
             gameViewModel.clearHints();
             gameViewModel.clearHistory();
         }
+        gameViewModel.removePlayer(player);
         gameViewModel.addPlayerToHistory(player);
     }
 

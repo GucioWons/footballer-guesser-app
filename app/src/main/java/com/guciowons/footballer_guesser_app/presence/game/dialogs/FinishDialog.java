@@ -7,6 +7,7 @@ import com.guciowons.footballer_guesser_app.databinding.DialogFinishBinding;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
 import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 
+//Set Dialog bigger
 public class FinishDialog {
     private DialogFinishBinding binding;
     private GameActivity activity;

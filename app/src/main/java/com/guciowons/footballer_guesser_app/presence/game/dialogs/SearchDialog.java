@@ -1,18 +1,13 @@
 package com.guciowons.footballer_guesser_app.presence.game.dialogs;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.data.models.player.Player;
-import com.guciowons.footballer_guesser_app.databinding.DialogFinishBinding;
 import com.guciowons.footballer_guesser_app.databinding.DialogSearchBinding;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
 import com.guciowons.footballer_guesser_app.presence.game.adapters.PlayersAdapter;
@@ -20,6 +15,7 @@ import com.guciowons.footballer_guesser_app.presence.game.adapters.PlayersAdapte
 import java.util.List;
 import java.util.stream.Collectors;
 
+//Set Dialog bigger
 public class SearchDialog {
     private DialogSearchBinding binding;
     private List<Player> players;
@@ -41,7 +37,7 @@ public class SearchDialog {
     private Dialog createDialog(){
         binding = DialogSearchBinding.inflate(activity.getLayoutInflater());
         dialog = new Dialog(activity);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.setContentView(binding.getRoot());
         setUpViews();
         return dialog;

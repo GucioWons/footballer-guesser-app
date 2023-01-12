@@ -44,4 +44,10 @@ public class PlayerRepository {
     public void addPlayer(Player player){
         tempPlayers.add(player);
     }
+
+    public void removePlayer(Player player) {
+        tempPlayers = players.getValue();
+        tempPlayers.remove(player);
+        players.setValue(tempPlayers);
+    }
 }
