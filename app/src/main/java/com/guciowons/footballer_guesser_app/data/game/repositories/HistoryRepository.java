@@ -12,13 +12,15 @@ import java.util.List;
 public class HistoryRepository {
     private MutableLiveData<List<HistoryPlayer>> history = new MutableLiveData<>();
 
-    public HistoryRepository(Application application){
+    public HistoryRepository(){
         history.postValue(new ArrayList<>());
     }
 
     public void addPlayer(HistoryPlayer historyPlayer){
         List<HistoryPlayer> newPlayers = history.getValue();
-        newPlayers.add(historyPlayer);
+        if (newPlayers != null){
+            newPlayers.add(historyPlayer);
+        }
         history.setValue(newPlayers);
     }
 

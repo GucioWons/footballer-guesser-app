@@ -38,7 +38,7 @@ public class GameViewModel extends AndroidViewModel {
 
     public GameViewModel(@NonNull Application application) {
         super(application);
-        historyRepository = new HistoryRepository(getApplication());
+        historyRepository = new HistoryRepository();
         history = historyRepository.getHistory();
         requestQueue = Volley.newRequestQueue(application);
         account = getEncryptedPreferences();
@@ -54,9 +54,7 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public void drawAnswer(){
-        XoRoShiRo128PlusRandom xoroRandom = new XoRoShiRo128PlusRandom();
-        answer = players.getValue().get(xoroRandom.nextInt(players.getValue().size()));
-        System.out.println(answer.getName());
+        answer = playerRepository.getRandomPlayer();
     }
 
     public boolean checkAnswer(Player player){
@@ -103,10 +101,10 @@ public class GameViewModel extends AndroidViewModel {
         positionHint.postValue(null);
     }
 
-    public void sendScore(Integer leagueId) {
-        Integer playerId = account.getInt("id", 0);
-        if(playerId != 0){
-            Integer points;
+    public void sendScore(int leagueId) {
+        int playerId = account.getInt("id", 0);
+        if(playerId != 0 && history.getValue() != null){
+            int points;
             if(history.getValue().size() <= 10){
                 points = 8;
             }else if(history.getValue().size() <= 15){

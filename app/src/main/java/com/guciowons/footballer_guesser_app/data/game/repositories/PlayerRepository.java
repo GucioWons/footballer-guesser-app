@@ -12,6 +12,8 @@ import com.guciowons.footballer_guesser_app.data.models.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unimi.dsi.util.XoRoShiRo128PlusRandom;
+
 public class PlayerRepository {
     private MutableLiveData<List<Player>> players = new MutableLiveData<>();
     private List<Player> tempPlayers = new ArrayList<>();
@@ -47,7 +49,14 @@ public class PlayerRepository {
 
     public void removePlayer(Player player) {
         tempPlayers = players.getValue();
-        tempPlayers.remove(player);
+        if(tempPlayers != null) {
+            tempPlayers.remove(player);
+        }
         players.setValue(tempPlayers);
+    }
+
+    public Player getRandomPlayer(){
+        XoRoShiRo128PlusRandom xoroRandom = new XoRoShiRo128PlusRandom();
+        return players.getValue().get(xoroRandom.nextInt(players.getValue().size()));
     }
 }
