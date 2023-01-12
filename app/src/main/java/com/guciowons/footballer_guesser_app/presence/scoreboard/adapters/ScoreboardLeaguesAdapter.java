@@ -36,7 +36,7 @@ public class ScoreboardLeaguesAdapter extends RecyclerView.Adapter<ScoreboardLea
         if(selected != null && selected == position){
             holder.imageButton.setBackgroundTintList(holder.context.getColorStateList(R.color.light_green));
         }else {
-            holder.imageButton.setBackgroundTintList(holder.context.getColorStateList(R.color.purple_200));
+            holder.imageButton.setBackgroundTintList(holder.context.getColorStateList(R.color.button_light));
         }
         holder.imageButton.setImageBitmap(leagues.get(position).getLogo());
     }
