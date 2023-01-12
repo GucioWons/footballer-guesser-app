@@ -92,7 +92,9 @@ public class PlayersRequestManager {
 
     public Player getRandomPlayer(){
         XoRoShiRo128PlusRandom xoroRandom = new XoRoShiRo128PlusRandom();
-        return players.get(xoroRandom.nextInt(players.size()));
+        Player player = players.get(xoroRandom.nextInt(players.size()));
+        System.out.println(player.getName());
+        return player;
     }
 
     private void setError(String s) {

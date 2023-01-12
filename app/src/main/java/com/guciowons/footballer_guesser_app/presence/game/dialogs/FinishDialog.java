@@ -45,6 +45,7 @@ public class FinishDialog {
     }
 
     private void goBack(){
+        dialog.dismiss();
         Intent intent = new Intent(activity, LeaguesActivity.class);
         activity.startActivity(intent);
         activity.finish();

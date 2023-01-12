@@ -85,11 +85,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setUpHistoryObserver(){
-        gameViewModel.getHistory().observe(this, history -> historyAdapter.setPlayers(history));
+        gameViewModel.getHistoryViewModel().getHistory().observe(this, history -> historyAdapter.setPlayers(history));
     }
 
     private void setUpClubObserver(){
-        gameViewModel.getClubHint().observe(this, club -> {
+        gameViewModel.getHintViewModel().getClubHint().observe(this, club -> {
             if(club != null) {
                 binding.hintClubImage.setImageBitmap(club.getCrest());
             }
@@ -97,7 +97,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setUpCountryObserver(){
-        gameViewModel.getCountryHint().observe(this, country -> {
+        gameViewModel.getHintViewModel().getCountryHint().observe(this, country -> {
             if(country != null) {
                 loadCountryImage(country);
             }
@@ -105,7 +105,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setUpNumberObserver(){
-        gameViewModel.getNumberHint().observe(this, number -> {
+        gameViewModel.getHintViewModel().getNumberHint().observe(this, number -> {
             if(number != null) {
                 binding.hintNumberText.setText(number.toString());
             }
@@ -113,7 +113,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setUpPositionObserver(){
-        gameViewModel.getPositionHint().observe(this, position ->{
+        gameViewModel.getHintViewModel().getPositionHint().observe(this, position ->{
             if(position != null) {
                 binding.hintPositionText.setText(position);
             }
@@ -138,15 +138,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void checkAnswer(Player player){
-        if(gameViewModel.checkAnswer(player)){
+        if(gameViewModel.checkAnswer(player, id)){
             startFinishDialog(player.getName());
-            gameViewModel.sendScore(id);
-            gameViewModel.clearHints();
-            gameViewModel.clearHistory();
+            gameViewModel.getHintViewModel().clearHints();
+            gameViewModel.getHistoryViewModel().clearHistory();
             gameViewModel.clearAnswer();
         }
         gameViewModel.removePlayer(player);
-        gameViewModel.addPlayerToHistory(player);
+        gameViewModel.getHistoryViewModel().addPlayerToHistory(player, gameViewModel.getHintViewModel());
     }
 
     private void loadCountryImage(String country){
