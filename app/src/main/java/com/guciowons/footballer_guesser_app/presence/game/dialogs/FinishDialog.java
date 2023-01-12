@@ -1,23 +1,17 @@
 package com.guciowons.footballer_guesser_app.presence.game.dialogs;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.content.Intent;
 
-import com.guciowons.footballer_guesser_app.R;
+import com.guciowons.footballer_guesser_app.databinding.DialogFinishBinding;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
+import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 
 public class FinishDialog {
-    //TODO
-    //Finish dialog binding
+    private DialogFinishBinding binding;
     private GameActivity activity;
     private String name;
     private Dialog dialog;
-    private TextView nameText;
-    private Button nextButton;
 
     public FinishDialog(GameActivity activity, String name) {
         this.activity = activity;
@@ -25,27 +19,33 @@ public class FinishDialog {
     }
 
     public void show(){
-        dialog = createDialog().create();
+        dialog = createDialog();
         dialog.show();
     }
 
-    private AlertDialog.Builder createDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_finish, null);
-        builder.setView(dialogView);
-        builder.setCancelable(false);
-        setUpViews(dialogView);
-        return builder;
+    private Dialog createDialog(){
+        binding = DialogFinishBinding.inflate(activity.getLayoutInflater());
+        dialog = new Dialog(activity);
+        dialog.setCancelable(false);
+        dialog.setContentView(binding.getRoot());
+        setUpViews();
+        return dialog;
     }
 
-    private void setUpViews(View dialogView){
-        nameText = dialogView.findViewById(R.id.finish_name_text);
-        nextButton = dialogView.findViewById(R.id.next_button);
-        nameText.setText(nameText.getText() + " " + name);
-        nextButton.setOnClickListener(view -> {
-            dialog.dismiss();
-            activity.recreate();
-        });
+    private void setUpViews(){
+        binding.finishNameText.text.setText(binding.finishNameText.getText() + " " + name);
+        binding.nextButton.setOnClickListener(view -> recreateActivity());
+        binding.backButton.setOnClickListener(view -> goBack());
+    }
+
+    private void recreateActivity(){
+        dialog.dismiss();
+        activity.recreate();
+    }
+
+    private void goBack(){
+        Intent intent = new Intent(activity, LeaguesActivity.class);
+        activity.startActivity(intent);
+        activity.finish();
     }
 }
