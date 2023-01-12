@@ -16,6 +16,7 @@ import it.unimi.dsi.util.XoRoShiRo128PlusRandom;
 
 public class PlayerRepository {
     private MutableLiveData<List<Player>> players = new MutableLiveData<>();
+    private MutableLiveData<Player> answer = new MutableLiveData<>();
     private List<Player> tempPlayers = new ArrayList<>();
     private RequestQueue requestQueue;
     private Integer id;
@@ -27,7 +28,7 @@ public class PlayerRepository {
     }
 
     private void fetchPlayers(){
-        PlayersRequestManager playersRequestManager = new PlayersRequestManager();
+        PlayersRequestManager playersRequestManager = new PlayersRequestManager(PlayerRepository.this);
         requestQueue.add(playersRequestManager.getPlayersRequest(PlayerRepository.this, id));
     }
 
@@ -39,12 +40,8 @@ public class PlayerRepository {
         return requestQueue;
     }
 
-    public void setPlayers(){
-        players.postValue(tempPlayers);
-    }
-
-    public void addPlayer(Player player){
-        tempPlayers.add(player);
+    public void setPlayers(List<Player> players){
+        this.players.postValue(players);
     }
 
     public void removePlayer(Player player) {
@@ -55,8 +52,11 @@ public class PlayerRepository {
         players.setValue(tempPlayers);
     }
 
-    public Player getRandomPlayer(){
-        XoRoShiRo128PlusRandom xoroRandom = new XoRoShiRo128PlusRandom();
-        return players.getValue().get(xoroRandom.nextInt(players.getValue().size()));
+    public void setAnswer(Player player){
+        answer.postValue(player);
+    }
+
+    public MutableLiveData<Player> getAnswer(){
+        return answer;
     }
 }

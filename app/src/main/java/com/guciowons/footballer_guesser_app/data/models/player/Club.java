@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 public class Club {
     private final String name;
     private final String shortcut;
-    private final String url;
+    private String url;
     private Bitmap crest;
 
     public Club(String name, String shortcut, String url) {
@@ -24,6 +24,10 @@ public class Club {
 
     public String getUrl() {
         return url;
+    }
+
+    public void setUrl(String url){
+        this.url = url;
     }
 
     public Bitmap getCrest() {

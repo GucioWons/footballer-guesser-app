@@ -28,13 +28,13 @@ public class GameViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Player>> players;
     private MutableLiveData<List<HistoryPlayer>> history;
+    private MutableLiveData<Player> answer = new MutableLiveData<>();
     private MutableLiveData<Club> clubHint = new MutableLiveData<>();
     private MutableLiveData<String> countryHint = new MutableLiveData<>();
     private MutableLiveData<Integer> numberHint = new MutableLiveData<>();
     private MutableLiveData<String> positionHint = new MutableLiveData<>();
 
     private RequestQueue requestQueue;
-    private Player answer;
 
     public GameViewModel(@NonNull Application application) {
         super(application);
@@ -51,26 +51,23 @@ public class GameViewModel extends AndroidViewModel {
     public void fetchPlayers(Integer id){
         playerRepository = new PlayerRepository(getApplication(), id);
         players = playerRepository.getPlayers();
-    }
-
-    public void drawAnswer(){
-        answer = playerRepository.getRandomPlayer();
+        answer = playerRepository.getAnswer();
     }
 
     public boolean checkAnswer(Player player){
-        if(answer.equals(player)){
+        if(answer.getValue().equals(player)){
             return true;
         }else{
-            if(answer.getClub().equals(player.getClub()) && clubHint.getValue() == null){
+            if(answer.getValue().getClub().equals(player.getClub()) && clubHint.getValue() == null){
                 clubHint.setValue(player.getClub());
             }
-            if(answer.getNationality().equals(player.getNationality()) && countryHint.getValue() == null){
+            if(answer.getValue().getNationality().equals(player.getNationality()) && countryHint.getValue() == null){
                 countryHint.setValue(player.getNationality());
             }
-            if(answer.getNumber().equals(player.getNumber()) && numberHint.getValue() == null){
+            if(answer.getValue().getNumber().equals(player.getNumber()) && numberHint.getValue() == null){
                 numberHint.setValue(player.getNumber());
             }
-            if(answer.getPosition().equals(player.getPosition()) && positionHint.getValue() == null){
+            if(answer.getValue().getPosition().equals(player.getPosition()) && positionHint.getValue() == null){
                 positionHint.setValue(player.getPosition());
             }
             return false;
@@ -99,6 +96,10 @@ public class GameViewModel extends AndroidViewModel {
         countryHint.postValue(null);
         numberHint.postValue(null);
         positionHint.postValue(null);
+    }
+
+    public void clearAnswer(){
+        answer.postValue(null);
     }
 
     public void sendScore(int leagueId) {

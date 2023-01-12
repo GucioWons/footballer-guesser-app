@@ -80,7 +80,6 @@ public class GameActivity extends AppCompatActivity {
 
     private void setUpPlayersObserver(){
         gameViewModel.getAllPlayers().observe(this, players -> {
-            gameViewModel.drawAnswer();
             loadingDialog.dismiss();
         });
     }
@@ -144,6 +143,7 @@ public class GameActivity extends AppCompatActivity {
             gameViewModel.sendScore(id);
             gameViewModel.clearHints();
             gameViewModel.clearHistory();
+            gameViewModel.clearAnswer();
         }
         gameViewModel.removePlayer(player);
         gameViewModel.addPlayerToHistory(player);

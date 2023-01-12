@@ -93,4 +93,7 @@ public class ScoreboardViewModel extends AndroidViewModel {
         EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
         return encryptedPreferencesGetter.getEncryptedPreferences(getApplication());
     }
+
+    public void setError(String s) {
+    }
 }

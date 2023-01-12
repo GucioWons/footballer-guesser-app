@@ -5,6 +5,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.guciowons.footballer_guesser_app.data.models.Score;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.viewmodel.ScoreboardViewModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,21 +14,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ScoresRequestManager {
-    public JsonArrayRequest getScores(ScoreboardViewModel scoreboardViewModel, String url){
-        return new JsonArrayRequest(Request.Method.GET, url, null,
-                response -> {
-                    List<Score> scores = new ArrayList<>();
-                    for(int i = 0; i< response.length(); i++) {
-                        try {
-                            JSONObject scoreJson = response.getJSONObject(i);
-                            scores.add(new Score(scoreJson.getString("username"), scoreJson.getInt("score")));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    scoreboardViewModel.setScores(scores.stream().limit(100).collect(Collectors.toList()));
-                }, error -> {
+    private List<Score> scores = new ArrayList<>();
 
-                });
+    public JsonArrayRequest getScores(ScoreboardViewModel viewModel, String url){
+        return new JsonArrayRequest(Request.Method.GET, url, null,
+                scoresJson -> convertScores(viewModel, scoresJson),
+                error -> viewModel.setError("Cannot fetch scores!"));
+    }
+
+    private void convertScores(ScoreboardViewModel viewModel, JSONArray scoresJson){
+        for(int i = 0; i< scoresJson.length(); i++) {
+            convertScore(scoresJson, i);
+        }
+        viewModel.setScores(scores.stream().limit(100).collect(Collectors.toList()));
+    }
+
+    private void convertScore(JSONArray scoresJson, int i){
+        try {
+            JSONObject scoreJson = scoresJson.getJSONObject(i);
+            scores.add(new Score(scoreJson.getString("username"), scoreJson.getInt("score")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
