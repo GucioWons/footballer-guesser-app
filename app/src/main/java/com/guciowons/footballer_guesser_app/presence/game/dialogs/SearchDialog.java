@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.data.models.player.Player;
+import com.guciowons.footballer_guesser_app.databinding.DialogFinishBinding;
+import com.guciowons.footballer_guesser_app.databinding.DialogSearchBinding;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
 import com.guciowons.footballer_guesser_app.presence.game.adapters.PlayersAdapter;
 
@@ -19,11 +21,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SearchDialog {
+    private DialogSearchBinding binding;
     private List<Player> players;
     private GameActivity activity;
-    private RecyclerView searchRecycler;
     private PlayersAdapter playersAdapter;
-    private SearchView searchView;
     private Dialog dialog;
     private PlayersAdapter.RecyclerViewClickListener listener;
 
@@ -33,24 +34,21 @@ public class SearchDialog {
     }
 
     public void show(){
-        dialog = createDialog().create();
+        dialog = createDialog();
         dialog.show();
     }
 
-    private AlertDialog.Builder createDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_search, null);
-        builder.setView(dialogView);
-        builder.setCancelable(true);
-        setUpViews(dialogView);
-        return builder;
+    private Dialog createDialog(){
+        binding = DialogSearchBinding.inflate(activity.getLayoutInflater());
+        dialog = new Dialog(activity);
+        dialog.setCancelable(false);
+        dialog.setContentView(binding.getRoot());
+        setUpViews();
+        return dialog;
     }
 
-    private void setUpViews(View dialogView){
-        searchRecycler = dialogView.findViewById(R.id.players_recycler);
-        searchView = dialogView.findViewById(R.id.player_searchview);
-        searchView.setOnQueryTextListener(setUpQueryTextListener());
+    private void setUpViews(){
+        binding.playerSearchview.setOnQueryTextListener(setUpQueryTextListener());
         updateAdapter();
     }
 
@@ -80,9 +78,9 @@ public class SearchDialog {
         setOnClickListener();
         playersAdapter = new PlayersAdapter(players, listener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity.getApplicationContext());
-        searchRecycler.setLayoutManager(layoutManager);
-        searchRecycler.setItemAnimator(new DefaultItemAnimator());
-        searchRecycler.setAdapter(playersAdapter);
+        binding.playersRecycler.setLayoutManager(layoutManager);
+        binding.playersRecycler.setItemAnimator(new DefaultItemAnimator());
+        binding.playersRecycler.setAdapter(playersAdapter);
     }
 
     private void setOnClickListener(){
