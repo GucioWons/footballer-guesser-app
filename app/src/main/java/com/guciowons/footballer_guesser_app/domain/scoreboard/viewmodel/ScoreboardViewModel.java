@@ -1,6 +1,7 @@
 package com.guciowons.footballer_guesser_app.domain.scoreboard.viewmodel;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,11 +13,13 @@ import com.guciowons.footballer_guesser_app.data.leagues.repositories.LeagueRepo
 import com.guciowons.footballer_guesser_app.data.models.League;
 import com.guciowons.footballer_guesser_app.data.models.Score;
 import com.guciowons.footballer_guesser_app.data.scoreboard.requests.ScoresRequestManager;
+import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
 
 import java.util.List;
 
 public class ScoreboardViewModel extends AndroidViewModel {
     private LeagueRepository leagueRepository;
+    private SharedPreferences account;
     private MutableLiveData<List<Score>> scores = new MutableLiveData<>();
     private MutableLiveData<List<League>> leagues;
 
@@ -30,9 +33,14 @@ public class ScoreboardViewModel extends AndroidViewModel {
         requestQueue = Volley.newRequestQueue(application);
         leagueRepository = new LeagueRepository(application);
         leagues = leagueRepository.getLeagues();
+        account = getEncryptedPreferences();
         time = null;
         leagueId = null;
         fetchScores();
+    }
+
+    public void logoutUser(){
+        account.edit().clear().apply();
     }
 
     public void setTime(String time){
@@ -79,5 +87,10 @@ public class ScoreboardViewModel extends AndroidViewModel {
 
     public RequestQueue getRequestQueue(){
         return requestQueue;
+    }
+
+    private SharedPreferences getEncryptedPreferences(){
+        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
+        return encryptedPreferencesGetter.getEncryptedPreferences(getApplication());
     }
 }

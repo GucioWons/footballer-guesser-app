@@ -24,6 +24,7 @@ import it.unimi.dsi.util.XoRoShiRo128PlusRandom;
 public class GameViewModel extends AndroidViewModel {
     private PlayerRepository playerRepository;
     private HistoryRepository historyRepository;
+    private SharedPreferences account;
 
     private MutableLiveData<List<Player>> players;
     private MutableLiveData<List<HistoryPlayer>> history;
@@ -40,6 +41,11 @@ public class GameViewModel extends AndroidViewModel {
         historyRepository = new HistoryRepository(getApplication());
         history = historyRepository.getHistory();
         requestQueue = Volley.newRequestQueue(application);
+        account = getEncryptedPreferences();
+    }
+
+    public void logoutUser(){
+        account.edit().clear().apply();
     }
 
     public void fetchPlayers(Integer id){
@@ -94,7 +100,7 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public void sendScore(Integer leagueId) {
-        Integer playerId = getEncryptedPreferences().getInt("id", 0);
+        Integer playerId = account.getInt("id", 0);
         if(playerId != 0){
             Integer points;
             if(history.getValue().size() <= 10){

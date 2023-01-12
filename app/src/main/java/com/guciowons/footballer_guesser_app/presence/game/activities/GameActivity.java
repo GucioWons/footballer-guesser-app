@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.guciowons.footballer_guesser_app.databinding.ActivityGameBinding;
 import com.guciowons.footballer_guesser_app.data.models.player.Player;
 import com.guciowons.footballer_guesser_app.data.game.requests.flag.FlagRequestManager;
 import com.guciowons.footballer_guesser_app.domain.game.viewmodel.GameViewModel;
+import com.guciowons.footballer_guesser_app.presence.authorization.landing.activities.LandingActivity;
 import com.guciowons.footballer_guesser_app.presence.game.adapters.HistoryAdapter;
 import com.guciowons.footballer_guesser_app.presence.game.dialogs.FinishDialog;
 import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
@@ -53,10 +55,16 @@ public class GameActivity extends AppCompatActivity {
     private void setUpMenu(){
         binding.appBar.toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.logout){
-                Toast.makeText(GameActivity.this, "Logout Successful", Toast.LENGTH_LONG).show();
+                logoutUser();
             }
             return true;
         });
+    }
+
+    private void logoutUser(){
+        gameViewModel.logoutUser();
+        Intent intent = new Intent(GameActivity.this, LandingActivity.class);
+        startActivity(intent);
     }
 
     private void setUpObservers(){

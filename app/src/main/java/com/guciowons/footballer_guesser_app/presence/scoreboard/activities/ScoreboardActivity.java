@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -11,7 +12,9 @@ import android.widget.Toast;
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.databinding.ActivityScoreboardBinding;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.viewmodel.ScoreboardViewModel;
+import com.guciowons.footballer_guesser_app.presence.authorization.landing.activities.LandingActivity;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
+import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 import com.guciowons.footballer_guesser_app.presence.scoreboard.adapters.ScoreboardLeaguesAdapter;
 import com.guciowons.footballer_guesser_app.presence.scoreboard.adapters.ScoresAdapter;
 
@@ -42,10 +45,16 @@ public class ScoreboardActivity extends AppCompatActivity {
     private void setUpMenu(){
         binding.appBar.toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.logout){
-                Toast.makeText(ScoreboardActivity.this, "Logout Successful", Toast.LENGTH_LONG).show();
+                logoutUser();
             }
             return true;
         });
+    }
+
+    private void logoutUser(){
+        scoreboardViewModel.logoutUser();
+        Intent intent = new Intent(ScoreboardActivity.this, LandingActivity.class);
+        startActivity(intent);
     }
 
     private void setUpButtons(){
