@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 
 public class SplashRequestManager {
     public JsonObjectRequest getLoginRequest(SplashViewModel model, JSONObject params){
-        String url = "http://footballerguesserservice-env.eba-iwqz7xzh.eu-central-1.elasticbeanstalk.com//";
+        String url = "http://footballerguesserservice-env.eba-iwqz7xzh.eu-central-1.elasticbeanstalk.com/login/";
         return new JsonObjectRequest(Request.Method.POST, url, params,
                 response -> model.setResponse(response, params),
                 error -> model.setErrorResponse(getErrorResponse(error)));
