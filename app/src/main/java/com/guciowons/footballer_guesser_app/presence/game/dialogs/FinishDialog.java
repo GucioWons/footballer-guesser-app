@@ -33,7 +33,7 @@ public class FinishDialog {
     }
 
     private void setUpViews(){
-        binding.finishNameText.text.setText(binding.finishNameText.getText() + " " + name);
+        binding.finishNameText.setText(binding.finishNameText.getText() + " " + name);
         binding.nextButton.setOnClickListener(view -> recreateActivity());
         binding.backButton.setOnClickListener(view -> goBack());
     }
