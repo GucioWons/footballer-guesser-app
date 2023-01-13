@@ -22,7 +22,7 @@ public class GameViewModel extends BaseViewModel {
     private HistoryViewModel historyViewModel;
 
     private MutableLiveData<List<Player>> players;
-    private MutableLiveData<Player> answer = new MutableLiveData<>();
+    private MutableLiveData<Player> answer;
 
     private RequestQueue requestQueue;
 
@@ -37,6 +37,7 @@ public class GameViewModel extends BaseViewModel {
         playerRepository = new PlayerRepository(application, id);
         players = playerRepository.getPlayers();
         answer = playerRepository.getAnswer();
+        error = playerRepository.getError();
     }
 
     public boolean checkAnswer(Player player, int id){

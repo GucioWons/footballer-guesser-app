@@ -34,6 +34,7 @@ public class ScoreboardViewModel extends BaseViewModel {
         requestQueue = Volley.newRequestQueue(application);
         leagueRepository = new LeagueRepository(application);
         leagues = leagueRepository.getLeagues();
+        error = leagueRepository.getError();
         time = null;
         leagueId = null;
         GetScoresSender.fetchScores(this, time, leagueId, requestQueue);
@@ -47,6 +48,10 @@ public class ScoreboardViewModel extends BaseViewModel {
     public void setLeagueId(Integer leagueId){
         this.leagueId = leagueId;
         GetScoresSender.fetchScores(this, time, leagueId, requestQueue);
+    }
+
+    public void setError(String error) {
+        leagueRepository.setError(error);
     }
 
     public MutableLiveData<List<Score>> getScores(){

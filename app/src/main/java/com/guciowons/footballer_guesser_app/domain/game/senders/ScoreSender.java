@@ -17,7 +17,11 @@ public class ScoreSender {
                 points = 1;
             }
             SendScoreRequestManager sendScoreRequestManager = new SendScoreRequestManager();
-            requestQueue.add(sendScoreRequestManager.sendScoreRequest(playerId, leagueId, points));
+            requestQueue.add(sendScoreRequestManager.sendScoreRequest(createUrl(leagueId, playerId, points)));
         }
+    }
+
+    private static String createUrl(int leagueId, int playerId, int points){
+        return "http://footballerguesserservice-env.eba-iwqz7xzh.eu-central-1.elasticbeanstalk.com/scores?userId=" + playerId + "&leagueId=" + leagueId + "&points=" + points;
     }
 }

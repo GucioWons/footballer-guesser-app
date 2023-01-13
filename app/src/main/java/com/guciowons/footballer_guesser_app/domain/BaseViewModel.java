@@ -7,11 +7,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
 
-public class BaseViewModel {
+public abstract class BaseViewModel {
     protected Application application;
     protected SharedPreferences account;
+    protected MutableLiveData<String> error = new MutableLiveData<>();
 
-    private MutableLiveData<String> error = new MutableLiveData<>();
+
 
     public BaseViewModel(Application application) {
         this.application = application;
@@ -27,7 +28,7 @@ public class BaseViewModel {
         account.edit().clear().apply();
     }
 
-    public void setError(String s) {
-        error.setValue(s);
+    public MutableLiveData<String> getError(){
+        return error;
     }
 }

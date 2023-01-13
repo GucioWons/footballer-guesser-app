@@ -1,9 +1,11 @@
 package com.guciowons.footballer_guesser_app.data.game.requests.players;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageRequest;
+import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.data.game.repositories.PlayerRepository;
 import com.guciowons.footballer_guesser_app.data.models.player.Club;
 
@@ -20,8 +22,6 @@ public class PngCrestRequestManager extends CrestRequestManager {
         return new ImageRequest(club.getUrl(),
                 crest -> setClubCrest(crest, club, clubJson),
                 64, 64, ImageView.ScaleType.CENTER, null,
-                error -> {
-                    //TODO
-                });
+                error -> playersRequestManager.setError("Cannot get one or more clubs!"));
     }
 }

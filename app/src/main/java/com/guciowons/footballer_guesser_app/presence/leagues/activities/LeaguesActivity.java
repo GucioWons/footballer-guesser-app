@@ -16,6 +16,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
+import com.guciowons.footballer_guesser_app.presence.BaseActivity;
 import com.guciowons.footballer_guesser_app.presence.authorization.landing.activities.LandingActivity;
 import com.guciowons.footballer_guesser_app.presence.scoreboard.activities.ScoreboardActivity;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
@@ -26,7 +27,7 @@ import com.guciowons.footballer_guesser_app.presence.leagues.adapters.LeaguesAda
 
 import java.util.ArrayList;
 
-public class LeaguesActivity extends AppCompatActivity {
+public class LeaguesActivity extends BaseActivity {
     private ActivityLeaguesBinding binding;
     private LeaguesViewModel leaguesViewModel;
     private LoadingDialog loadingDialog;
@@ -44,6 +45,7 @@ public class LeaguesActivity extends AppCompatActivity {
         startLoadingDialog();
         setUpLeaguesRecycler();
         setUpObserver();
+        setUpErrorObserver(leaguesViewModel);
     }
 
     private void setUpMenu(){
@@ -53,7 +55,7 @@ public class LeaguesActivity extends AppCompatActivity {
                     goToScoreboard();
                     break;
                 case R.id.logout:
-                    logoutUser();
+                    logoutUser(leaguesViewModel);
                     break;
             }
             return true;
@@ -62,12 +64,6 @@ public class LeaguesActivity extends AppCompatActivity {
 
     public void goToScoreboard(){
         Intent intent = new Intent(LeaguesActivity.this, ScoreboardActivity.class);
-        startActivity(intent);
-    }
-
-    public void logoutUser(){
-        leaguesViewModel.logoutUser();
-        Intent intent = new Intent(LeaguesActivity.this, LandingActivity.class);
         startActivity(intent);
     }
 

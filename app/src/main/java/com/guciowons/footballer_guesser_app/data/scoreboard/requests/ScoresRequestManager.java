@@ -24,18 +24,18 @@ public class ScoresRequestManager {
     }
 
     private void convertScores(ScoreboardViewModel viewModel, JSONArray scoresJson){
+        viewModel.setError("Error 1");
         for(int i = 0; i< scoresJson.length(); i++) {
-            convertScore(scoresJson, i);
+            convertScore(viewModel, scoresJson, i);
         }
         viewModel.setScores(scores.stream().limit(100).collect(Collectors.toList()));
     }
 
-    //TODO
-    private void convertScore(JSONArray scoresJson, int i){
+    private void convertScore(ScoreboardViewModel viewModel, JSONArray scoresJson, int i){
         try {
             scores.add(JsonToScoreMapper.mapJsonToScore(scoresJson.getJSONObject(i)));
         } catch (JSONException e) {
-            e.printStackTrace();
+            viewModel.setError("Cannot fetch scores!");
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.guciowons.footballer_guesser_app.data.game.repositories;
 
-import android.app.Application;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -26,9 +25,5 @@ public class HistoryRepository {
 
     public MutableLiveData<List<HistoryPlayer>> getHistory(){
         return history;
-    }
-
-    public void clearHistory(){
-        history.postValue(new ArrayList<>());
     }
 }

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.databinding.ActivityScoreboardBinding;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.viewmodel.ScoreboardViewModel;
+import com.guciowons.footballer_guesser_app.presence.BaseActivity;
 import com.guciowons.footballer_guesser_app.presence.authorization.landing.activities.LandingActivity;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
 import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
@@ -20,7 +21,7 @@ import com.guciowons.footballer_guesser_app.presence.scoreboard.adapters.ScoresA
 
 import java.util.ArrayList;
 
-public class ScoreboardActivity extends AppCompatActivity {
+public class ScoreboardActivity extends BaseActivity {
     private ActivityScoreboardBinding binding;
     private ScoreboardViewModel scoreboardViewModel;
     private ScoresAdapter scoresAdapter;
@@ -40,21 +41,16 @@ public class ScoreboardActivity extends AppCompatActivity {
         scoreboardViewModel = new ScoreboardViewModel(getApplication());
         scoreboardViewModel.getScores().observe(this, scores -> scoresAdapter.setScores(scores));
         scoreboardViewModel.getLeagues().observe(this, leagues -> scoreboardLeaguesAdapter.setLeagues(leagues));
+        setUpErrorObserver(scoreboardViewModel);
     }
 
     private void setUpMenu(){
         binding.appBar.toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.logout){
-                logoutUser();
+                logoutUser(scoreboardViewModel);
             }
             return true;
         });
-    }
-
-    private void logoutUser(){
-        scoreboardViewModel.logoutUser();
-        Intent intent = new Intent(ScoreboardActivity.this, LandingActivity.class);
-        startActivity(intent);
     }
 
     private void setUpButtons(){

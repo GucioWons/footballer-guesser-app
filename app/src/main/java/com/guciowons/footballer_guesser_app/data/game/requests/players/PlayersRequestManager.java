@@ -81,6 +81,10 @@ public class PlayersRequestManager {
         return players.size() == estimatedPlayers;
     }
 
+    public void reducePlayerSize(){
+        estimatedPlayers = estimatedPlayers-1;
+    }
+
     public void addPlayer(Player player){
         players.add(player);
     }
@@ -96,7 +100,8 @@ public class PlayersRequestManager {
         System.out.println(player.getName());
         return player;
     }
-    //TODO
-    private void setError(String s) {
+
+    public void setError(String error) {
+        repository.setError(error);
     }
 }

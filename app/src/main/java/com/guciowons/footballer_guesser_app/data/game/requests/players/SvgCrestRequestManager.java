@@ -20,15 +20,15 @@ public class SvgCrestRequestManager extends CrestRequestManager {
 
     public StringRequest getSvgCrestRequest(Club club, JSONObject clubJson){
         return new StringRequest(club.getUrl(),
-                response -> convertPlayerSvg(response, club, clubJson),
-                error -> showError());
+                response -> convertCrestSvg(response, club, clubJson),
+                error -> playersRequestManager.setError("Cannot get one or more clubs!"));
     }
 
-    private void convertPlayerSvg(String response12, Club club, JSONObject clubJson){
+    private void convertCrestSvg(String response12, Club club, JSONObject clubJson){
         try {
             getBitmapFromSvg(SVG.getFromString(response12).renderToPicture(), club, clubJson);
         } catch (SVGParseException e) {
-            showError();
+            playersRequestManager.setError("Cannot get one or more clubs!");
         }
     }
 
@@ -37,11 +37,7 @@ public class SvgCrestRequestManager extends CrestRequestManager {
             Bitmap bitmap = Bitmap.createBitmap(picture);
             setClubCrest(bitmap, club, clubJson);
         }else {
-            showError();
+            playersRequestManager.setError("Cannot get one or more clubs!");
         }
-    }
-
-    //TODO
-    private void showError() {
     }
 }

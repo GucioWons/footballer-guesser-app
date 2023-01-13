@@ -22,6 +22,7 @@ public class LeaguesViewModel extends BaseViewModel {
         super(application);
         leagueRepository = new LeagueRepository(application);
         leagues = leagueRepository.getLeagues();
+        error = leagueRepository.getError();
     }
 
     public MutableLiveData<List<League>> getLeagues(){

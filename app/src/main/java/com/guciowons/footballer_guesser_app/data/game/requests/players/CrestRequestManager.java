@@ -10,8 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CrestRequestManager {
-    private final PlayersRequestManager playersRequestManager;
+public abstract class CrestRequestManager {
+    protected final PlayersRequestManager playersRequestManager;
 
     public CrestRequestManager(PlayersRequestManager playersRequestManager) {
         this.playersRequestManager = playersRequestManager;
@@ -22,7 +22,7 @@ public class CrestRequestManager {
         try {
             convertPlayers(club, clubJson.getJSONArray("footballers"));
         } catch (JSONException e) {
-            //TODO
+            playersRequestManager.setError("Cannot get one or more clubs!");
         }
     }
 
@@ -37,7 +37,8 @@ public class CrestRequestManager {
             JsonToPlayerMapper jsonToPlayerMapper = new JsonToPlayerMapper();
             playersRequestManager.addPlayer(jsonToPlayerMapper.mapJsonToPlayer(playersJson.getJSONObject(j), club));
         } catch (JSONException e) {
-            //TODO
+            playersRequestManager.setError("Cannot get one or more players!");
+            playersRequestManager.reducePlayerSize();
         }
         if (playersRequestManager.isPlayersSizeFine()) {
             playersRequestManager.sendPlayers();

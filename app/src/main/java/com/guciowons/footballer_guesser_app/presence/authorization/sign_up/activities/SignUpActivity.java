@@ -1,23 +1,19 @@
 package com.guciowons.footballer_guesser_app.presence.authorization.sign_up.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+import com.guciowons.footballer_guesser_app.presence.authorization.BaseAuthActivity;
 import com.guciowons.footballer_guesser_app.presence.authorization.splash.activities.SplashActivity;
-import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 import com.guciowons.footballer_guesser_app.databinding.ActivitySignUpBinding;
 import com.guciowons.footballer_guesser_app.domain.authorization.sign_up.viewmodel.SignUpViewModel;
 import com.guciowons.footballer_guesser_app.presence.authorization.validators.ConfirmPasswordValidator;
-import com.guciowons.footballer_guesser_app.presence.authorization.validators.EmailValidator;
-import com.guciowons.footballer_guesser_app.presence.authorization.validators.PasswordValidator;
-import com.guciowons.footballer_guesser_app.presence.authorization.validators.UsernameValidator;
+import com.guciowons.footballer_guesser_app.presence.authorization.validators.DefaultTextValidator;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends BaseAuthActivity {
     private SignUpViewModel signUpViewModel;
     private ActivitySignUpBinding binding;
 
@@ -57,54 +53,32 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validateEditTexts(){
-        boolean usernameCorrect = validateUsername();
-        boolean emailCorrect = validateEmail();
-        boolean passwordCorrect = validatePassword();
-        boolean confirmCorrect = validateConfirm();
+        boolean usernameCorrect = validateUsername(binding.usernameEt);
+        boolean emailCorrect = validateEmail(binding.emailEt);
+        boolean passwordCorrect = validatePassword(binding.passwordEt);
+        boolean confirmCorrect = validateConfirm(binding.confirmEt, binding.passwordEt);
         return usernameCorrect && emailCorrect && passwordCorrect && confirmCorrect;
     }
 
-    private boolean validateUsername(){
-        String usernameResponse = UsernameValidator.validateUsername(binding.usernameEt.getEditText().getText().toString());
+    private boolean validateUsername(TextInputLayout usernameEt){
+        String usernameResponse = DefaultTextValidator.validateText(usernameEt.getEditText().getText().toString(), "Username");
         if(!usernameResponse.equals("Success")){
-            binding.usernameEt.setError(usernameResponse);
+            usernameEt.setError(usernameResponse);
             return false;
         }
+        usernameEt.setError(null);
         return true;
     }
 
-    private boolean validateEmail(){
-        String emailResponse = EmailValidator.validateEmail(binding.emailEt.getEditText().getText().toString());
-        if(!emailResponse.equals("Success")){
-            binding.emailEt.setError(emailResponse);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validatePassword(){
-        String passwordResponse = PasswordValidator.validatePassword(binding.passwordEt.getEditText().getText().toString());
-        if(!passwordResponse.equals("Success")){
-            binding.passwordEt.setError(passwordResponse);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validateConfirm(){
+    private boolean validateConfirm(TextInputLayout confirmEt, TextInputLayout passwordEt){
         String confirmResponse = ConfirmPasswordValidator.validateConfirmPassword(
-                binding.passwordEt.getEditText().getText().toString(), binding.confirmEt.getEditText().getText().toString());
+                passwordEt.getEditText().getText().toString(), confirmEt.getEditText().getText().toString());
         if(!confirmResponse.equals("Success")){
-            binding.confirmEt.setError(confirmResponse);
+            confirmEt.setError(confirmResponse);
             return false;
         }
+        confirmEt.setError(null);
         return true;
-    }
-
-    private void authenticateUser(){
-        Intent intent = new Intent(this, LeaguesActivity.class);
-        startActivity(intent);
-        finishAffinity();
     }
 
     public void goBack(){

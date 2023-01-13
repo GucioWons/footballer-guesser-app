@@ -9,11 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.guciowons.footballer_guesser_app.R;
+import com.guciowons.footballer_guesser_app.presence.authorization.BaseAuthActivity;
 import com.guciowons.footballer_guesser_app.presence.authorization.landing.activities.LandingActivity;
 import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 import com.guciowons.footballer_guesser_app.domain.authorization.splash.viewmodel.SplashViewModel;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseAuthActivity {
     private SplashViewModel splashViewModel;
 
     @Override
@@ -37,12 +38,6 @@ public class SplashActivity extends AppCompatActivity {
                 closeSplashScreen();
             }
         });
-    }
-
-    private void authenticateUser(){
-        Intent intent = new Intent(this, LeaguesActivity.class);
-        startActivity(intent);
-        finishAffinity();
     }
 
     public void closeSplashScreen() {

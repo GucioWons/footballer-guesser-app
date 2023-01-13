@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.guciowons.footballer_guesser_app.presence.authorization.BaseAuthActivity;
 import com.guciowons.footballer_guesser_app.presence.authorization.splash.activities.SplashActivity;
 import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 import com.guciowons.footballer_guesser_app.databinding.ActivitySignInBinding;
@@ -15,7 +16,7 @@ import com.guciowons.footballer_guesser_app.domain.authorization.sign_in.viewmod
 import com.guciowons.footballer_guesser_app.presence.authorization.validators.EmailValidator;
 import com.guciowons.footballer_guesser_app.presence.authorization.validators.PasswordValidator;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends BaseAuthActivity {
     private SignInViewModel signInViewModel;
 
     private ActivitySignInBinding binding;
@@ -28,8 +29,6 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(view);
         setUpObserver();
         setUpButtons();
-
-
     }
 
     private void setUpObserver(){
@@ -55,33 +54,9 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private boolean validateEditTexts(){
-        boolean emailCorrect = validateEmail();
-        boolean passwordCorrect = validatePassword();
+        boolean emailCorrect = validateEmail(binding.emailEt);
+        boolean passwordCorrect = validatePassword(binding.passwordEt);
         return emailCorrect && passwordCorrect;
-    }
-
-    private boolean validateEmail(){
-        String emailResponse = EmailValidator.validateEmail(binding.emailEt.getEditText().getText().toString());
-        if(!emailResponse.equals("Success")){
-            binding.emailEt.setError(emailResponse);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validatePassword(){
-        String passwordResponse = PasswordValidator.validatePassword(binding.passwordEt.getEditText().getText().toString());
-        if(!passwordResponse.equals("Success")){
-            binding.passwordEt.setError(passwordResponse);
-            return false;
-        }
-        return true;
-    }
-
-    private void authenticateUser(){
-        Intent intent = new Intent(this, LeaguesActivity.class);
-        startActivity(intent);
-        finishAffinity();
     }
 
     public void goBack(){

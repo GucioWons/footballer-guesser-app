@@ -7,6 +7,6 @@ import org.json.JSONObject;
 
 public class JsonToClubMapper {
     public Club mapJsonToclub(JSONObject club) throws JSONException {
-        return new Club(club.getString("name"), club.getString("shortcut"), club.getString("url"));
+        return new Club(club.getString("name"), club.getString("url"));
     }
 }
