@@ -4,21 +4,20 @@ import android.app.Application;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.data.game.repositories.PlayerRepository;
 import com.guciowons.footballer_guesser_app.data.models.player.Player;
+import com.guciowons.footballer_guesser_app.domain.BaseViewModel;
 import com.guciowons.footballer_guesser_app.domain.game.senders.ScoreSender;
 import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
 
 import java.util.List;
 
-public class GameViewModel extends AndroidViewModel {
+public class GameViewModel extends BaseViewModel {
     private PlayerRepository playerRepository;
-    private SharedPreferences account;
     private HintViewModel hintViewModel;
     private HistoryViewModel historyViewModel;
 
@@ -32,15 +31,10 @@ public class GameViewModel extends AndroidViewModel {
         hintViewModel = new HintViewModel();
         historyViewModel = new HistoryViewModel();
         requestQueue = Volley.newRequestQueue(application);
-        account = getEncryptedPreferences();
-    }
-
-    public void logoutUser(){
-        account.edit().clear().apply();
     }
 
     public void fetchPlayers(Integer id){
-        playerRepository = new PlayerRepository(getApplication(), id);
+        playerRepository = new PlayerRepository(application, id);
         players = playerRepository.getPlayers();
         answer = playerRepository.getAnswer();
     }
@@ -51,21 +45,14 @@ public class GameViewModel extends AndroidViewModel {
             return true;
         }else{
             hintViewModel.checkHints(answer.getValue(), player);
+            removePlayer(player);
+            getHistoryViewModel().addPlayerToHistory(player, getHintViewModel());
             return false;
         }
     }
 
     public void removePlayer(Player player){
         playerRepository.removePlayer(player);
-    }
-
-    public void clearAnswer(){
-        answer.postValue(null);
-    }
-
-    private SharedPreferences getEncryptedPreferences(){
-        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
-        return encryptedPreferencesGetter.getEncryptedPreferences(getApplication());
     }
 
     public HintViewModel getHintViewModel(){

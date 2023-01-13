@@ -96,7 +96,7 @@ public class PlayersRequestManager {
         System.out.println(player.getName());
         return player;
     }
-
+    //TODO
     private void setError(String s) {
     }
 }

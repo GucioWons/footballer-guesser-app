@@ -10,11 +10,11 @@ import org.json.JSONObject;
 import java.nio.charset.StandardCharsets;
 
 public class RegisterRequestManager {
-    public JsonObjectRequest getRegisterRequest(SignUpViewModel model, JSONObject params){
+    public JsonObjectRequest getRegisterRequest(SignUpViewModel viewModel, JSONObject params){
         String url = "http://springbootfootballguesserservice-env.eba-zp39mcrx.eu-central-1.elasticbeanstalk.com/register/";
         return new JsonObjectRequest(Request.Method.POST, url, params,
-                response -> model.setResponse(response, params),
-                error -> model.setErrorResponse(getErrorResponse(error)));
+                response -> viewModel.setResponse(response, params),
+                error -> viewModel.setErrorResponse(getErrorResponse(error)));
     }
 
     private String getErrorResponse(VolleyError error){

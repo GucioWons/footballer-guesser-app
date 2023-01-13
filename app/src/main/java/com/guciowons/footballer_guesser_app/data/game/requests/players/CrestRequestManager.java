@@ -22,7 +22,7 @@ public class CrestRequestManager {
         try {
             convertPlayers(club, clubJson.getJSONArray("footballers"));
         } catch (JSONException e) {
-
+            //TODO
         }
     }
 

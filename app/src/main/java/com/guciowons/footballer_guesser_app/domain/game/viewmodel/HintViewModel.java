@@ -26,13 +26,6 @@ public class HintViewModel {
         }
     }
 
-    public void clearHints(){
-        clubHint.postValue(null);
-        countryHint.postValue(null);
-        numberHint.postValue(null);
-        positionHint.postValue(null);
-    }
-
     public MutableLiveData<Club> getClubHint() {
         return clubHint;
     }

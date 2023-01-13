@@ -9,29 +9,19 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.guciowons.footballer_guesser_app.data.leagues.repositories.LeagueRepository;
 import com.guciowons.footballer_guesser_app.data.models.League;
+import com.guciowons.footballer_guesser_app.domain.BaseViewModel;
 import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
 
 import java.util.List;
 
-public class LeaguesViewModel extends AndroidViewModel {
+public class LeaguesViewModel extends BaseViewModel {
     private LeagueRepository leagueRepository;
-    private SharedPreferences account;
     private MutableLiveData<List<League>> leagues;
 
-    public LeaguesViewModel(@NonNull Application application) {
+    public LeaguesViewModel(Application application) {
         super(application);
         leagueRepository = new LeagueRepository(application);
         leagues = leagueRepository.getLeagues();
-        account = getEncryptedPreferences();
-    }
-
-    public void logoutUser(){
-        account.edit().clear().apply();
-    }
-
-    private SharedPreferences getEncryptedPreferences(){
-        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
-        return encryptedPreferencesGetter.getEncryptedPreferences(getApplication());
     }
 
     public MutableLiveData<List<League>> getLeagues(){

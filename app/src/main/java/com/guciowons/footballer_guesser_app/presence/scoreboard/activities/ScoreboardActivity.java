@@ -37,7 +37,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         setUpScoreboardLeaguesRecycler();
         setUpButtons();
         setUpMenu();
-        scoreboardViewModel = new ViewModelProvider(this).get(ScoreboardViewModel.class);
+        scoreboardViewModel = new ScoreboardViewModel(getApplication());
         scoreboardViewModel.getScores().observe(this, scores -> scoresAdapter.setScores(scores));
         scoreboardViewModel.getLeagues().observe(this, leagues -> scoreboardLeaguesAdapter.setLeagues(leagues));
     }

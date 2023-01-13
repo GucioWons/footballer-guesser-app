@@ -72,7 +72,7 @@ public class LeaguesActivity extends AppCompatActivity {
     }
 
     private void setUpObserver(){
-        leaguesViewModel = new ViewModelProvider(this).get(LeaguesViewModel.class);
+        leaguesViewModel = new LeaguesViewModel(getApplication());
         leaguesViewModel.getLeagues().observe(this, leagues -> {
             leaguesAdapter.setLeagues(leagues);
             loadingDialog.dismiss();

@@ -68,56 +68,22 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setUpObservers(){
-        gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        gameViewModel = new GameViewModel(getApplication());
         gameViewModel.fetchPlayers(id);
-        setUpPlayersObserver();
-        setUpHistoryObserver();
-        setUpClubObserver();
-        setUpCountryObserver();
-        setUpNumberObserver();
-        setUpPositionObserver();
+        setUpListsObservers();
+        setUpHintsObservers();
     }
 
-    private void setUpPlayersObserver(){
-        gameViewModel.getAllPlayers().observe(this, players -> {
-            loadingDialog.dismiss();
-        });
-    }
-
-    private void setUpHistoryObserver(){
+    private void setUpListsObservers(){
+        gameViewModel.getAllPlayers().observe(this, players -> loadingDialog.dismiss());
         gameViewModel.getHistoryViewModel().getHistory().observe(this, history -> historyAdapter.setPlayers(history));
     }
 
-    private void setUpClubObserver(){
-        gameViewModel.getHintViewModel().getClubHint().observe(this, club -> {
-            if(club != null) {
-                binding.hintClubImage.setImageBitmap(club.getCrest());
-            }
-        });
-    }
-
-    private void setUpCountryObserver(){
-        gameViewModel.getHintViewModel().getCountryHint().observe(this, country -> {
-            if(country != null) {
-                loadCountryImage(country);
-            }
-        });
-    }
-
-    private void setUpNumberObserver(){
-        gameViewModel.getHintViewModel().getNumberHint().observe(this, number -> {
-            if(number != null) {
-                binding.hintNumberText.setText(number.toString());
-            }
-        });
-    }
-
-    private void setUpPositionObserver(){
-        gameViewModel.getHintViewModel().getPositionHint().observe(this, position ->{
-            if(position != null) {
-                binding.hintPositionText.setText(position);
-            }
-        });
+    private void setUpHintsObservers(){
+        gameViewModel.getHintViewModel().getClubHint().observe(this, club -> binding.hintClubImage.setImageBitmap(club.getCrest()));
+        gameViewModel.getHintViewModel().getCountryHint().observe(this, country -> loadCountryImage(country));
+        gameViewModel.getHintViewModel().getNumberHint().observe(this, number -> binding.hintNumberText.setText(number.toString()));
+        gameViewModel.getHintViewModel().getPositionHint().observe(this, position -> binding.hintPositionText.setText(position));
     }
 
     private void setUpHistoryRecycler(){
@@ -140,12 +106,7 @@ public class GameActivity extends AppCompatActivity {
     public void checkAnswer(Player player){
         if(gameViewModel.checkAnswer(player, id)){
             startFinishDialog(player.getName());
-            gameViewModel.getHintViewModel().clearHints();
-            gameViewModel.getHistoryViewModel().clearHistory();
-            gameViewModel.clearAnswer();
         }
-        gameViewModel.removePlayer(player);
-        gameViewModel.getHistoryViewModel().addPlayerToHistory(player, gameViewModel.getHintViewModel());
     }
 
     private void loadCountryImage(String country){

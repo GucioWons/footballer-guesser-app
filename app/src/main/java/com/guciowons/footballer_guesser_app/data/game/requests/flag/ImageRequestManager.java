@@ -11,6 +11,6 @@ public class ImageRequestManager {
         return new ImageRequest(url,
                 response -> imageView.setImageBitmap(response),
                 min, max, ImageView.ScaleType.CENTER, null,
-                error -> imageView.setImageBitmap(BitmapFactory.decodeResource(imageView.getResources(), R.drawable.badge)));
+                error -> imageView.setImageBitmap(BitmapFactory.decodeResource(imageView.getResources(), R.drawable.flag)));
     }
 }

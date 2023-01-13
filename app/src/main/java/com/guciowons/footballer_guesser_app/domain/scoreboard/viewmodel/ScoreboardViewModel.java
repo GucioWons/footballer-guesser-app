@@ -13,13 +13,14 @@ import com.guciowons.footballer_guesser_app.data.leagues.repositories.LeagueRepo
 import com.guciowons.footballer_guesser_app.data.models.League;
 import com.guciowons.footballer_guesser_app.data.models.Score;
 import com.guciowons.footballer_guesser_app.data.scoreboard.requests.ScoresRequestManager;
+import com.guciowons.footballer_guesser_app.domain.BaseViewModel;
 import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
+import com.guciowons.footballer_guesser_app.domain.scoreboard.senders.GetScoresSender;
 
 import java.util.List;
 
-public class ScoreboardViewModel extends AndroidViewModel {
+public class ScoreboardViewModel extends BaseViewModel {
     private LeagueRepository leagueRepository;
-    private SharedPreferences account;
     private MutableLiveData<List<Score>> scores = new MutableLiveData<>();
     private MutableLiveData<List<League>> leagues;
 
@@ -33,40 +34,19 @@ public class ScoreboardViewModel extends AndroidViewModel {
         requestQueue = Volley.newRequestQueue(application);
         leagueRepository = new LeagueRepository(application);
         leagues = leagueRepository.getLeagues();
-        account = getEncryptedPreferences();
         time = null;
         leagueId = null;
-        fetchScores();
-    }
-
-    public void logoutUser(){
-        account.edit().clear().apply();
+        GetScoresSender.fetchScores(this, time, leagueId, requestQueue);
     }
 
     public void setTime(String time){
         this.time = time;
-        fetchScores();
+        GetScoresSender.fetchScores(this, time, leagueId, requestQueue);
     }
 
     public void setLeagueId(Integer leagueId){
         this.leagueId = leagueId;
-        fetchScores();
-    }
-
-    private void fetchScores() {
-        ScoresRequestManager scoresRequestManager = new ScoresRequestManager();
-        requestQueue.add(scoresRequestManager.getScores(this, createUrl()));
-    }
-
-    private String createUrl(){
-        String url = "http://footballerguesserservice-env.eba-iwqz7xzh.eu-central-1.elasticbeanstalk.com/scores?";
-        if(time != null){
-            url = url + "time=" + time + "&";
-        }
-        if(leagueId != null){
-            url = url + "leagueId=" + leagueId;
-        }
-        return url;
+        GetScoresSender.fetchScores(this, time, leagueId, requestQueue);
     }
 
     public MutableLiveData<List<Score>> getScores(){
@@ -87,13 +67,5 @@ public class ScoreboardViewModel extends AndroidViewModel {
 
     public RequestQueue getRequestQueue(){
         return requestQueue;
-    }
-
-    private SharedPreferences getEncryptedPreferences(){
-        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
-        return encryptedPreferencesGetter.getEncryptedPreferences(getApplication());
-    }
-
-    public void setError(String s) {
     }
 }

@@ -30,10 +30,6 @@ public class HistoryViewModel {
         return history.getValue().size();
     }
 
-    public void clearHistory(){
-        historyRepository.clearHistory();
-    }
-
     public MutableLiveData<List<HistoryPlayer>> getHistory(){
         return history;
     }

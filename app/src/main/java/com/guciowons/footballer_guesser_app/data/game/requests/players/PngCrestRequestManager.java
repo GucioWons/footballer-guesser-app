@@ -21,7 +21,7 @@ public class PngCrestRequestManager extends CrestRequestManager {
                 crest -> setClubCrest(crest, club, clubJson),
                 64, 64, ImageView.ScaleType.CENTER, null,
                 error -> {
-
+                    //TODO
                 });
     }
 }
