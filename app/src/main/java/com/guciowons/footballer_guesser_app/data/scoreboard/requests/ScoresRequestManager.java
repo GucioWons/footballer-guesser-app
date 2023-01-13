@@ -3,6 +3,7 @@ package com.guciowons.footballer_guesser_app.data.scoreboard.requests;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.guciowons.footballer_guesser_app.data.models.Score;
+import com.guciowons.footballer_guesser_app.data.scoreboard.mappers.JsonToScoreMapper;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.viewmodel.ScoreboardViewModel;
 
 import org.json.JSONArray;
@@ -29,10 +30,10 @@ public class ScoresRequestManager {
         viewModel.setScores(scores.stream().limit(100).collect(Collectors.toList()));
     }
 
+    //TODO
     private void convertScore(JSONArray scoresJson, int i){
         try {
-            JSONObject scoreJson = scoresJson.getJSONObject(i);
-            scores.add(new Score(scoreJson.getString("username"), scoreJson.getInt("score")));
+            scores.add(JsonToScoreMapper.mapJsonToScore(scoresJson.getJSONObject(i)));
         } catch (JSONException e) {
             e.printStackTrace();
         }
