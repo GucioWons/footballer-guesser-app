@@ -9,7 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.guciowons.footballer_guesser_app.data.authorization.splash.SplashRequestManager;
+import com.guciowons.footballer_guesser_app.data.authorization.sign_in.LoginRequestManager;
+import com.guciowons.footballer_guesser_app.domain.authorization.BaseAuthViewModel;
 import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
 
 import org.json.JSONException;
@@ -17,30 +18,23 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class SplashViewModel extends AndroidViewModel {
-    private RequestQueue requestQueue;
-    private MutableLiveData<String> response = new MutableLiveData<>();
+public class SplashViewModel extends BaseAuthViewModel {
     private SharedPreferences account;
     private Integer id;
     private String email, username, password;
 
     public SplashViewModel(@NonNull Application application) {
         super(application);
-        requestQueue = Volley.newRequestQueue(application);
         account = getEncryptedPreferences();
-    }
-
-    public MutableLiveData<String> getResponse(){
-        return response;
     }
 
     public void authenticateUser(){
         loadData();
         if(id != 0 || email != null || username != null || password != null) {
-            SplashRequestManager splashRequestManager = new SplashRequestManager();
-            requestQueue.add(splashRequestManager.getLoginRequest(this, getJsonParams()));
+            LoginRequestManager loginRequestManager = new LoginRequestManager();
+            requestQueue.add(loginRequestManager.getLoginRequest(this, getJsonParams()));
         }else{
-            response.setValue("No preferences");
+            setErrorResponse("No preferences");
         }
     }
 
@@ -54,7 +48,7 @@ public class SplashViewModel extends AndroidViewModel {
 
     private SharedPreferences getEncryptedPreferences(){
         EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
-        return encryptedPreferencesGetter.getEncryptedPreferences(getApplication());
+        return encryptedPreferencesGetter.getEncryptedPreferences(application);
     }
 
     private void loadData(){
@@ -62,27 +56,5 @@ public class SplashViewModel extends AndroidViewModel {
         email = account.getString("email", null);
         username = account.getString("username", null);
         password = account.getString("password", null);
-    }
-
-    public void setResponse(JSONObject user, JSONObject params){
-        saveData(user, params);
-        response.setValue("Success");
-    }
-
-    private void saveData(JSONObject user, JSONObject params){
-        SharedPreferences.Editor editor = account.edit();
-        try {
-            editor.putInt("id", user.getInt("id"));
-            editor.putString("username", user.getString("username"));
-            editor.putString("email", user.getString("email"));
-            editor.putString("password", params.getString("password"));
-            editor.apply();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setErrorResponse(String error){
-        response.setValue(error);
     }
 }

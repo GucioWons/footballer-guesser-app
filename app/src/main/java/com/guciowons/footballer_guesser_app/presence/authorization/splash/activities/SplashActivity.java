@@ -26,13 +26,10 @@ public class SplashActivity extends AppCompatActivity {
         setUpObserver();
 
         splashViewModel.authenticateUser();
-
-        //TODO
-        //Cant get encrypted preferences after reinstall
     }
 
     private void setUpObserver(){
-        splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+        splashViewModel = new SplashViewModel(getApplication());
         splashViewModel.getResponse().observe(this, response -> {
             if(response.equals("Success")){
                 authenticateUser();

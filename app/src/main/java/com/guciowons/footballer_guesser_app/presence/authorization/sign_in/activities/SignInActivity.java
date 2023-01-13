@@ -33,7 +33,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void setUpObserver(){
-        signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
+        signInViewModel = new SignInViewModel(getApplication());
         signInViewModel.getResponse().observe(this, response -> {
             if(response.equals("Success")){
                 authenticateUser();

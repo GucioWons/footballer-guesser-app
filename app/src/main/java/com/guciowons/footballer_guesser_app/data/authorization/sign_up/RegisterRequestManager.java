@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 
 public class RegisterRequestManager {
     public JsonObjectRequest getRegisterRequest(SignUpViewModel viewModel, JSONObject params){
-        String url = "http://springbootfootballguesserservice-env.eba-zp39mcrx.eu-central-1.elasticbeanstalk.com/register/";
+        String url = "http://footballerguesserservice-env.eba-iwqz7xzh.eu-central-1.elasticbeanstalk.com/register/";
         return new JsonObjectRequest(Request.Method.POST, url, params,
                 response -> viewModel.setResponse(response, params),
                 error -> viewModel.setErrorResponse(getErrorResponse(error)));
