@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryRepository {
-    private MutableLiveData<List<HistoryPlayer>> history = new MutableLiveData<>();
+    private final MutableLiveData<List<HistoryPlayer>> history = new MutableLiveData<>();
 
     public HistoryRepository(){
         history.postValue(new ArrayList<>());

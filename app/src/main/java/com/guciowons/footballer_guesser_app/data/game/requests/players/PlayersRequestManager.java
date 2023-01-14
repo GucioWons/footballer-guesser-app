@@ -18,7 +18,7 @@ import it.unimi.dsi.util.XoRoShiRo128PlusRandom;
 
 public class PlayersRequestManager {
     private final PlayerRepository repository;
-    private List<Player> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
     private int estimatedPlayers = 0;
 
     public PlayersRequestManager(PlayerRepository repository) {

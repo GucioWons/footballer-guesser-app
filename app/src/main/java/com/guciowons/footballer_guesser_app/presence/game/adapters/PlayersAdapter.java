@@ -1,23 +1,20 @@
 package com.guciowons.footballer_guesser_app.presence.game.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.data.models.player.Player;
+import com.guciowons.footballer_guesser_app.databinding.ItemsPlayersBinding;
 
 import java.util.List;
 
 public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder>{
     private List<Player> players;
-    private RecyclerViewClickListener listener;
+    private final RecyclerViewClickListener listener;
 
     public PlayersAdapter(List<Player> players, RecyclerViewClickListener listener){
         this.players = players;
@@ -27,8 +24,8 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
     @NonNull
     @Override
     public PlayersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View gameView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_players, parent, false);
-        return new PlayersViewHolder(gameView);
+        ItemsPlayersBinding itemBinding = ItemsPlayersBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new PlayersViewHolder(itemBinding);
     }
 
     @Override
@@ -37,8 +34,8 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
     }
 
     private void setUpItem(PlayersViewHolder holder, Player player){
-        holder.nameText.setText(player.getName());
-        holder.clubImage.setImageBitmap(player.getClub().getCrest());
+        holder.itemBinding.playerText.setText(player.getName());
+        holder.itemBinding.playerClubImage.setImageBitmap(player.getClub().getCrest());
     }
 
     @Override
@@ -47,8 +44,9 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
     }
 
     public void setFilteredList(List<Player> filteredList){
+        notifyItemRangeRemoved(0, players.size());
         this.players = filteredList;
-        notifyDataSetChanged();
+        notifyItemRangeInserted(0, filteredList.size());
     }
 
     public Player getPlayer(Integer position){
@@ -56,20 +54,12 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
     }
 
     public class PlayersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView nameText;
-        private ImageView clubImage;
-        private Context context;
+        private final ItemsPlayersBinding itemBinding;
 
-        public PlayersViewHolder(final View view){
-            super(view);
-            setUpViews(view);
-            view.setOnClickListener(this);
-        }
-
-        private void setUpViews(View view){
-            nameText = view.findViewById(R.id.player_text);
-            clubImage = view.findViewById(R.id.player_club_image);
-            context = view.getContext();
+        public PlayersViewHolder(ItemsPlayersBinding itemBinding){
+            super(itemBinding.getRoot());
+            this.itemBinding = itemBinding;
+            itemBinding.getRoot().setOnClickListener(this);
         }
 
         @Override

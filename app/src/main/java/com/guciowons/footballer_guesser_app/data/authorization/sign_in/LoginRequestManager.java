@@ -4,7 +4,6 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.guciowons.footballer_guesser_app.domain.authorization.BaseAuthViewModel;
-import com.guciowons.footballer_guesser_app.domain.authorization.sign_in.viewmodel.SignInViewModel;
 
 import org.json.JSONObject;
 

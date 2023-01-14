@@ -8,15 +8,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 public abstract class BaseRepository {
-    private MutableLiveData<String> error = new MutableLiveData<>();
-    protected RequestQueue requestQueue;
+    private final MutableLiveData<String> error = new MutableLiveData<>();
+    protected final RequestQueue requestQueue;
 
     public BaseRepository(Application application) {
         requestQueue = Volley.newRequestQueue(application);
     }
 
-    public MutableLiveData<String> getError(){
-        return error;
+    public RequestQueue getRequestQueue(){
+        return requestQueue;
     }
 
     public void setError(String error) {
@@ -25,7 +25,7 @@ public abstract class BaseRepository {
         }
     }
 
-    public RequestQueue getRequestQueue(){
-        return requestQueue;
+    public MutableLiveData<String> getError(){
+        return error;
     }
 }

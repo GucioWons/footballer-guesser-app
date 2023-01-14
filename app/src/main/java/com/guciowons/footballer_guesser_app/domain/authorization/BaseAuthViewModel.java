@@ -12,20 +12,20 @@ import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferen
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BaseAuthViewModel {
+public abstract class BaseAuthViewModel {
     protected RequestQueue requestQueue;
-    private MutableLiveData<String> response = new MutableLiveData<>();
-    protected Application application;
+    private final MutableLiveData<String> response = new MutableLiveData<>();
+    protected final Application application;
+    protected final SharedPreferences account;
 
     public BaseAuthViewModel(Application application) {
         this.application = application;
         requestQueue = Volley.newRequestQueue(application);
+        account = getEncryptedPreferences();
     }
 
     private void saveData(JSONObject user, JSONObject params){
-        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
-        SharedPreferences sharedPreferences = encryptedPreferencesGetter.getEncryptedPreferences(application);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = getEncryptedPreferences().edit();
         try {
             editor.putInt("id", user.getInt("id"));
             editor.putString("username", user.getString("username"));
@@ -35,6 +35,11 @@ public class BaseAuthViewModel {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private SharedPreferences getEncryptedPreferences(){
+        EncryptedPreferencesGetter encryptedPreferencesGetter = new EncryptedPreferencesGetter();
+        return encryptedPreferencesGetter.getEncryptedPreferences(application);
     }
 
     public void setErrorResponse(String error){

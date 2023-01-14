@@ -4,21 +4,17 @@ import android.app.Application;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.data.BaseRepository;
 import com.guciowons.footballer_guesser_app.data.game.requests.players.PlayersRequestManager;
 import com.guciowons.footballer_guesser_app.data.models.player.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import it.unimi.dsi.util.XoRoShiRo128PlusRandom;
-
 public class PlayerRepository extends BaseRepository {
-    private MutableLiveData<List<Player>> players = new MutableLiveData<>();
-    private MutableLiveData<Player> answer = new MutableLiveData<>();
-    private Integer id;
+    private final Integer id;
+
+    private final MutableLiveData<List<Player>> players = new MutableLiveData<>();
+    private final MutableLiveData<Player> answer = new MutableLiveData<>();
 
     public PlayerRepository(Application application, Integer id){
         super(application);
@@ -31,20 +27,20 @@ public class PlayerRepository extends BaseRepository {
         requestQueue.add(playersRequestManager.getPlayersRequest(PlayerRepository.this, id));
     }
 
-    public MutableLiveData<List<Player>> getPlayers(){
-        return players;
-    }
-
-    public void setPlayers(List<Player> players){
-        this.players.postValue(players);
-    }
-
     public void removePlayer(Player player) {
         List<Player> tempPlayers = players.getValue();
         if(tempPlayers != null) {
             tempPlayers.remove(player);
         }
         players.setValue(tempPlayers);
+    }
+
+    public void setPlayers(List<Player> players){
+        this.players.postValue(players);
+    }
+
+    public MutableLiveData<List<Player>> getPlayers(){
+        return players;
     }
 
     public void setAnswer(Player player){

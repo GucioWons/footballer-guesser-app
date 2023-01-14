@@ -8,14 +8,13 @@ import com.guciowons.footballer_guesser_app.domain.scoreboard.viewmodel.Scoreboa
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ScoresRequestManager {
-    private List<Score> scores = new ArrayList<>();
+    private final List<Score> scores = new ArrayList<>();
 
     public JsonArrayRequest getScores(ScoreboardViewModel viewModel, String url){
         return new JsonArrayRequest(Request.Method.GET, url, null,

@@ -1,16 +1,10 @@
 package com.guciowons.footballer_guesser_app.data.game.requests.players;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageRequest;
-import com.guciowons.footballer_guesser_app.R;
-import com.guciowons.footballer_guesser_app.data.game.repositories.PlayerRepository;
 import com.guciowons.footballer_guesser_app.data.models.player.Club;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PngCrestRequestManager extends CrestRequestManager {

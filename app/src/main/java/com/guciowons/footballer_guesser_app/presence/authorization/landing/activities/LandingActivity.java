@@ -27,12 +27,12 @@ public class LandingActivity extends AppCompatActivity {
         binding.signUpBtn.setOnClickListener(view -> goToSignUp());
     }
 
-    public void goToSignIn(){
+    private void goToSignIn(){
         Intent intent = new Intent(LandingActivity.this, SignInActivity.class);
         startActivity(intent);
     }
 
-    public void goToSignUp(){
+    private void goToSignUp(){
         Intent intent = new Intent(LandingActivity.this, SignUpActivity.class);
         startActivity(intent);
     }

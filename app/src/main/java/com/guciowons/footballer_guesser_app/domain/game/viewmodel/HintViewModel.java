@@ -6,10 +6,10 @@ import com.guciowons.footballer_guesser_app.data.models.player.Club;
 import com.guciowons.footballer_guesser_app.data.models.player.Player;
 
 public class HintViewModel {
-    private MutableLiveData<Club> clubHint = new MutableLiveData<>();
-    private MutableLiveData<String> countryHint = new MutableLiveData<>();
-    private MutableLiveData<Integer> numberHint = new MutableLiveData<>();
-    private MutableLiveData<String> positionHint = new MutableLiveData<>();
+    private final MutableLiveData<Club> clubHint = new MutableLiveData<>();
+    private final MutableLiveData<String> countryHint = new MutableLiveData<>();
+    private final MutableLiveData<Integer> numberHint = new MutableLiveData<>();
+    private final MutableLiveData<String> positionHint = new MutableLiveData<>();
 
     public void checkHints(Player answer, Player player){
         if(answer.getClub().equals(player.getClub()) && clubHint.getValue() == null){

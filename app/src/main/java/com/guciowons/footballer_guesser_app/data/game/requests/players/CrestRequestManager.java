@@ -3,7 +3,6 @@ package com.guciowons.footballer_guesser_app.data.game.requests.players;
 import android.graphics.Bitmap;
 
 import com.guciowons.footballer_guesser_app.data.game.mappers.JsonToPlayerMapper;
-import com.guciowons.footballer_guesser_app.data.game.repositories.PlayerRepository;
 import com.guciowons.footballer_guesser_app.data.models.player.Club;
 
 import org.json.JSONArray;

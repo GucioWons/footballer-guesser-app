@@ -13,6 +13,8 @@ import com.guciowons.footballer_guesser_app.domain.authorization.sign_up.viewmod
 import com.guciowons.footballer_guesser_app.presence.authorization.validators.ConfirmPasswordValidator;
 import com.guciowons.footballer_guesser_app.presence.authorization.validators.DefaultTextValidator;
 
+import java.util.Objects;
+
 public class SignUpActivity extends BaseAuthActivity {
     private SignUpViewModel signUpViewModel;
     private ActivitySignUpBinding binding;
@@ -24,12 +26,16 @@ public class SignUpActivity extends BaseAuthActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        setUpObserver();
+        setUpViewModel();
         setUpButtons();
     }
 
-    private void setUpObserver(){
+    private void setUpViewModel(){
         signUpViewModel = new SignUpViewModel(getApplication());
+        setUpResponseObserver();
+    }
+
+    private void setUpResponseObserver(){
         signUpViewModel.getResponse().observe(this, response -> {
             if(response.equals("Success")){
                 authenticateUser();
@@ -46,9 +52,9 @@ public class SignUpActivity extends BaseAuthActivity {
 
     private void processRegisterForm(){
         if(validateEditTexts()){
-            signUpViewModel.signUpUser(binding.usernameEt.getEditText().getText().toString(),
-                    binding.emailEt.getEditText().getText().toString(),
-                    binding.passwordEt.getEditText().getText().toString());
+            signUpViewModel.signUpUser(Objects.requireNonNull(binding.usernameEt.getEditText()).getText().toString(),
+                    Objects.requireNonNull(binding.emailEt.getEditText()).getText().toString(),
+                    Objects.requireNonNull(binding.passwordEt.getEditText()).getText().toString());
         }
     }
 
@@ -61,7 +67,7 @@ public class SignUpActivity extends BaseAuthActivity {
     }
 
     private boolean validateUsername(TextInputLayout usernameEt){
-        String usernameResponse = DefaultTextValidator.validateText(usernameEt.getEditText().getText().toString(), "Username");
+        String usernameResponse = DefaultTextValidator.validateText(Objects.requireNonNull(usernameEt.getEditText()).getText().toString(), "Username");
         if(!usernameResponse.equals("Success")){
             usernameEt.setError(usernameResponse);
             return false;
@@ -72,7 +78,7 @@ public class SignUpActivity extends BaseAuthActivity {
 
     private boolean validateConfirm(TextInputLayout confirmEt, TextInputLayout passwordEt){
         String confirmResponse = ConfirmPasswordValidator.validateConfirmPassword(
-                passwordEt.getEditText().getText().toString(), confirmEt.getEditText().getText().toString());
+                Objects.requireNonNull(passwordEt.getEditText()).getText().toString(), Objects.requireNonNull(confirmEt.getEditText()).getText().toString());
         if(!confirmResponse.equals("Success")){
             confirmEt.setError(confirmResponse);
             return false;
@@ -81,7 +87,7 @@ public class SignUpActivity extends BaseAuthActivity {
         return true;
     }
 
-    public void goBack(){
+    private void goBack(){
         Intent intent = new Intent(SignUpActivity.this, SplashActivity.class);
         startActivity(intent);
     }

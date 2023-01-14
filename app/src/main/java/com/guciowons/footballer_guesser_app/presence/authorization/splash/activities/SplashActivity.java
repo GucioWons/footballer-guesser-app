@@ -1,9 +1,5 @@
 package com.guciowons.footballer_guesser_app.presence.authorization.splash.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +7,6 @@ import android.os.Handler;
 import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.presence.authorization.BaseAuthActivity;
 import com.guciowons.footballer_guesser_app.presence.authorization.landing.activities.LandingActivity;
-import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 import com.guciowons.footballer_guesser_app.domain.authorization.splash.viewmodel.SplashViewModel;
 
 public class SplashActivity extends BaseAuthActivity {
@@ -24,13 +19,16 @@ public class SplashActivity extends BaseAuthActivity {
         if(getSupportActionBar() != null){
             getSupportActionBar().hide();
         }
-        setUpObserver();
-
+        setUpViewModel();
         splashViewModel.authenticateUser();
     }
 
-    private void setUpObserver(){
+    private void setUpViewModel(){
         splashViewModel = new SplashViewModel(getApplication());
+        setUpResponseObserver();
+    }
+
+    private void setUpResponseObserver(){
         splashViewModel.getResponse().observe(this, response -> {
             if(response.equals("Success")){
                 authenticateUser();
@@ -40,7 +38,7 @@ public class SplashActivity extends BaseAuthActivity {
         });
     }
 
-    public void closeSplashScreen() {
+    private void closeSplashScreen() {
         new Handler().postDelayed(() -> {
             startActivity(new Intent(SplashActivity.this, LandingActivity.class));
             finish();

@@ -1,10 +1,8 @@
 package com.guciowons.footballer_guesser_app.domain.scoreboard.viewmodel;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.RequestQueue;
@@ -12,22 +10,20 @@ import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.data.leagues.repositories.LeagueRepository;
 import com.guciowons.footballer_guesser_app.data.models.League;
 import com.guciowons.footballer_guesser_app.data.models.Score;
-import com.guciowons.footballer_guesser_app.data.scoreboard.requests.ScoresRequestManager;
 import com.guciowons.footballer_guesser_app.domain.BaseViewModel;
-import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
 import com.guciowons.footballer_guesser_app.domain.scoreboard.senders.GetScoresSender;
 
 import java.util.List;
 
 public class ScoreboardViewModel extends BaseViewModel {
-    private LeagueRepository leagueRepository;
-    private MutableLiveData<List<Score>> scores = new MutableLiveData<>();
-    private MutableLiveData<List<League>> leagues;
+    private final LeagueRepository leagueRepository;
+    private final RequestQueue requestQueue;
 
     private String time;
     private Integer leagueId;
 
-    private RequestQueue requestQueue;
+    private final MutableLiveData<List<Score>> scores = new MutableLiveData<>();
+    private final MutableLiveData<List<League>> leagues;
 
     public ScoreboardViewModel(@NonNull Application application) {
         super(application);
@@ -50,27 +46,27 @@ public class ScoreboardViewModel extends BaseViewModel {
         GetScoresSender.fetchScores(this, time, leagueId, requestQueue);
     }
 
+    public RequestQueue getRequestQueue(){
+        return requestQueue;
+    }
+
     public void setError(String error) {
         leagueRepository.setError(error);
-    }
-
-    public MutableLiveData<List<Score>> getScores(){
-        return scores;
-    }
-
-    public MutableLiveData<List<League>> getLeagues(){
-        return leagues;
     }
 
     public void setScores(List<Score> newScores){
         scores.setValue(newScores);
     }
 
+    public MutableLiveData<List<Score>> getScores(){
+        return scores;
+    }
+
     public void setLeagues(List<League> newLeagues){
         leagues.postValue(newLeagues);
     }
 
-    public RequestQueue getRequestQueue(){
-        return requestQueue;
+    public MutableLiveData<List<League>> getLeagues(){
+        return leagues;
     }
 }

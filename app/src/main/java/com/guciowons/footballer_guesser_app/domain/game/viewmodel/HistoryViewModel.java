@@ -7,14 +7,19 @@ import com.guciowons.footballer_guesser_app.data.models.player.HistoryPlayer;
 import com.guciowons.footballer_guesser_app.data.models.player.Player;
 
 import java.util.List;
+import java.util.Objects;
 
 public class HistoryViewModel {
-    private HistoryRepository historyRepository;
-    private MutableLiveData<List<HistoryPlayer>> history;
+    private final HistoryRepository historyRepository;
+    private final MutableLiveData<List<HistoryPlayer>> history;
 
     public HistoryViewModel() {
         historyRepository = new HistoryRepository();
         history = historyRepository.getHistory();
+    }
+
+    public int getHistorySize(){
+        return Objects.requireNonNull(history.getValue()).size();
     }
 
     public void addPlayerToHistory(Player player, HintViewModel hintViewModel){
@@ -24,10 +29,6 @@ public class HistoryViewModel {
                 player.getNumber().equals(hintViewModel.getNumberHint().getValue()),
                 player.getPosition().equals(hintViewModel.getPositionHint().getValue()),
                 player.getClub().equals(hintViewModel.getClubHint().getValue())));
-    }
-
-    public int getHistorySize(){
-        return history.getValue().size();
     }
 
     public MutableLiveData<List<HistoryPlayer>> getHistory(){

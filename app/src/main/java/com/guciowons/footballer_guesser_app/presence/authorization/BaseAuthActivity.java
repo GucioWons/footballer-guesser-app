@@ -1,7 +1,6 @@
 package com.guciowons.footballer_guesser_app.presence.authorization;
 
 import android.content.Intent;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,9 +9,11 @@ import com.guciowons.footballer_guesser_app.presence.authorization.validators.Em
 import com.guciowons.footballer_guesser_app.presence.authorization.validators.PasswordValidator;
 import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 
+import java.util.Objects;
+
 public abstract class BaseAuthActivity extends AppCompatActivity {
     protected boolean validateEmail(TextInputLayout emailEt){
-        String emailResponse = EmailValidator.validateEmail(emailEt.getEditText().getText().toString());
+        String emailResponse = EmailValidator.validateEmail(Objects.requireNonNull(emailEt.getEditText()).getText().toString());
         if(!emailResponse.equals("Success")){
             emailEt.setError(emailResponse);
             return false;
@@ -22,7 +23,7 @@ public abstract class BaseAuthActivity extends AppCompatActivity {
     }
 
     protected boolean validatePassword(TextInputLayout passwordEt){
-        String passwordResponse = PasswordValidator.validatePassword(passwordEt.getEditText().getText().toString());
+        String passwordResponse = PasswordValidator.validatePassword(Objects.requireNonNull(passwordEt.getEditText()).getText().toString());
         if(!passwordResponse.equals("Success")){
             passwordEt.setError(passwordResponse);
             return false;

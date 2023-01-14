@@ -6,7 +6,6 @@ public class HistoryPlayer extends Player{
     private final boolean positionCorrect;
     private final boolean clubCorrect;
 
-
     public HistoryPlayer(String name, String nationality, Integer number, String position, Club club, boolean nationalityCorrect, boolean shirtCorrect, boolean positionCorrect, boolean clubCorrect) {
         super(name, nationality, number, position, club);
         this.nationalityCorrect = nationalityCorrect;

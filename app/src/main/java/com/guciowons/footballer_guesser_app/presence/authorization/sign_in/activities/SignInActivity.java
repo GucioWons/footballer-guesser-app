@@ -1,8 +1,5 @@
 package com.guciowons.footballer_guesser_app.presence.authorization.sign_in.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +7,10 @@ import android.widget.Toast;
 
 import com.guciowons.footballer_guesser_app.presence.authorization.BaseAuthActivity;
 import com.guciowons.footballer_guesser_app.presence.authorization.splash.activities.SplashActivity;
-import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 import com.guciowons.footballer_guesser_app.databinding.ActivitySignInBinding;
 import com.guciowons.footballer_guesser_app.domain.authorization.sign_in.viewmodel.SignInViewModel;
-import com.guciowons.footballer_guesser_app.presence.authorization.validators.EmailValidator;
-import com.guciowons.footballer_guesser_app.presence.authorization.validators.PasswordValidator;
+
+import java.util.Objects;
 
 public class SignInActivity extends BaseAuthActivity {
     private SignInViewModel signInViewModel;
@@ -27,12 +23,16 @@ public class SignInActivity extends BaseAuthActivity {
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        setUpObserver();
+        setUpViewModel();
         setUpButtons();
     }
 
-    private void setUpObserver(){
+    private void setUpViewModel(){
         signInViewModel = new SignInViewModel(getApplication());
+        setUpResponseObserver();
+    }
+
+    private void setUpResponseObserver(){
         signInViewModel.getResponse().observe(this, response -> {
             if(response.equals("Success")){
                 authenticateUser();
@@ -49,7 +49,7 @@ public class SignInActivity extends BaseAuthActivity {
 
     public void processLoginForm(){
         if(validateEditTexts()){
-            signInViewModel.logInUser(binding.emailEt.getEditText().getText().toString(), binding.passwordEt.getEditText().getText().toString());
+            signInViewModel.logInUser(Objects.requireNonNull(binding.emailEt.getEditText()).getText().toString(), Objects.requireNonNull(binding.passwordEt.getEditText()).getText().toString());
         }
     }
 
@@ -59,7 +59,7 @@ public class SignInActivity extends BaseAuthActivity {
         return emailCorrect && passwordCorrect;
     }
 
-    public void goBack(){
+    private void goBack(){
         Intent intent = new Intent(SignInActivity.this, SplashActivity.class);
         startActivity(intent);
     }

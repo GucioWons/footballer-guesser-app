@@ -6,11 +6,8 @@ import android.graphics.Picture;
 import com.android.volley.toolbox.StringRequest;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
-import com.guciowons.footballer_guesser_app.data.game.repositories.PlayerRepository;
 import com.guciowons.footballer_guesser_app.data.models.player.Club;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SvgCrestRequestManager extends CrestRequestManager {

@@ -1,6 +1,5 @@
 package com.guciowons.footballer_guesser_app.data.scoreboard.mappers;
 
-import com.guciowons.footballer_guesser_app.data.models.League;
 import com.guciowons.footballer_guesser_app.data.models.Score;
 
 import org.json.JSONException;

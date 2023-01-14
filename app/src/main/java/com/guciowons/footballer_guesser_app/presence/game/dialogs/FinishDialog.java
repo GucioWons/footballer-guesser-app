@@ -1,5 +1,6 @@
 package com.guciowons.footballer_guesser_app.presence.game.dialogs;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 
@@ -7,11 +8,10 @@ import com.guciowons.footballer_guesser_app.databinding.DialogFinishBinding;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
 import com.guciowons.footballer_guesser_app.presence.leagues.activities.LeaguesActivity;
 
-//Set Dialog bigger
 public class FinishDialog {
     private DialogFinishBinding binding;
-    private GameActivity activity;
-    private String name;
+    private final GameActivity activity;
+    private final String name;
     private Dialog dialog;
 
     public FinishDialog(GameActivity activity, String name) {
@@ -20,18 +20,20 @@ public class FinishDialog {
     }
 
     public void show(){
-        dialog = createDialog();
+        dialog = createDialog().create();
         dialog.show();
     }
 
-    private Dialog createDialog(){
+    private AlertDialog.Builder createDialog(){
         binding = DialogFinishBinding.inflate(activity.getLayoutInflater());
-        dialog = new Dialog(activity);
-        dialog.setCancelable(false);
-        dialog.setContentView(binding.getRoot());
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(binding.getRoot());
+        builder.setCancelable(false);
         setUpViews();
-        return dialog;
+        return builder;
     }
+
+
 
     private void setUpViews(){
         binding.finishNameText.setText(binding.finishNameText.getText() + " " + name);

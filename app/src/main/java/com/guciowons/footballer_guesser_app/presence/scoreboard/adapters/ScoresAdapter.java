@@ -1,15 +1,13 @@
 package com.guciowons.footballer_guesser_app.presence.scoreboard.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.data.models.Score;
+import com.guciowons.footballer_guesser_app.databinding.ItemsScoresBinding;
 
 import java.util.List;
 
@@ -23,8 +21,8 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoresView
     @NonNull
     @Override
     public ScoresViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View scoreView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_scores, parent, false);
-        return new ScoresViewHolder(scoreView);
+        ItemsScoresBinding itemBinding = ItemsScoresBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ScoresViewHolder(itemBinding);
     }
 
     @Override
@@ -33,9 +31,9 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoresView
     }
 
     private void setUpItem(ScoresViewHolder holder, Score score, Integer position) {
-        holder.positionText.setText(position.toString() + ".");
-        holder.nameText.setText(score.getName());
-        holder.pointsText.setText(score.getPoints().toString());
+        holder.itemBinding.scorePosition.setText(String.format("%s.", position));
+        holder.itemBinding.scoreName.setText(score.getName());
+        holder.itemBinding.scorePoints.setText(String.format("%s", score.getPoints()));
     }
 
     @Override
@@ -44,22 +42,17 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoresView
     }
 
     public void setScores(List<Score> scores){
+        notifyItemRangeRemoved(0, this.scores.size());
         this.scores = scores;
-        notifyDataSetChanged();
+        notifyItemRangeInserted(0, scores.size());
     }
 
     public class ScoresViewHolder extends RecyclerView.ViewHolder {
-        private TextView positionText, nameText, pointsText;
+        private final ItemsScoresBinding itemBinding;
 
-        public ScoresViewHolder(final View view) {
-            super(view);
-            setUpViews(view);
-        }
-
-        private void setUpViews(View view) {
-            positionText = view.findViewById(R.id.score_position);
-            nameText = view.findViewById(R.id.score_name);
-            pointsText = view.findViewById(R.id.score_points);
+        public ScoresViewHolder(ItemsScoresBinding itemBinding) {
+            super(itemBinding.getRoot());
+            this.itemBinding = itemBinding;
         }
     }
 }

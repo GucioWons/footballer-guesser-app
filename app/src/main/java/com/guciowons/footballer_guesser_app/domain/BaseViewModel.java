@@ -8,11 +8,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.guciowons.footballer_guesser_app.domain.preferences.EncryptedPreferencesGetter;
 
 public abstract class BaseViewModel {
-    protected Application application;
-    protected SharedPreferences account;
+    protected final Application application;
+    protected final SharedPreferences account;
     protected MutableLiveData<String> error = new MutableLiveData<>();
-
-
 
     public BaseViewModel(Application application) {
         this.application = application;
