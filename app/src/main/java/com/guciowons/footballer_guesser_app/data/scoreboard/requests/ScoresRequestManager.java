@@ -23,7 +23,6 @@ public class ScoresRequestManager {
     }
 
     private void convertScores(ScoreboardViewModel viewModel, JSONArray scoresJson){
-        viewModel.setError("Error 1");
         for(int i = 0; i< scoresJson.length(); i++) {
             convertScore(viewModel, scoresJson, i);
         }

@@ -60,7 +60,6 @@ public class LeaguesActivity extends BaseActivity {
 
     private void setOnClickListener() {
         listener = (view, name, id) -> {
-            System.out.println(id);
             Intent intent = new Intent(getApplicationContext(), GameActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("name", name);
