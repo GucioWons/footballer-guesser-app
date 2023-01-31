@@ -1,14 +1,12 @@
 package com.guciowons.footballer_guesser_app.presence.loading.dialogs;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.view.LayoutInflater;
 
-import com.guciowons.footballer_guesser_app.R;
+import com.guciowons.footballer_guesser_app.databinding.DialogLoadingBinding;
 
 public class LoadingDialog {
-    private Activity activity;
+    private final Activity activity;
     private Dialog dialog;
 
     public LoadingDialog(Activity activity) {
@@ -16,16 +14,16 @@ public class LoadingDialog {
     }
 
     public void show(){
-        dialog = createDialog().create();
+        dialog = createDialog();
         dialog.show();
     }
 
-    private AlertDialog.Builder createDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.dialog_loading, null));
-        builder.setCancelable(false);
-        return builder;
+    private Dialog createDialog(){
+        DialogLoadingBinding binding = DialogLoadingBinding.inflate(activity.getLayoutInflater());
+        dialog = new Dialog(activity);
+        dialog.setCancelable(false);
+        dialog.setContentView(binding.getRoot());
+        return dialog;
     }
 
     public void dismiss(){

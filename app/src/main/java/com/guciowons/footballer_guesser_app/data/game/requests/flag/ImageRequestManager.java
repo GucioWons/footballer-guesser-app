@@ -9,8 +9,8 @@ import com.guciowons.footballer_guesser_app.R;
 public class ImageRequestManager {
     public ImageRequest getPngRequest(String url, ImageView imageView, Integer min, Integer max){
         return new ImageRequest(url,
-                response -> imageView.setImageBitmap(response),
+                imageView::setImageBitmap,
                 min, max, ImageView.ScaleType.CENTER, null,
-                error -> imageView.setImageBitmap(BitmapFactory.decodeResource(imageView.getResources(), R.drawable.badge)));
+                error -> imageView.setImageBitmap(BitmapFactory.decodeResource(imageView.getResources(), R.drawable.flag)));
     }
 }

@@ -2,8 +2,6 @@ package com.guciowons.footballer_guesser_app.ui.authentication.validators;
 
 import static org.junit.Assert.*;
 
-import com.guciowons.footballer_guesser_app.presence.authorization.validators.UsernameValidator;
-
 import org.junit.Test;
 
 public class UsernameValidatorTest {

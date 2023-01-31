@@ -1,23 +1,20 @@
 package com.guciowons.footballer_guesser_app.presence.leagues.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.guciowons.footballer_guesser_app.R;
 import com.guciowons.footballer_guesser_app.data.models.League;
+import com.guciowons.footballer_guesser_app.databinding.ItemsLeaguesBinding;
 
 import java.util.List;
 
 public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeaguesViewHolder> {
     private List<League> leagues;
-    private RecyclerViewClickListener listener;
+    private final RecyclerViewClickListener listener;
 
     public LeaguesAdapter(List<League> leagues, RecyclerViewClickListener listener){
         this.leagues = leagues;
@@ -27,8 +24,8 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeaguesV
     @NonNull
     @Override
     public LeaguesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View leagueView = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_leagues, parent, false);
-        return new LeaguesViewHolder(leagueView);
+        ItemsLeaguesBinding itemBinding = ItemsLeaguesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new LeaguesViewHolder(itemBinding);
     }
 
     @Override
@@ -37,8 +34,8 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeaguesV
     }
 
     private void setUpItem(LeaguesViewHolder holder, League league){
-        holder.nameText.setText(league.getName());
-        holder.leagueImage.setImageBitmap(league.getLogo());
+        holder.itemBinding.leaguesText.setText(league.getName());
+        holder.itemBinding.leagueImage.setImageBitmap(league.getLogo());
     }
 
     @Override
@@ -48,24 +45,16 @@ public class LeaguesAdapter extends RecyclerView.Adapter<LeaguesAdapter.LeaguesV
 
     public void setLeagues(List<League> leagues){
         this.leagues = leagues;
-        notifyDataSetChanged();
+        notifyItemRangeInserted(0, leagues.size());
     }
 
     public class LeaguesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView nameText;
-        private ImageView leagueImage;
-        private Context context;
+        private final ItemsLeaguesBinding itemBinding;
 
-        public LeaguesViewHolder(final View view){
-            super(view);
-            setUpViews(view);
-            view.setOnClickListener(this);
-        }
-
-        private void setUpViews(View view){
-            nameText = view.findViewById(R.id.leagues_text);
-            leagueImage = view.findViewById(R.id.league_image);
-            context = view.getContext();
+        public LeaguesViewHolder(ItemsLeaguesBinding itemBinding){
+            super(itemBinding.getRoot());
+            this.itemBinding = itemBinding;
+            itemBinding.getRoot().setOnClickListener(this);
         }
 
         @Override

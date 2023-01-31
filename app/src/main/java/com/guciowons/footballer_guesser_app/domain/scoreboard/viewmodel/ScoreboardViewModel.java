@@ -3,7 +3,6 @@ package com.guciowons.footballer_guesser_app.domain.scoreboard.viewmodel;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.RequestQueue;
@@ -11,73 +10,63 @@ import com.android.volley.toolbox.Volley;
 import com.guciowons.footballer_guesser_app.data.leagues.repositories.LeagueRepository;
 import com.guciowons.footballer_guesser_app.data.models.League;
 import com.guciowons.footballer_guesser_app.data.models.Score;
-import com.guciowons.footballer_guesser_app.data.scoreboard.requests.ScoresRequestManager;
+import com.guciowons.footballer_guesser_app.domain.BaseViewModel;
+import com.guciowons.footballer_guesser_app.domain.scoreboard.senders.GetScoresSender;
 
 import java.util.List;
 
-public class ScoreboardViewModel extends AndroidViewModel {
-    private LeagueRepository leagueRepository;
-    private MutableLiveData<List<Score>> scores = new MutableLiveData<>();
-    private MutableLiveData<List<League>> leagues;
+public class ScoreboardViewModel extends BaseViewModel {
+    private final LeagueRepository leagueRepository;
+    private final RequestQueue requestQueue;
 
     private String time;
     private Integer leagueId;
 
-    private RequestQueue requestQueue;
+    private final MutableLiveData<List<Score>> scores = new MutableLiveData<>();
+    private final MutableLiveData<List<League>> leagues;
 
     public ScoreboardViewModel(@NonNull Application application) {
         super(application);
         requestQueue = Volley.newRequestQueue(application);
         leagueRepository = new LeagueRepository(application);
         leagues = leagueRepository.getLeagues();
+        error = leagueRepository.getError();
         time = null;
         leagueId = null;
-        fetchScores();
+        GetScoresSender.fetchScores(this, time, leagueId, requestQueue);
     }
 
     public void setTime(String time){
         this.time = time;
-        fetchScores();
+        GetScoresSender.fetchScores(this, time, leagueId, requestQueue);
     }
 
     public void setLeagueId(Integer leagueId){
         this.leagueId = leagueId;
-        fetchScores();
+        GetScoresSender.fetchScores(this, time, leagueId, requestQueue);
     }
 
-    private void fetchScores() {
-        ScoresRequestManager scoresRequestManager = new ScoresRequestManager();
-        requestQueue.add(scoresRequestManager.getScores(this, createUrl()));
+    public RequestQueue getRequestQueue(){
+        return requestQueue;
     }
 
-    private String createUrl(){
-        String url = "http://footballerguesserservice-env.eba-iwqz7xzh.eu-central-1.elasticbeanstalk.com/scores?";
-        if(time != null){
-            url = url + "time=" + time + "&";
-        }
-        if(leagueId != null){
-            url = url + "leagueId=" + leagueId;
-        }
-        return url;
-    }
-
-    public MutableLiveData<List<Score>> getScores(){
-        return scores;
-    }
-
-    public MutableLiveData<List<League>> getLeagues(){
-        return leagues;
+    public void setError(String error) {
+        leagueRepository.setError(error);
     }
 
     public void setScores(List<Score> newScores){
         scores.setValue(newScores);
     }
 
+    public MutableLiveData<List<Score>> getScores(){
+        return scores;
+    }
+
     public void setLeagues(List<League> newLeagues){
         leagues.postValue(newLeagues);
     }
 
-    public RequestQueue getRequestQueue(){
-        return requestQueue;
+    public MutableLiveData<List<League>> getLeagues(){
+        return leagues;
     }
 }

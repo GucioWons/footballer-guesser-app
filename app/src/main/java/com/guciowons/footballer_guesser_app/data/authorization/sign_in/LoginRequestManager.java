@@ -3,18 +3,18 @@ package com.guciowons.footballer_guesser_app.data.authorization.sign_in;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.guciowons.footballer_guesser_app.domain.authorization.sign_in.viewmodel.SignInViewModel;
+import com.guciowons.footballer_guesser_app.domain.authorization.BaseAuthViewModel;
 
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 
 public class LoginRequestManager {
-    public JsonObjectRequest getLoginRequest(SignInViewModel model, JSONObject params){
+    public JsonObjectRequest getLoginRequest(BaseAuthViewModel viewModel, JSONObject params){
         String url = "http://footballerguesserservice-env.eba-iwqz7xzh.eu-central-1.elasticbeanstalk.com/login/";
         return new JsonObjectRequest(Request.Method.POST, url, params,
-                response -> model.setResponse(response, params),
-                error -> model.setErrorResponse(getErrorResponse(error)));
+                response -> viewModel.setResponse(response, params),
+                error -> viewModel.setErrorResponse(getErrorResponse(error)));
     }
 
     private String getErrorResponse(VolleyError error){
