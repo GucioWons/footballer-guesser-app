@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.guciowons.footballer_guesser_app.R;
+import com.guciowons.footballer_guesser_app.SettingsActivity;
 import com.guciowons.footballer_guesser_app.presence.BaseActivity;
 import com.guciowons.footballer_guesser_app.presence.scoreboard.activities.ScoreboardActivity;
 import com.guciowons.footballer_guesser_app.presence.game.activities.GameActivity;
@@ -73,9 +74,16 @@ public class LeaguesActivity extends BaseActivity {
                 goToScoreboard();
             }else if(item.getItemId() == R.id.logout){
                 logoutUser(leaguesViewModel);
+            }else if(item.getItemId() == R.id.settings){
+                goToSettings();
             }
             return true;
         });
+    }
+
+    private void goToSettings(){
+        Intent intent = new Intent(LeaguesActivity.this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     public void goToScoreboard(){
