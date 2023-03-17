@@ -4,8 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.guciowons.footballer_guesser_app.databinding.ActivitySettingsBinding;
 import com.guciowons.footballer_guesser_app.presence.BaseActivity;
+import com.guciowons.footballer_guesser_app.presence.authorization.validators.DefaultTextValidator;
+import com.guciowons.footballer_guesser_app.presence.authorization.validators.EmailValidator;
+import com.guciowons.footballer_guesser_app.presence.authorization.validators.PasswordValidator;
+
+import org.w3c.dom.Text;
 
 import java.util.Objects;
 
@@ -34,17 +40,30 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void changeUsername(){
+        TextInputLayout usernameInput = binding.changeUsernameEt;
         String newUsername = Objects.requireNonNull(binding.changeUsernameEt.getEditText()).getText().toString();
-        Toast.makeText(this, newUsername, Toast.LENGTH_SHORT).show();
+        validateField(usernameInput, DefaultTextValidator.validateText(newUsername, "Username"));
     }
 
     private void changeEmail(){
-        String newEmail = Objects.requireNonNull(binding.changeEmailEt.getEditText()).getText().toString();
-        Toast.makeText(this, newEmail, Toast.LENGTH_SHORT).show();
+        TextInputLayout emailInput = binding.changeEmailEt;
+        String newEmail = Objects.requireNonNull(emailInput.getEditText()).getText().toString();
+        validateField(emailInput, EmailValidator.validateEmail(newEmail));
     }
 
     private void changePassword(){
-        String newPassword = Objects.requireNonNull(binding.newPasswordEt.getEditText()).getText().toString();
-        Toast.makeText(this, newPassword, Toast.LENGTH_SHORT).show();
+        TextInputLayout passwordInput = binding.newPasswordEt;
+        String newPassword = Objects.requireNonNull(passwordInput.getEditText()).getText().toString();
+        validateField(passwordInput, PasswordValidator.validatePassword(newPassword));
+    }
+
+    private void validateField(TextInputLayout input, String validationMessage){
+        if(validationMessage.equals("Success")){
+            Objects.requireNonNull(input.getEditText()).setText("");
+            input.setError(null);
+            Toast.makeText(this, "Works", Toast.LENGTH_SHORT).show();
+        }else{
+            input.setError(validationMessage);
+        }
     }
 }
